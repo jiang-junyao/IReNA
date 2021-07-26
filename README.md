@@ -6,7 +6,13 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of IReNA is to
+The goal of IReNA is to reconstruct regulatory networks through
+integrating scRNA-seq and ATAC-seq data.
+
+## Citation
+
+if you use this package please cite the following published paper:
+<https://science.sciencemag.org/content/370/6519/eabb8598>
 
 ## Installation
 
@@ -40,16 +46,34 @@ write.table(peak_counts_bed,'hotspot.bed',row.names=F, col.names=F, sep=' ', quo
 dnase2tf(datafilepath=DNase-seq reads,filename=hotspot.bed, mapfiledir=Mappability, outputfilepath=outputpath, assemseqdir=assemseqdir1, biascorrection='dimer', FDRs = c(0.01, 0.05, 1), numworker=30, paired=T)
 ```
 
+### Choose motif database file
+
+We stored the Tranfac201803 database for 4 species(Homo sapiens, Mus
+musculus, Zebrafish and Chicken) in this package. You can use following
+codes to call these databases, or you can use your own motif database
+which should have the same format as our stored motif database.
+
+``` r
+###call Mus musculus motif database
+motif1 = Tranfac201803_Mm_MotifTFsF
+###call Homo sapiens motif database
+motif1 = Tranfac201803_Hs_MotifTFsF
+###call Zebrafish motif database
+motif1 = Tranfac201803_Zf_MotifTFsF
+###call Chicken motif database
+motif1 = Tranfac201803_Ch_MotifTFsF
+```
+
 ### IReNA pipline
 
 ``` r
 library(IReNA)
 ###merge footprints whose distance is less than 4
-footprints<-read.table('mmATACPhxW_CuFiQ10No_sorted_fdr0.050000.bed',,sep='\t',header = T)
-merged_footprint<-merge_footprints(footprints)
+footprints <- read.table('mmATACPhxW_CuFiQ10No_sorted_fdr0.050000.bed',,sep='\t',header = T)
+merged_footprint <- merge_footprints(footprints)
 ###get sequences of the footprints
-fastadir<-'D:\\GIBH\\IReNA2 R package\\IReNA2\\Public\\GRCm38Chr\\Genome\\GRCm38Chr.fasta'
-fasta<-getfasta(merged_footprint,fastadir)
+fastadir <- 'D:\\GIBH\\IReNA2 R package\\IReNA2\\Public\\GRCm38Chr\\Genome\\GRCm38Chr.fasta'
+fasta <- getfasta(merged_footprint,fastadir)
 ```
 
 In this step, because Fimo software only have linux version, we generate
@@ -57,7 +81,6 @@ a shell script to run Fimo software in shell. If you are familiar with
 linux system, you can write your own commands as you like.
 
 ``` r
-motif1<-read.table('D:\\GIBH\\IReNA2 R package\\IReNA2\\ATAC\\Tranfac201803_Mm_MotifTFsF_Phx_Motifs.txt',row.names = 1,sep = '\t',header = T)
 Dir2='D:\\GIBH\\IReNA2 R package\\IReNA2\\ATAC\\outputdir'
 find_motifs(motif1,step=20,Dir2,'Dir1')
 ### run the following commands in the shell
