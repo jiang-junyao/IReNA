@@ -346,12 +346,12 @@ Cal_Regulation_Cor <- function(Regulation1, ScExp1, CorThr1 = 0.8, ScCorThr1 = 0
     if ((x1[4] == "Bulk" & x1[9] == "Bulk" | is.na(x1[length(x1)])) & !is.na(x1[length(x1) - 1])) {
       x2 <- as.numeric(x1[length(x1) - 1])
       if (abs(x2) > CorThr1) {
-        x3 <- T
+        x3 <- TRUE
       }
     } else if (!is.na(x1[length(x1)])) {
       x2 <- as.numeric(x1[length(x1)])
       if (abs(x2) > ScCorThr1) {
-        x3 <- T
+        x3 <- TRUE
       }
     } else {
       x2 <- 0
