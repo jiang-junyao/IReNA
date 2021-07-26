@@ -6,6 +6,11 @@
 \usage{
 Cal_Footprints_FOS(cutsp2_list, FlankFold1 = 3)
 }
+\arguments{
+\item{cutsp2_list}{list that each element is cutsp2}
+
+\item{FlankFold1}{threshold}
+}
 \description{
 Inner function
 }

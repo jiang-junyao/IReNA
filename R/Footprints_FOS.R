@@ -10,294 +10,376 @@
 #' @export
 #'
 #' @examples
-Footprints_FOS<-function(Wig_list,Candid,expression_profile,FlankFold1=3,trans_wig=FALSE){
-  if (trans_wig==TRUE) {
-    Wig_list2<-Trans_WigToMultirows(Wig_list)
-  }else{Wig_list2<-Wig_list}
-  cutsp2_list<-Add_size_of_motif(Wig_list2,Candid)
-  cutsp2_FOS<-Cal_Footprints_FOS(cutsp2_list,FlankFold1=3)
-  FOS1<-Combine_Footprints_FOS(cutsp2_FOS)
-  FOS2<-Filter_Footprints(FOS1)
-  FOSF<-get_potential_regulation(FOS2)
-  FOSF_RegM<-Merge_same_pairs(mmATACPhxW_PFF_scRNA_Candid_FOSF_Reg)
-  Regulation<-Add_expression_information(FOSF_RegM,expression_profile)
-  Regulation2<-Cal_Regulation_Cor(Regulation,expression_profile,CorThr1=0.8,ScCorThr1 <- 0.2)
+Footprints_FOS <- function(Wig_list, Candid, expression_profile, FlankFold1 = 3, trans_wig = FALSE) {
+  if (trans_wig == TRUE) {
+    Wig_list2 <- Trans_WigToMultirows(Wig_list)
+  } else {
+    Wig_list2 <- Wig_list
+  }
+  cutsp2_list <- Add_size_of_motif(Wig_list2, Candid)
+  cutsp2_FOS <- Cal_Footprints_FOS(cutsp2_list, FlankFold1 = 3)
+  FOS1 <- Combine_Footprints_FOS(cutsp2_FOS)
+  FOS2 <- Filter_Footprints(FOS1)
+  FOSF <- get_potential_regulation(FOS2)
+  FOSF_RegM <- Merge_same_pairs(FOSF)
+  Regulation <- Add_expression_information(FOSF_RegM, expression_profile)
+  Regulation2 <- Cal_Regulation_Cor(Regulation, expression_profile, CorThr1 = 0.8, ScCorThr1 <- 0.2)
 }
-Trans_WigToMultirows<-function(Wig_list){
-  list1<-list()
+
+#' Inner function
+#'
+#' @param Wig_list list that each element is wig dataframe
+Trans_WigToMultirows <- function(Wig_list) {
+  list1 <- list()
   for (i in 1:length(Wig_list)) {
-    wig<-Trans_WigToMultirows2(as.data.frame(Wig_list[[i]]))
-    list1[[i]]<-wig
+    wig <- Trans_WigToMultirows2(as.data.frame(Wig_list[[i]]))
+    list1[[i]] <- wig
   }
   return(list1)
 }
 
 #' Inner function
-Trans_WigToMultirows2<-function(b){
-  rownum<-c()
-  col1<-c()
+#'
+#' @param b wig
+Trans_WigToMultirows2 <- function(b) {
+  rownum <- c()
+  col1 <- c()
   for (i in 1:nrow(b)) {
-    if (!b[i,]%in%c(as.character(0:20))|!b[i,]%in%0:20) {
-      rownum<-c(rownum,i)
+    if (!b[i, ] %in% c(as.character(0:20)) | !b[i, ] %in% 0:20) {
+      rownum <- c(rownum, i)
     }
   }
   for (i in 1:length(rownum)) {
-    if (i==length(rownum)) {
-      acc1=b[(rownum[i]+1):nrow(b),]
-    }else{acc1<-b[(rownum[i]+1):(rownum[i+1]-1),]}
-    acc11<-paste(acc1,collapse = '\t')
-    acc2<-strsplit(b[rownum[i],],'\t')[[1]]
-    acc21<-strsplit(acc2[2],'=')[[1]][2]
-    acc22<-as.numeric(strsplit(acc2[3],'=')[[1]][2])-1
-    acc23<-acc22+length(acc1)
-    acc3<-paste(acc21,acc22,acc23,acc11,'\t')
-    col1<-c(col1,acc3)
+    if (i == length(rownum)) {
+      acc1 <- b[(rownum[i] + 1):nrow(b), ]
+    } else {
+      acc1 <- b[(rownum[i] + 1):(rownum[i + 1] - 1), ]
+    }
+    acc11 <- paste(acc1, collapse = "\t")
+    acc2 <- strsplit(b[rownum[i], ], "\t")[[1]]
+    acc21 <- strsplit(acc2[2], "=")[[1]][2]
+    acc22 <- as.numeric(strsplit(acc2[3], "=")[[1]][2]) - 1
+    acc23 <- acc22 + length(acc1)
+    acc3 <- paste(acc21, acc22, acc23, acc11, "\t")
+    col1 <- c(col1, acc3)
   }
-  col1<-as.data.frame(col1)
+  col1 <- as.data.frame(col1)
 }
 
 #' Inner function
-Add_size_of_motif<-function(cutsp_list,Candid){
-  list1<-list()
-  con2<-Candid
+#'
+#' @param cutsp_list list that each element is cuptsp
+#' @param Candid candidate gene
+Add_size_of_motif <- function(cutsp_list, Candid) {
+  list1 <- list()
+  con2 <- Candid
   for (i in 1:length(cutsp_list)) {
-    con3<-cutsp_list[[i]]
-    var11<-c();var12<-c()
-    col1<-c()
+    con3 <- cutsp_list[[i]]
+    var11 <- c()
+    var12 <- c()
+    col1 <- c()
     for (k in 1:nrow(con3)) {
-      var2<-con3[k,]
-      var3<-strsplit(var2,'\t')
-      var31<-var3[[1]][1:3]
-      var32<-var3[[1]][4:length(var3[[1]])]
-      var311<-paste0(var31[1:length(var31)],collapse = '\t')
-      var321<-paste0(var32[1:length(var32)],collapse = ',')
-      var11<-c(var11,var311);var12<-c(var12,var321)
+      var2 <- con3[k, ]
+      var3 <- strsplit(var2, "\t")
+      var31 <- var3[[1]][1:3]
+      var32 <- var3[[1]][4:length(var3[[1]])]
+      var311 <- paste0(var31[1:length(var31)], collapse = "\t")
+      var321 <- paste0(var32[1:length(var32)], collapse = ",")
+      var11 <- c(var11, var311)
+      var12 <- c(var12, var321)
     }
-    var1<-as.data.frame(matrix(c(var11,var12),ncol=2))
+    var1 <- as.data.frame(matrix(c(var11, var12), ncol = 2))
     for (j in 1:nrow(con2)) {
-      var21<-paste0(as.character(con2[j,][c(1,5,6)]),collapse = '\t')
-      size1<-con2[j,][3]-con2[j,][2]+1
-      if (var21%in%var1$V1) {
-        col11<-paste(con2[j,][ncol(con2)],con2[j,][4],size1,con2[j,][1],con2[j,][2],con2[j,][3],var1[var1$V1==var21,]$V2[1],sep = '\t')
-        col1<-c(col1,col11)
+      var21 <- paste0(as.character(con2[j, ][c(1, 5, 6)]), collapse = "\t")
+      size1 <- con2[j, ][3] - con2[j, ][2] + 1
+      if (var21 %in% var1$V1) {
+        col11 <- paste(con2[j, ][ncol(con2)], con2[j, ][4], size1, con2[j, ][1], con2[j, ][2], con2[j, ][3], var1[var1$V1 == var21, ]$V2[1], sep = "\t")
+        col1 <- c(col1, col11)
       }
     }
-    col2<-as.data.frame(col1)
-    col2<-split_dataframe(col2)
-    list1[[i]]<-col2
+    col2 <- as.data.frame(col1)
+    col2 <- split_dataframe(col2)
+    list1[[i]] <- col2
   }
   return(list1)
 }
 
 #' Inner function
-Cal_Footprints_FOS<-function(cutsp2_list,FlankFold1=3){
-  list1<-list()
+#'
+#' @param cutsp2_list list that each element is cutsp2
+#' @param FlankFold1 threshold
+Cal_Footprints_FOS <- function(cutsp2_list, FlankFold1 = 3) {
+  list1 <- list()
   for (i in 1:length(cutsp2_list)) {
-    FP<-cutsp2_list[[i]]
-    FOS<-Cal_Footprints_FOS2(FP,FlankFold1=FlankFold1)
-    list1[[i]]<-FOS
+    FP <- cutsp2_list[[i]]
+    FOS <- Cal_Footprints_FOS2(FP, FlankFold1 = FlankFold1)
+    list1[[i]] <- FOS
   }
   return(list1)
 }
 
 #' Inner function to calculate footprint occupancy score
-Cal_Footprints_FOS2 <- function(FP1, FlankFold1=3){
-  FP2 <- apply(FP1, 1, function(X1){ MotifSize1 <- as.numeric(X1[3])
-  WidthL1 <- floor(MotifSize1/2); WidthR1 <- MotifSize1-WidthL1;
-  WidthL2 <- floor(MotifSize1*(2*FlankFold1+1)/2); WidthR2 <- MotifSize1*(2*FlankFold1+1)-WidthL2;
-  Insertion1 <- strsplit(X1[7], ',')[[1]]; Midpoint1 <- floor(length(Insertion1)/2)
-  Insertion2 <- as.numeric(Insertion1[c((Midpoint1-WidthL2+1):(Midpoint1+WidthR2))])
+#'
+#' @param FP1 data source
+#' @param FlankFold1 threshold
+Cal_Footprints_FOS2 <- function(FP1, FlankFold1 = 3) {
+  FP2 <- apply(FP1, 1, function(X1) {
+    MotifSize1 <- as.numeric(X1[3])
+    WidthL1 <- floor(MotifSize1 / 2)
+    WidthR1 <- MotifSize1 - WidthL1
+    WidthL2 <- floor(MotifSize1 * (2 * FlankFold1 + 1) / 2)
+    WidthR2 <- MotifSize1 * (2 * FlankFold1 + 1) - WidthL2
+    Insertion1 <- strsplit(X1[7], ",")[[1]]
+    Midpoint1 <- floor(length(Insertion1) / 2)
+    Insertion2 <- as.numeric(Insertion1[c((Midpoint1 - WidthL2 + 1):(Midpoint1 + WidthR2))])
 
-  L1 <- sum(Insertion2[1:(WidthL2-WidthL1)])/FlankFold1
-  M1 <- sum(Insertion2[(WidthL2-WidthL1+1):(WidthL2+WidthR1)])
-  R1 <- sum(Insertion2[(WidthL2+WidthR1+1):length(Insertion2)])/FlankFold1
-  FOS1 <- min(-log2((M1+1)/(L1+1)), -log2((M1+1)/(R1+1)));
-  return(c(X1[1:6], as.numeric(FOS1)))
-  } )
+    L1 <- sum(Insertion2[1:(WidthL2 - WidthL1)]) / FlankFold1
+    M1 <- sum(Insertion2[(WidthL2 - WidthL1 + 1):(WidthL2 + WidthR1)])
+    R1 <- sum(Insertion2[(WidthL2 + WidthR1 + 1):length(Insertion2)]) / FlankFold1
+    FOS1 <- min(-log2((M1 + 1) / (L1 + 1)), -log2((M1 + 1) / (R1 + 1)))
+    return(c(X1[1:6], as.numeric(FOS1)))
+  })
 
   return(t(FP2))
 }
 
 
 #' Inner function
-Combine_Footprints_FOS<-function(FOS_list){
+#'
+#' @param FOS_list list contain footprints with FOS
+Combine_Footprints_FOS <- function(FOS_list) {
   for (i in 1:length(FOS_list)) {
-    FOS1<-FOS_list[[i]]
-    if(i==1){ FOS2 <- FOS1
-    }else{ FOS2 <- cbind(FOS2, FOS1[, ncol(FOS1)]) }
+    FOS1 <- FOS_list[[i]]
+    if (i == 1) {
+      FOS2 <- FOS1
+    } else {
+      FOS2 <- cbind(FOS2, FOS1[, ncol(FOS1)])
+    }
   }
-  colnames(FOS2)[1:6] <- c('Motif','Target','MotifSize','Chr','Start','End')
+  colnames(FOS2)[1:6] <- c("Motif", "Target", "MotifSize", "Chr", "Start", "End")
   return(FOS2)
 }
 
 #' Inner function
-Filter_Footprints<-function(FOS1){
-  mFOS1 <- apply(FOS1, 1, function(x1){
-    x2 <- as.numeric(x1[7:length(x1)]); x3 <- min(x2[1:2]);
-    for(i in seq(3, length(x2), 2)){
-      x3 <- max(c(x3, min(x2[i:(i+1)])))
-    }
+#'
+#' @param FOS1 footprints occupancy score
+Filter_Footprints <- function(FOS1) {
+  mFOS1 <- apply(FOS1, 1, function(x1) {
+    x2 <- as.numeric(x1[7:length(x1)])
+    x3 <- max(x2)
     return(x3)
   })
-  FOS2 <- cbind(FOS1, mFOS1); colnames(FOS2)[ncol(FOS2)] <- 'MaxFOS'
-  FOS3 <- FOS2[FOS2[, 'MaxFOS']>1, ];
-  print(nrow(FOS2)); print(nrow(FOS3))
+  FOS2 <- cbind(FOS1, mFOS1)
+  colnames(FOS2)[ncol(FOS2)] <- "MaxFOS"
+  FOS3 <- FOS2[FOS2[, "MaxFOS"] > 1, ]
+  print(nrow(FOS2))
+  print(nrow(FOS3))
   return(FOS3)
 }
 
 
 #' Inner function
-get_potential_regulation<-function(FOSF){
-  con1<-FOSF
-  col1<-c()
-  title1<-paste('TF','\t','Motif','\t','Target','\t','TypeChrStartEndFOS')
-  col1<-c(title1,col1)
+#'
+#' @param FOSF filtered FOS
+get_potential_regulation <- function(FOSF) {
+  con1 <- FOSF
+  col1 <- c()
+  title1 <- paste("TF", "\t", "Motif", "\t", "Target", "\t", "TypeChrStartEndFOS")
+  col1 <- c(title1, col1)
   for (i in 1:nrow(con1)) {
-    acc11<-strsplit(as.character(con1[i,][1]),'\\|')[[1]]
-    acc12<-strsplit(as.character(con1[i,][2]),';')[[1]]
-    acc121<-c()
+    acc11 <- strsplit(as.character(con1[i, ][1]), "\\|")[[1]]
+    acc12 <- strsplit(as.character(con1[i, ][2]), ";")[[1]]
+    acc121 <- c()
     for (j in 1:length(acc12)) {
-      acc122<-strsplit(acc12[j],'\\|')[[1]]
-      acc1222<-strsplit(acc122[1],',')[[1]]
-      var122<-paste(acc122[2],con1[i,][5],con1[i,][6]
-                    ,con1[i,][ncol(con1)],sep = ',')
+      acc122 <- strsplit(acc12[j], "\\|")[[1]]
+      acc1222 <- strsplit(acc122[1], ",")[[1]]
+      var122 <- paste(acc122[2], con1[i, ][5], con1[i, ][6],
+        con1[i, ][ncol(con1)],
+        sep = ","
+      )
       for (k in 1:length(acc1222)) {
-        acc121<-c(acc121,paste(acc1222[k],var122,sep = '\t'))
+        acc121 <- c(acc121, paste(acc1222[k], var122, sep = "\t"))
       }
     }
     for (j in 1:length(acc11)) {
-      acc112<-strsplit(acc11[j],';')[[1]]
+      acc112 <- strsplit(acc11[j], ";")[[1]]
       for (k in 2:length(acc112)) {
         for (n in 1:length(acc121)) {
-          var1<-paste(acc112[k],acc112[1],acc121[n],sep = '\t')
-          col1<-c(col1,var1)
+          var1 <- paste(acc112[k], acc112[1], acc121[n], sep = "\t")
+          col1 <- c(col1, var1)
         }
       }
     }
   }
-  col2<-as.data.frame(col1)
-  col2<-split_dataframe(col2)
-  colnames(col2)<-col2[1,]
-  col2=col2[-1,]
+  col2 <- as.data.frame(col1)
+  col2 <- split_dataframe(col2)
+  colnames(col2) <- col2[1, ]
+  col2 <- col2[-1, ]
   return(col2)
 }
 
 #' Inner function
-Merge_same_pairs<-function(FOSF_Reg){
-  con1<-FOSF_Reg
-  hash1<-list()
+#'
+#' @param FOSF_Reg FOS with potential regulatory
+Merge_same_pairs <- function(FOSF_Reg) {
+  con1 <- FOSF_Reg
+  hash1 <- list()
   for (i in 1:nrow(con1)) {
-    var1<-paste(as.character(con1[i,][c(1,3)]),collapse = '\t')
-    var2<-paste(as.character(con1[i,][c(2,4)]),collapse = ',')
-    if (is.null(hash1[var1])==FALSE) {
-      hash1[[var1]]<-c(hash1[[var1]],var2)
-    }else{hash1[var1]<-var2}
-  }
-  name1<-names(hash1)
-  name1<-sort(name1)
-  col1<-c(paste('TF','Target','MotifTypeChrStartEndFOS',sep = '\t'))
-  for (i in 1:length(name1)) {
-    acc1<-paste(unlist(hash1[name1[i]]),collapse = ';')
-    var1<-paste(name1[i],acc1,sep = '\t')
-    col1<-c(col1,var1)
-  }
-  col2<-as.data.frame(col1)
-  col2<-split_dataframe(col2)
-  colnames(col2)<-col2[1,]
-  col2=col2[-1,]
-  return(col2)
-}
-
-
-#' Inner function
-Merge_TFs_genes<-function(FOSF_RegM){
-  con1<-FOSF_RegM
-  hash1<-list();hash2<-list()
-  for (i in 1:nrow(con1)) {
-    var1<-con1[i,][2:3];var2<-con1[i,][c(1,3)]
-    gene1<-as.character(con1[i,][1])
-    gene2<-as.character(con1[i,][2])
-    if (is.null(hash1[gene1])==FALSE) {
-      hash1[[gene1]]<-c(hash1[[gene1]],var1)
-    }else{hash1[gene1]=var1}
-    if (is.null(hash2[gene2])==FALSE) {
-      hash2[[gene2]]<-c(hash2[[gene2]],var2)
-    }else{hash2[gene2]<-var2}
-  }
-  col1<-c();col2<-c()
-  col1<-c(paste('TF','Target','MotifTypeChrStartEndFOS',sep = '\t'),col1)
-  col2<-c(paste('Target','TF','MotifTypeChrStartEndFOS',sep = '\t'),col2)
-  for (i in 1:2) {
-    if (i==1) {
-      hash3<-hash1
-    }else{hash3<-hash2}
-    name1<-names(hash3)
-    name1<-sort(name1)
-    col3<-c()
-    for (j in 1:length(name1)) {
-      num<-seq(1,length(hash3[[name1[j]]]),by=2)
-      acc1<-paste(unlist(hash3[[name1[j]]][num]),collapse = '|')
-      acc2<-paste(unlist(hash3[[name1[j]]][num+1]),collapse = '|')
-      var1<-paste(name1[j],acc1,acc2,sep = '\t')
-      col3<-c(col3,var1)
+    var1 <- paste(as.character(con1[i, ][c(1, 3)]), collapse = "\t")
+    var2 <- paste(as.character(con1[i, ][c(2, 4)]), collapse = ",")
+    if (is.null(hash1[var1]) == FALSE) {
+      hash1[[var1]] <- c(hash1[[var1]], var2)
+    } else {
+      hash1[var1] <- var2
     }
-    if (i==1) {
-      col1<-c(col1,col3)
-    }else{col2<-c(col2,col3)}
   }
-  col1<-as.data.frame(col1);col2<-as.data.frame(col2)
-  col1<-split_dataframe(col1);col2<-split_dataframe(col2)
-  colnames(col1)<-col1[1,];colnames(col2)<-col2[1,]
-  col1=col1[-1,];col2=col2[-1,]
-  list1<-list(col1,col2)
+  name1 <- names(hash1)
+  name1 <- sort(name1)
+  col1 <- c(paste("TF", "Target", "MotifTypeChrStartEndFOS", sep = "\t"))
+  for (i in 1:length(name1)) {
+    acc1 <- paste(unlist(hash1[name1[i]]), collapse = ";")
+    var1 <- paste(name1[i], acc1, sep = "\t")
+    col1 <- c(col1, var1)
+  }
+  col2 <- as.data.frame(col1)
+  col2 <- split_dataframe(col2)
+  colnames(col2) <- col2[1, ]
+  col2 <- col2[-1, ]
+  return(col2)
+}
+
+
+#' Inner function
+#'
+#' @param FOSF_RegM merged FOS with potential regulatory
+Merge_TFs_genes <- function(FOSF_RegM) {
+  con1 <- FOSF_RegM
+  hash1 <- list()
+  hash2 <- list()
+  for (i in 1:nrow(con1)) {
+    var1 <- con1[i, ][2:3]
+    var2 <- con1[i, ][c(1, 3)]
+    gene1 <- as.character(con1[i, ][1])
+    gene2 <- as.character(con1[i, ][2])
+    if (is.null(hash1[gene1]) == FALSE) {
+      hash1[[gene1]] <- c(hash1[[gene1]], var1)
+    } else {
+      hash1[gene1] <- var1
+    }
+    if (is.null(hash2[gene2]) == FALSE) {
+      hash2[[gene2]] <- c(hash2[[gene2]], var2)
+    } else {
+      hash2[gene2] <- var2
+    }
+  }
+  col1 <- c()
+  col2 <- c()
+  col1 <- c(paste("TF", "Target", "MotifTypeChrStartEndFOS", sep = "\t"), col1)
+  col2 <- c(paste("Target", "TF", "MotifTypeChrStartEndFOS", sep = "\t"), col2)
+  for (i in 1:2) {
+    if (i == 1) {
+      hash3 <- hash1
+    } else {
+      hash3 <- hash2
+    }
+    name1 <- names(hash3)
+    name1 <- sort(name1)
+    col3 <- c()
+    for (j in 1:length(name1)) {
+      num <- seq(1, length(hash3[[name1[j]]]), by = 2)
+      acc1 <- paste(unlist(hash3[[name1[j]]][num]), collapse = "|")
+      acc2 <- paste(unlist(hash3[[name1[j]]][num + 1]), collapse = "|")
+      var1 <- paste(name1[j], acc1, acc2, sep = "\t")
+      col3 <- c(col3, var1)
+    }
+    if (i == 1) {
+      col1 <- c(col1, col3)
+    } else {
+      col2 <- c(col2, col3)
+    }
+  }
+  col1 <- as.data.frame(col1)
+  col2 <- as.data.frame(col2)
+  col1 <- split_dataframe(col1)
+  col2 <- split_dataframe(col2)
+  colnames(col1) <- col1[1, ]
+  colnames(col2) <- col2[1, ]
+  col1 <- col1[-1, ]
+  col2 <- col2[-1, ]
+  list1 <- list(col1, col2)
   return(list1)
 }
 
-#' Inner function
-Add_expression_information<-function(Regulation1, GeneM0){
-  GeneM1 <- cbind(GeneM0[, 1:2], 'scRNA',0)
-  colnames(GeneM1) <- c('Symbol','Group','ScBk','PeakExpTime')
+#' Internal function
+#'
+#' @param Regulation1 regulaotry relationship
+#' @param GeneM0 expression profile
+Add_expression_information <- function(Regulation1, GeneM0) {
+  GeneM1 <- cbind(GeneM0[, 1:2], "scRNA", 0)
+  colnames(GeneM1) <- c("Symbol", "Group", "ScBk", "PeakExpTime")
   Regulation11 <- GeneM1[match(Regulation1$TF, rownames(GeneM1)), ]
   Regulation12 <- GeneM1[match(Regulation1$Target, rownames(GeneM1)), ]
   Regulation2 <- cbind(Regulation1, Regulation11, Regulation12)
-  Regulation3 <- Regulation2[, c(1,4:7, 2,8:11, 3)]
-  colnames(Regulation3)[c(2:5, 7:10)] <- c('TFSymbol','TFGroup','TFScBk','TFPeakExpTime', 'TargetSymbol','TargetGroup','TargetScBk','TargetPeakExpTime')
+  Regulation3 <- Regulation2[, c(1, 4:7, 2, 8:11, 3)]
+  colnames(Regulation3)[c(2:5, 7:10)] <- c("TFSymbol", "TFGroup", "TFScBk", "TFPeakExpTime", "TargetSymbol", "TargetGroup", "TargetScBk", "TargetPeakExpTime")
   return(Regulation3)
 }
 
-#' Inner function
-Cal_Regulation_Cor<-function(Regulation1,ScExp1,CorThr1=0.8,ScCorThr1 = 0.2){
-  Ind1 <- match(c('TF', 'Target'), colnames(Regulation1))
-  print('Calculate correlation for scRNA-seq')
-  ScExp2 <- ScExp1[, grep('Exp', colnames(ScExp1))]
+#' Internal function
+#'
+#' @param Regulation1 regulatory relationship
+#' @param ScExp1 expression profile
+#' @param CorThr1 threshold
+#' @param ScCorThr1 threshold
+Cal_Regulation_Cor <- function(Regulation1, ScExp1, CorThr1 = 0.8, ScCorThr1 = 0.2) {
+  Ind1 <- match(c("TF", "Target"), colnames(Regulation1))
+  print("Calculate correlation for scRNA-seq")
+  ScExp2 <- ScExp1[, grep("Exp", colnames(ScExp1))]
   ScCor <- Cal_GenePairs_Cor2(ScExp2, Regulation1[, Ind1])
 
   BkCor <- rep(0, length(ScCor))
 
-  Regulation2 <- cbind(Regulation1, BkCor, ScCor);
-  Ind2 <- match(c('TFScBk', 'TargetScBk'), colnames(Regulation2))
-  Correlation <- t(apply(Regulation2, 1, function(x1){
+  Regulation2 <- cbind(Regulation1, BkCor, ScCor)
+  Ind2 <- match(c("TFScBk", "TargetScBk"), colnames(Regulation2))
+  Correlation <- t(apply(Regulation2, 1, function(x1) {
     x3 <- F
-    if((x1[4]=='Bulk' & x1[9]=='Bulk' | is.na(x1[length(x1)])) & !is.na(x1[length(x1)-1]) ){
-      x2 <- as.numeric(x1[length(x1)-1]);
-      if(abs(x2)>CorThr1){ x3 <- T }
-    }else if(!is.na(x1[length(x1)])){
+    if ((x1[4] == "Bulk" & x1[9] == "Bulk" | is.na(x1[length(x1)])) & !is.na(x1[length(x1) - 1])) {
+      x2 <- as.numeric(x1[length(x1) - 1])
+      if (abs(x2) > CorThr1) {
+        x3 <- T
+      }
+    } else if (!is.na(x1[length(x1)])) {
       x2 <- as.numeric(x1[length(x1)])
-      if(abs(x2)>ScCorThr1){ x3 <- T }
-    }else{ x2 <- 0; print(x1) }
+      if (abs(x2) > ScCorThr1) {
+        x3 <- T
+      }
+    } else {
+      x2 <- 0
+      print(x1)
+    }
     return(c(x2, x3))
   }))
   Regulation3 <- cbind(Regulation2, Correlation)
-  colnames(Regulation3)[ncol(Regulation3)-1] <- 'Correlation'
-  print(quantile(as.numeric(as.character(Regulation3[, 'Correlation'])))); print(nrow(Regulation3))
-  Regulation4 <- Regulation3[Regulation3[, ncol(Regulation3)]==T, ]; print(nrow(Regulation4))
+  colnames(Regulation3)[ncol(Regulation3) - 1] <- "Correlation"
+  print(stats::quantile(as.numeric(as.character(Regulation3[, "Correlation"]))))
+  print(nrow(Regulation3))
+  Regulation4 <- Regulation3[Regulation3[, ncol(Regulation3)] == TRUE, ]
+  print(nrow(Regulation4))
   return(Regulation4)
 }
 
 #' Inner function
-Cal_GenePairs_Cor2 <- function(RNA1, Pair1){
+#'
+#' @param RNA1 expression
+#' @param Pair1 pair
+#'
+Cal_GenePairs_Cor2 <- function(RNA1, Pair1) {
   dRNA1 <- dim(RNA1)[2]
-  RNA2 <- cbind(RNA1[match(Pair1[, 1],rownames(RNA1)), ], RNA1[match(Pair1[, 2],rownames(RNA1)), ])
-  Cor1 <- apply(RNA2, 1, function(x1){ x2 <- as.numeric(x1); cx2 <- cor(x2[1:dRNA1], x2[(dRNA1+1):length(x2)]); return(cx2) } )
+  RNA2 <- cbind(RNA1[match(Pair1[, 1], rownames(RNA1)), ], RNA1[match(Pair1[, 2], rownames(RNA1)), ])
+  Cor1 <- apply(RNA2, 1, function(x1) {
+    x2 <- as.numeric(x1)
+    cx2 <- stats::cor(x2[1:dRNA1], x2[(dRNA1 + 1):length(x2)])
+    return(cx2)
+  })
   return(Cor1)
 }

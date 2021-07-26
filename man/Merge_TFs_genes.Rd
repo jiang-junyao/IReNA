@@ -6,6 +6,9 @@
 \usage{
 Merge_TFs_genes(FOSF_RegM)
 }
+\arguments{
+\item{FOSF_RegM}{merged FOS with potential regulatory}
+}
 \description{
 Inner function
 }

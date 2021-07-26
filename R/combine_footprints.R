@@ -12,7 +12,7 @@ combine_footprints <- function(motif, file1, Dir) {
   con1 <- motif
   con2 <- file1
   DirFile1 <- list.files(Dir)
-  con3 <- read.table(paste0(Dir, DirFile1[1]), header = T, sep = "\t")
+  con3 <- read.table(paste0(Dir, DirFile1[1]), header = TRUE, sep = "\t")
   col1 <- con3[, c(3, 4, 5, 6, 8, 10, 1)]
   name1 <- c()
   for (i in 1:nrow(con2)) {
@@ -25,7 +25,7 @@ combine_footprints <- function(motif, file1, Dir) {
   for (i in 2:length(DirFile1)) {
     info <- file.info(paste0(FootprintsDir1, "/", File1, "_Fimo/", DirFile1[i]))
     if (info$size > 0) {
-      con12 <- read.table(paste0(FootprintsDir1, "/", File1, "_Fimo/", DirFile1[i]), header = T, sep = "\t")
+      con12 <- read.table(paste0(FootprintsDir1, "/", File1, "_Fimo/", DirFile1[i]), header = TRUE, sep = "\t")
       col2 <- con12[, c(3, 4, 5, 6, 8, 10, 1)]
       col1 <- rbind(col1, col2)
     }
@@ -49,18 +49,18 @@ combine_footprints <- function(motif, file1, Dir) {
 #' @export
 #'
 #' @examples
-overlap_footprints_peaks<-function(footprints,peak_bed){
-  merged<-matrix(ncol = 10)
+overlap_footprints_peaks <- function(footprints, peak_bed) {
+  merged <- matrix(ncol = 10)
   for (i in 1:nrow(footprints)) {
-    range1<-as.numeric(footprints[i,2]):as.numeric(footprints[i,3])
+    range1 <- as.numeric(footprints[i, 2]):as.numeric(footprints[i, 3])
     for (j in 1:nrow(peak_bed)) {
-      range2=peak_bed[j,2]:peak_bed[j,3]
-      if (length(intersect(range1,range2))>0) {
-        merged<-rbind(merged,c(footprints[i,],peak_bed[j,]))
+      range2 <- peak_bed[j, 2]:peak_bed[j, 3]
+      if (length(intersect(range1, range2)) > 0) {
+        merged <- rbind(merged, c(footprints[i, ], peak_bed[j, ]))
       }
     }
   }
-  merged<-merged[-1,]
-  merged<-as.data.frame(merged)
+  merged <- merged[-1, ]
+  merged <- as.data.frame(merged)
   return(merged)
 }

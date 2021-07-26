@@ -2,10 +2,15 @@
 % Please edit documentation in R/Footprints_FOS.R
 \name{Add_expression_information}
 \alias{Add_expression_information}
-\title{Inner function}
+\title{Internal function}
 \usage{
 Add_expression_information(Regulation1, GeneM0)
 }
+\arguments{
+\item{Regulation1}{regulaotry relationship}
+
+\item{GeneM0}{expression profile}
+}
 \description{
-Inner function
+Internal function
 }

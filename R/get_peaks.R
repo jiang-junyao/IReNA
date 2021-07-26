@@ -6,54 +6,62 @@
 #' @export
 #'
 #' @examples
-get_peaks_genes <- function(list1, expression_profile){
-  print('Get candidate genes/TFs-related peaks')
+get_peaks_genes <- function(list1, expression_profile) {
+  print("Get candidate genes/TFs-related peaks")
   con1 <- list1[[2]]
   con2 <- list1[[1]]
   con3 <- expression_profile
-  hash2 <- con3[,c(1,2)]
-  col1<-c()
-  test1<-c()
-  col2<-c()
+  hash2 <- con3[, c(1, 2)]
+  col1 <- c()
+  test1 <- c()
+  col2 <- c()
   for (i in 1:nrow(con1)) {
-    acc131<-c()
-    acc11<-strsplit(con1[i,][1]$V1,';')[[1]];acc12<-strsplit(con1[i,][2]$V2,';')[[1]]
-    acc122<-c()
+    acc131 <- c()
+    acc11 <- strsplit(con1[i, ][1]$V1, ";")[[1]]
+    acc12 <- strsplit(con1[i, ][2]$V2, ";")[[1]]
+    acc122 <- c()
     for (l in 1:length(acc12)) {
-      acc121<-strsplit(acc12[l],',')[[1]]
+      acc121 <- strsplit(acc12[l], ",")[[1]]
 
       for (j in acc121) {
-        if (j %in% hash2[,1]) {
-          acc122<-c(acc122,j)
-          test1<-c(test1,j)
-        }}
-      if (is.null(acc122)==FALSE) {
-        acc123<-''
-        if (length(acc122)>1) {
-          acc123<-paste(acc122,collapse = ',')
-         }else{acc123<-acc122}
-        var11<-paste0(acc123,'|',acc11[l])
-        acc131<-c(acc131,var11)
-      }}
+        if (j %in% hash2[, 1]) {
+          acc122 <- c(acc122, j)
+          test1 <- c(test1, j)
+        }
+      }
+      if (is.null(acc122) == FALSE) {
+        acc123 <- ""
+        if (length(acc122) > 1) {
+          acc123 <- paste(acc122, collapse = ",")
+        } else {
+          acc123 <- acc122
+        }
+        var11 <- paste0(acc123, "|", acc11[l])
+        acc131 <- c(acc131, var11)
+      }
+    }
 
-    if (is.null(acc131)==FALSE) {
-      acc132<-''
-      if (length(acc131)>1) {
+    if (is.null(acc131) == FALSE) {
+      acc132 <- ""
+      if (length(acc131) > 1) {
         for (k in acc131) {
-          acc132<-paste(acc123,k,sep = ';')
-        }}else{acc132<-acc131}
-      #acc131<-c(acc131,var11)
-      #var131<-paste(acc131,collapse = ';')
-      ch1<-paste0(con1[i,][3],'\t',con1[i,][4],'\t',con1[i,][5])
-      ch2<-paste0(con1[i,][7],'\t',con1[i,][8],'\t',con1[i,][9])
-      var1<-paste0(ch1,'\t',acc132,'\t',ch2)
-      col1<-c(col1,var1)
-      col2<-c(col2,i)
+          acc132 <- paste(acc123, k, sep = ";")
+        }
+      } else {
+        acc132 <- acc131
+      }
+      # acc131<-c(acc131,var11)
+      # var131<-paste(acc131,collapse = ';')
+      ch1 <- paste0(con1[i, ][3], "\t", con1[i, ][4], "\t", con1[i, ][5])
+      ch2 <- paste0(con1[i, ][7], "\t", con1[i, ][8], "\t", con1[i, ][9])
+      var1 <- paste0(ch1, "\t", acc132, "\t", ch2)
+      col1 <- c(col1, var1)
+      col2 <- c(col2, i)
     }
   }
-  col1<-as.data.frame(col1)
-  col3<-con2[col2,]
-  col1<-split_dataframe(col1)
-  list2<-list(col3,col1)
+  col1 <- as.data.frame(col1)
+  col3 <- con2[col2, ]
+  col1 <- split_dataframe(col1)
+  list2 <- list(col3, col1)
   return(list2)
 }

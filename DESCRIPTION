@@ -1,15 +1,13 @@
 Package: IReNA
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: IReNA
+Version: 0.99.0
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Jiang",
+           family = "Jun yao",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+           email = "jiangjunyao789@163.com")
+Description: IReNA is a R package that can reconstruct regulatory networks through integrating scRNA-seq and ATAC-seq data.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -18,7 +16,11 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Depends: 
-    R (>= 2.10)
+    R (>= 4.0)
 Imports: 
     Rsamtools,
-    ChIPseeker
+    ChIPseeker,
+    GenomicRanges,
+    IRanges,
+    Biostrings
+biocViews:SingleCell,RNASeq,ATACSeq,Network

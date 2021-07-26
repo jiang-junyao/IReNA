@@ -6,6 +6,9 @@
 \usage{
 Merge_same_pairs(FOSF_Reg)
 }
+\arguments{
+\item{FOSF_Reg}{FOS with potential regulatory}
+}
 \description{
 Inner function
 }

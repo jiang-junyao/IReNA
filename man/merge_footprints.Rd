@@ -16,6 +16,3 @@ merge_footprints(footprints, ditance = 4, revise = TRUE)
 \description{
 Inner function to merge footprints whose distance is less than 4
 }
-\examples{
-
-}

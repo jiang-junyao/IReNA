@@ -7,44 +7,46 @@
 #' @importFrom Rsamtools PileupParam
 #' @importFrom Rsamtools pileup
 #' @importFrom Rsamtools indexBam
-#' @return
+#' @return return formated wig file
 #' @export
 #'
 #' @examples
-wig_track<-function(bamfilepath,bedfile,index=FALSE){
-  bed<-bedfile
+wig_track <- function(bamfilepath, bedfile, index = FALSE) {
+  bed <- bedfile
   p_param <- Rsamtools::PileupParam(min_base_quality = 10L)
-  if (index==FALSE) {
+  if (index == FALSE) {
     Rsamtools::indexBam(bamfilepath)
   }
   res <- Rsamtools::pileup(bamfilepath, pileupParam = p_param)
-  pos1<-res$pos
-  range<-c(bed[1,3]:bed[nrow(bed),3])
-  pos2<-pos1[pos1%in%range]
-  res2<-res[res$pos%in%pos2,]
-  bed_cuts<-c()
+  pos1 <- res$pos
+  range <- c(bed[1, 3]:bed[nrow(bed), 3])
+  pos2 <- pos1[pos1 %in% range]
+  res2 <- res[res$pos %in% pos2, ]
+  bed_cuts <- c()
   for (i in 1:nrow(bed)) {
-    seq1<-c(bed[i,2]:bed[i,3])
-    pos3<-res[res$pos%in%seq1,]
-    if (nrow(pos3)==0) {
-      cuts<-paste0(bed[i,1],'\t',bed[i,2],'\t',bed[i,3],sep = '\t')
-      print(paste0('No position appear in line',i,' of bedfile'))
-      cuts<-paste0(cuts,paste0(rep(0,length(seq1)),collapse = '\t'))
-      bed_cuts<-c(bed_cuts,cuts)
-    }else{
-      cuts<-c(bed[i,1],bed[i,2],bed[i,3])
-    for (j in 1:(length(seq1)-1)) {
-      if (seq1[j] %in% pos3$pos) {
-        if (seq1[j+1]%in% pos3$pos) {
-          cuts<-c(cuts,abs(pos3[pos3$pos==seq1[j],]$count-pos3[pos3$pos==seq1[j+1],]$count))
+    seq1 <- c(bed[i, 2]:bed[i, 3])
+    pos3 <- res[res$pos %in% seq1, ]
+    if (nrow(pos3) == 0) {
+      cuts <- paste0(bed[i, 1], "\t", bed[i, 2], "\t", bed[i, 3], sep = "\t")
+      print(paste0("No position appear in line", i, " of bedfile"))
+      cuts <- paste0(cuts, paste0(rep(0, length(seq1)), collapse = "\t"))
+      bed_cuts <- c(bed_cuts, cuts)
+    } else {
+      cuts <- c(bed[i, 1], bed[i, 2], bed[i, 3])
+      for (j in 1:(length(seq1) - 1)) {
+        if (seq1[j] %in% pos3$pos) {
+          if (seq1[j + 1] %in% pos3$pos) {
+            cuts <- c(cuts, abs(pos3[pos3$pos == seq1[j], ]$count - pos3[pos3$pos == seq1[j + 1], ]$count))
+          }
+          cuts <- c(cuts, pos3[pos3$pos == seq1[j], ]$count)
+        } else {
+          cuts <- c(cuts, 0)
         }
-        cuts<-c(cuts,pos3[pos3$pos==seq1[j],]$count)
-      }else{cuts<-c(cuts,0)}
-      cuts<-paste0(cuts,collapse = '\t')
+        cuts <- paste0(cuts, collapse = "\t")
+      }
+      bed_cuts <- c(bed_cuts, cuts)
     }
-    bed_cuts<-c(bed_cuts,cuts)
-   }
   }
-  bed_cuts<-as.data.frame(bed_cuts)
+  bed_cuts <- as.data.frame(bed_cuts)
   return(bed_cuts)
 }

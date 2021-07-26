@@ -18,7 +18,7 @@ motifs_check <- function(motif, Dir) {
   Filename1 <- rownames(con1)
   Errors <- c()
   for (i in Filename1) {
-    if (i %in% DirFile2 == F) {
+    if (i %in% DirFile2 == FALSE) {
       Errors <- c(Errors, paste0(i, " not included"))
     }
   }

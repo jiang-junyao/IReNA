@@ -2,10 +2,19 @@
 % Please edit documentation in R/Footprints_FOS.R
 \name{Cal_Regulation_Cor}
 \alias{Cal_Regulation_Cor}
-\title{Inner function}
+\title{Internal function}
 \usage{
 Cal_Regulation_Cor(Regulation1, ScExp1, CorThr1 = 0.8, ScCorThr1 = 0.2)
 }
+\arguments{
+\item{Regulation1}{regulatory relationship}
+
+\item{ScExp1}{expression profile}
+
+\item{CorThr1}{threshold}
+
+\item{ScCorThr1}{threshold}
+}
 \description{
-Inner function
+Internal function
 }

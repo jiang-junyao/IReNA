@@ -11,9 +11,6 @@ getfasta(merged_footprints, fastadir)
 
 \item{fastadir}{reference genome}
 }
-\value{
-
-}
 \description{
 Inner function to get fasta from each footprints
 }

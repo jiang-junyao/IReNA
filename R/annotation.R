@@ -13,43 +13,50 @@
 #' @export
 #'
 #' @examples
-get_related_genes<-function(footprints,motif,Species,txdb,tssRegion=c(-3000, 3000)){
-  footprintslist<-merge_extent_footprints(footprints,motif)
-  merged_footprints<-footprintslist[[2]]
-  if (Species=='Hs') {
-    annodb='org.Hs.eg.db'
-  }else if(Species=='Mm'){
-    annodb='org.Mm.eg.db'
-  }else if(Species=='Zf'){
-    annodb='org.Dr.eg.db'
-  }else if(Species=='Ch'){
-    annodb='org.Gg.eg.db'
+get_related_genes <- function(footprints, motif, Species, txdb, tssRegion = c(-3000, 3000)) {
+  footprintslist <- merge_extent_footprints(footprints, motif)
+  merged_footprints <- footprintslist[[2]]
+  if (Species == "Hs") {
+    annodb <- "org.Hs.eg.db"
+  } else if (Species == "Mm") {
+    annodb <- "org.Mm.eg.db"
+  } else if (Species == "Zf") {
+    annodb <- "org.Dr.eg.db"
+  } else if (Species == "Ch") {
+    annodb <- "org.Gg.eg.db"
   }
-  reference_GRange <-GenomicRanges::GRanges(seqnames = merged_footprints$V1,IRanges::IRanges(start = as.numeric(merged_footprints$V2),end =as.numeric(merged_footprints$V3)),strand = merged_footprints$V4)
-  peakAnno <- ChIPseeker::annotatePeak(reference_GRange, tssRegion=tssRegion,
-                           TxDb=txdb,annoDb=annodb)
-  region<-peakAnno@anno@elementMetadata$annotation
-  gene<-peakAnno@anno@elementMetadata$ENSEMBL
-  start1<-peakAnno@anno@ranges@start
-  merged_footprints2<-merged_footprints[merged_footprints$V2%in%start1,]
-  region2<-c()
+  reference_GRange <- GenomicRanges::GRanges(seqnames = merged_footprints$V1, IRanges::IRanges(start = as.numeric(merged_footprints$V2), end = as.numeric(merged_footprints$V3)), strand = merged_footprints$V4)
+  peakAnno <- ChIPseeker::annotatePeak(reference_GRange,
+    tssRegion = tssRegion,
+    TxDb = txdb, annoDb = annodb
+  )
+  region <- peakAnno@anno@elementMetadata$annotation
+  gene <- peakAnno@anno@elementMetadata$ENSEMBL
+  start1 <- peakAnno@anno@ranges@start
+  merged_footprints2 <- merged_footprints[merged_footprints$V2 %in% start1, ]
+  region2 <- c()
   for (i in region) {
-    region3<-strsplit(i,'\\(')[[1]][1]
-    region4<-strsplit(region3,' ')[[1]]
-    if (length(region4)>1) {
-      region5<-region3
-    }else{region5<-region4[1]}
-    region2<-c(region2,region5)
+    region3 <- strsplit(i, "\\(")[[1]][1]
+    region4 <- strsplit(region3, " ")[[1]]
+    if (length(region4) > 1) {
+      region5 <- region3
+    } else {
+      region5 <- region4[1]
+    }
+    region2 <- c(region2, region5)
   }
-  merged_footprints2$gene<-gene
-  merged_footprints2$region<-region2
-  merged_footprints2<-merged_footprints2[,c(9,8,1:7)]
-  colnames(merged_footprints2)<-c(paste0('V',1:9))
-  footprintslist[[2]]<-merged_footprints2
+  merged_footprints2$gene <- gene
+  merged_footprints2$region <- region2
+  merged_footprints2 <- merged_footprints2[, c(9, 8, 1:7)]
+  colnames(merged_footprints2) <- c(paste0("V", 1:9))
+  footprintslist[[2]] <- merged_footprints2
   return(footprintslist)
 }
 
 #' Inner function to merge and extent footprints
+#'
+#' @param file1 footprints
+#' @param motif motif file
 
 merge_extent_footprints <- function(file1, motif) {
   con1 <- file1
@@ -62,8 +69,8 @@ merge_extent_footprints <- function(file1, motif) {
   for (i in 1:nrow(con1)) {
     var1 <- paste(con1[i, ][1]$V1, con1[i, ][2]$V2, con1[i, ][3]$V3, con1[i, ][4]$V4, sep = "\t")
     acc1 <- con1$V7
-    if (acc1[i] %in% con3[,1] == TRUE) {
-      var12 <- paste(acc1[i], con3[con3[,1] == acc1[i], ][2], sep = ";")
+    if (acc1[i] %in% con3[, 1] == TRUE) {
+      var12 <- paste(acc1[i], con3[con3[, 1] == acc1[i], ][2], sep = ";")
     }
     if (is.null(hash1[var1]) == FALSE) {
       hash1[[var1]] <- c(hash1[[var1]], var12)
@@ -87,8 +94,8 @@ merge_extent_footprints <- function(file1, motif) {
   }
   col3 <- as.data.frame(col1)
   col4 <- as.data.frame(col2)
-  col3 <- split_dataframe(col3, sep = '\t')
-  col4 <- split_dataframe(col4, sep = '\t')
-  list1<-list(col3,col4)
+  col3 <- split_dataframe(col3, sep = "\t")
+  col4 <- split_dataframe(col4, sep = "\t")
+  list1 <- list(col3, col4)
   return(list1)
 }

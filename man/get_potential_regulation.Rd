@@ -6,6 +6,9 @@
 \usage{
 get_potential_regulation(FOSF)
 }
+\arguments{
+\item{FOSF}{filtered FOS}
+}
 \description{
 Inner function
 }

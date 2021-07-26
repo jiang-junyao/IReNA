@@ -6,6 +6,11 @@
 \usage{
 Cal_Footprints_FOS2(FP1, FlankFold1 = 3)
 }
+\arguments{
+\item{FP1}{data source}
+
+\item{FlankFold1}{threshold}
+}
 \description{
 Inner function to calculate footprint occupancy score
 }

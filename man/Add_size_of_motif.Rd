@@ -6,6 +6,11 @@
 \usage{
 Add_size_of_motif(cutsp_list, Candid)
 }
+\arguments{
+\item{cutsp_list}{list that each element is cuptsp}
+
+\item{Candid}{candidate gene}
+}
 \description{
 Inner function
 }

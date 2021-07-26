@@ -6,6 +6,11 @@
 \usage{
 Cal_GenePairs_Cor2(RNA1, Pair1)
 }
+\arguments{
+\item{RNA1}{expression}
+
+\item{Pair1}{pair}
+}
 \description{
 Inner function
 }

@@ -6,8 +6,10 @@
 \usage{
 split_dataframe(dataframe1, sep = "\\t")
 }
-\value{
+\arguments{
+\item{dataframe1}{dataframe need to be splited}
 
+\item{sep}{split symbol}
 }
 \description{
 inner function to split dataframe

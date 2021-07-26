@@ -25,7 +25,7 @@ find_motifs <- function(motif, step = 20, Dir, sequence_dir) {
         out1 <- c(out1, col1)
       }
       out1 <- as.data.frame(out1)
-      write.table(out1, paste0(Dir, "/Fimo", no1, ".txt"), row.names = F, col.names = F, quote = F)
+      write.table(out1, paste0(Dir, "/Fimo", no1, ".txt"), row.names = FALSE, col.names = FALSE, quote = FALSE)
     } else {
       for (k in i:nrow(con1)) {
         col1 <- paste0(
@@ -36,7 +36,7 @@ find_motifs <- function(motif, step = 20, Dir, sequence_dir) {
         out1 <- c(out1, col1)
       }
       out1 <- as.data.frame(out1)
-      write.table(out1, paste0(Dir, "/Fimo", no1, ".txt"), row.names = F, col.names = F, quote = F)
+      write.table(out1, paste0(Dir, "/Fimo", no1, ".txt"), row.names = FALSE, col.names = FALSE, quote = FALSE)
     }
     # write.table(out1,paste0(Dir1,'/Programs/Fimo',no1,'.txt'),row.names=F,col.names = F,quote = F)
     no1 <- no1 + 1
@@ -44,5 +44,5 @@ find_motifs <- function(motif, step = 20, Dir, sequence_dir) {
     out2 <- c(out2, col2)
   }
   out2 <- as.data.frame(out2)
-  write.table(out2, paste0(Dir, "/Fimo", "_All", ".txt"), row.names = F, col.names = F, quote = F)
+  write.table(out2, paste0(Dir, "/Fimo", "_All", ".txt"), row.names = FALSE, col.names = FALSE, quote = FALSE)
 }

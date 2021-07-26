@@ -6,6 +6,11 @@
 \usage{
 merge_extent_footprints(file1, motif)
 }
+\arguments{
+\item{file1}{footprints}
+
+\item{motif}{motif file}
+}
 \description{
 Inner function to merge and extent footprints
 }

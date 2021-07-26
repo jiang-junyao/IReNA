@@ -14,7 +14,7 @@ wig_track(bamfilepath, bedfile, index = FALSE)
 \item{index}{logical, whether to index the bam file. If bam file do not have a matched bai file, this parameter should be TRUE}
 }
 \value{
-
+return formated wig file
 }
 \description{
 Function to get cuts of each position in footprints
