@@ -35,7 +35,11 @@ get_related_genes<-function(footprints,motif,Species,txdb,tssRegion=c(-3000, 300
   region2<-c()
   for (i in region) {
     region3<-strsplit(i,'\\(')[[1]][1]
-    region2<-c(region2,region3)
+    region4<-strsplit(region3,' ')[[1]]
+    if (length(region4)>1) {
+      region5<-region3
+    }else{region5<-region4[1]}
+    region2<-c(region2,region5)
   }
   merged_footprints2$gene<-gene
   merged_footprints2$region<-region2
@@ -56,7 +60,7 @@ merge_extent_footprints <- function(file1, motif) {
   col2 <- c()
   hash1 <- list()
   for (i in 1:nrow(con1)) {
-    var1 <- paste(con1[i, ][1], con1[i, ][2], con1[i, ][3], con1[i, ][4], sep = "\t")
+    var1 <- paste(con1[i, ][1]$V1, con1[i, ][2]$V2, con1[i, ][3]$V3, con1[i, ][4]$V4, sep = "\t")
     acc1 <- con1$V7
     if (acc1[i] %in% con3[,1] == TRUE) {
       var12 <- paste(acc1[i], con3[con3[,1] == acc1[i], ][2], sep = ";")
