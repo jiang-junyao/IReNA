@@ -99,7 +99,7 @@ overlapped<-read.table('overlapped.txt')
 ###get footprint-related genes
 library(TxDb.Mmusculus.UCSC.mm10.knownGene )
 txdb<-TxDb.Mmusculus.UCSC.mm10.knownGene
-list1[[1]]<-annotate_genes(overlapped,txdb = txdb,Species = 'Mm')
+list1<-get_related_genes(overlapped,txdb = txdb,motif=Tranfac201803_Mm_MotifTFsF,Species = 'Mm')
 ###Get candidate genes/TFs-related peaks
 expression<-read.delim('D:\\GIBH\\IReNA2 R package\\IReNA2\\scRNA\\MmscRNA_PHx_Exp_NewF.txt')
 list2<-get_peaks_genes(list1,expression)

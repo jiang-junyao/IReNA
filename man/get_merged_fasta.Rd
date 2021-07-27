@@ -20,5 +20,6 @@ return sequence of footprints in fasta format
 This function first merges footprints whose distances is less than 4, and then obtains the sequence of each footprint based on the reference genome, and  output the sequence in FASTA format
 }
 \examples{
-get_merged_fasta <- get_merged_fasta(fdr005)
+fastadir='Genome/GRCm38Chr.fasta'
+#merged_fasta <- get_merged_fasta(fdr005,fastadir)
 }

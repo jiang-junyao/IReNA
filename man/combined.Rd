@@ -3,7 +3,7 @@
 \docType{data}
 \name{combined}
 \alias{combined}
-\title{data for test}
+\title{data for demonstrating}
 \format{
 combined footprints
 }
@@ -11,6 +11,6 @@ combined footprints
 combined
 }
 \description{
-data for test
+data for demonstrating
 }
 \keyword{datasets}

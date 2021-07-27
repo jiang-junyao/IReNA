@@ -3,7 +3,7 @@
 \docType{data}
 \name{Candid}
 \alias{Candid}
-\title{data for test}
+\title{data for demonstrating}
 \format{
 combined footprints
 }
@@ -11,6 +11,6 @@ combined footprints
 Candid
 }
 \description{
-data for test
+data for demonstrating
 }
 \keyword{datasets}

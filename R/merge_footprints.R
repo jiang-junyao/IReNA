@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples fastadir='Genome/GRCm38Chr.fasta'
-#' #get_merged_fasta <- get_merged_fasta(fdr005,fastadir)
+#' #merged_fasta <- get_merged_fasta(fdr005,fastadir)
 get_merged_fasta <- function(footprints, distance = 4, fastadir) {
   merged_footprints <- merge_footprints(footprints, ditance = distance)
   fasta <- getfasta(merged_footprints, fastadir = fastadir)

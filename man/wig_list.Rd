@@ -3,7 +3,7 @@
 \docType{data}
 \name{wig_list}
 \alias{wig_list}
-\title{data for test}
+\title{data for demonstrating}
 \format{
 a list contain 2 processed wig file
 }
@@ -11,6 +11,6 @@ a list contain 2 processed wig file
 wig_list
 }
 \description{
-data for test
+data for demonstrating
 }
 \keyword{datasets}

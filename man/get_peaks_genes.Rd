@@ -17,3 +17,6 @@ return a list contain two dataframe, first one is candidate genes/TFs-related pe
 \description{
 Get candidate genes/TFs-related peaks
 }
+\examples{
+list1 <- get_peaks_genes(list1,MmscRNA_PHx_Exp_NewF)
+}

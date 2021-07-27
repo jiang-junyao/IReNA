@@ -23,3 +23,9 @@ return a list, first element is bed format datafrmae, second element is annotate
 \description{
 This function first merge and extend footprint regions, and then integrate R package ChIPseeker to get footprint-related genes
 }
+\examples{
+txdb <- TxDb.Mmusculus.UCSC.mm10.knownGene::TxDb.Mmusculus.UCSC.mm10.knownGene
+peak_bed <- get_bed(peak)
+overlapped <- overlap_footprints_peaks(combined, peak_bed)
+list1 <- get_related_genes(overlapped,txdb = txdb,motif=Tranfac201803_Mm_MotifTFsF,Species = 'Mm')
+}

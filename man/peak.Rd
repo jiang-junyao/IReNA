@@ -3,7 +3,7 @@
 \docType{data}
 \name{peak}
 \alias{peak}
-\title{data for test}
+\title{data for demonstrating}
 \format{
 peaks file
 }
@@ -11,6 +11,6 @@ peaks file
 peak
 }
 \description{
-data for test
+data for demonstrating
 }
 \keyword{datasets}
