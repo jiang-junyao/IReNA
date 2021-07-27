@@ -102,7 +102,7 @@ txdb<-TxDb.Mmusculus.UCSC.mm10.knownGene
 list1[[1]]<-annotate_genes(overlapped,txdb = txdb,Species = 'Mm')
 ###Get candidate genes/TFs-related peaks
 expression<-read.delim('D:\\GIBH\\IReNA2 R package\\IReNA2\\scRNA\\MmscRNA_PHx_Exp_NewF.txt')
-list2<-get_peaks(list1,expression)
+list2<-get_peaks_genes(list1,expression)
 ```
 Calculate the FOS of footprints to determine enriched TFs, and then get regulatory relationships.
 ```r
