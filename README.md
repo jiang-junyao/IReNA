@@ -69,10 +69,9 @@ motif1 = Tranfac201803_Ch_MotifTFsF
 library(IReNA)
 ###merge footprints whose distance is less than 4
 footprints <- read.table('mmATACPhxW_CuFiQ10No_sorted_fdr0.050000.bed',,sep='\t',header = T)
-merged_footprint <- merge_footprints(footprints)
-###get sequences of the footprints
-fastadir <- 'D:\\GIBH\\IReNA2 R package\\IReNA2\\Public\\GRCm38Chr\\Genome\\GRCm38Chr.fasta'
-fasta <- getfasta(merged_footprint,fastadir)
+fastadir='Genome/GRCm38Chr.fasta'
+merged_fasta <- get_merged_fasta(fdr005,fastadir)
+write.table(merged_fasta,'merged_footprints.fasta',row.names=F,quote=F)
 ```
 
 In this step, because Fimo software only have linux version, we generate
@@ -81,7 +80,7 @@ linux system, you can write your own commands as you like.
 
 ``` r
 Dir2='D:\\GIBH\\IReNA2 R package\\IReNA2\\ATAC\\outputdir'
-find_motifs(motif1,step=20,Dir2,'Dir1')
+find_motifs(motif1,step=20,Dir2,'merged_footprints.fasta')
 ### run the following commands in the shell
 mv fimo_all.txt fimo_all.sh
 chmod +x fimo_all.sh
