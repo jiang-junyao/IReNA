@@ -15,6 +15,9 @@ Cal_Regulation_Cor(Regulation1, ScExp1, CorThr1 = 0.8, ScCorThr1 = 0.2)
 
 \item{ScCorThr1}{threshold}
 }
+\value{
+correlation of gene pairs
+}
 \description{
 Internal function
 }

@@ -48,7 +48,8 @@ combine_footprints <- function(motif, file1, Dir) {
 #' @return return data.frame contain footprints that overlap peaks
 #' @export
 #'
-#' @examples
+#' @examples peak_bed <- get_bed(peak)
+#' overlapped <- overlap_footprints_peaks(combined, peak_bed)
 overlap_footprints_peaks <- function(footprints, peak_bed) {
   merged <- matrix(ncol = 10)
   for (i in 1:nrow(footprints)) {

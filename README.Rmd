@@ -18,29 +18,27 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of IReNA is to reconstruct regulatory networks through integrating scRNA-seq and ATAC-seq data.
+IReNA (Integrated Regulatory Network Analysis) is to reconstruct regulatory networks through integrating scRNA-seq and ATAC-seq data.
 
 ## Citation
-if you use this package please cite the following published paper: https://science.sciencemag.org/content/370/6519/eabb8598
+If you use IReNA package, please cite the following Science paper: https://science.sciencemag.org/content/370/6519/eabb8598.
 
 ## Installation
 
-You can install the development version from [GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("jiang-junyao/IReNA")
-```
-
-
-Our package need some biocondutor packages which can not be installed automatically by cran, so you need to install these package before install IReNA.
+First, install Rsamtools and ChIPseeker packages which are needed to run IReNA.
 ```r
 install.packages('BiocManager')
 BiocManager::install('Rsamtools')
 BiocManager::install('ChIPseeker')
 ```
+
+Second, to install IReNA from GitHub, run:
+```r
+install.packages("devtools")
+devtools::install_github("jiang-junyao/IReNA")
+```
 ## Example
-### Run dnase2tf to get footprints. 
+### Step 1: Run dnase2tf to get footprints.
 ```r
 devtools::install_github('jiang-junyao/dnase2tf')
 peak_counts_bed<-read.delim("mmATACPhxW_AllPeaks_Counts.txt")
@@ -48,8 +46,8 @@ peak_counts_bed<-peak_counts_bed[1:(nrow(peak_counts_bed)-7),1:3]
 write.table(peak_counts_bed,'hotspot.bed',row.names=F, col.names=F, sep=' ', quote=F)
 dnase2tf(datafilepath=DNase-seq reads,filename=hotspot.bed, mapfiledir=Mappability, outputfilepath=outputpath, assemseqdir=assemseqdir1, biascorrection='dimer', FDRs = c(0.01, 0.05, 1), numworker=30, paired=T)
 ```
-### Choose motif database file
-We stored the Tranfac201803 database for 4 species(Homo sapiens, Mus musculus, Zebrafish and Chicken) in this package. You can use following codes to call these databases, or you can use your own motif database which should have the same format as our stored motif database.
+### Select DNA motif of transcription factors from TRANSFAC database
+IReNA contains DNA motif datasets for four species (Homo sapiens, Mus musculus, Zebrafish and Chicken) derived from TRANSFAC 2018 database. Following codes are used to call  the motif dataset from TRANSFAC or  user-defined motif dataset which should have the same format as these from TRANSFAC database.
 ```r
 ###call Mus musculus motif database
 motif1 = Tranfac201803_Mm_MotifTFsF
@@ -99,11 +97,10 @@ Contiunue the pipline in R
 ```r
 ###Merge and extend footprint regions
 overlapped<-read.table('overlapped.txt')
-list1<-merge_extent_footprints(overlapped,motif1)
 ###get footprint-related genes
 library(TxDb.Mmusculus.UCSC.mm10.knownGene )
 txdb<-TxDb.Mmusculus.UCSC.mm10.knownGene
-list1[[1]]<-annotate_genes(list1[[1]],txdb = txdb,Species = 'Mm')
+list1[[1]]<-annotate_genes(overlapped,txdb = txdb,Species = 'Mm')
 ###Get candidate genes/TFs-related peaks
 expression<-read.delim('D:\\GIBH\\IReNA2 R package\\IReNA2\\scRNA\\MmscRNA_PHx_Exp_NewF.txt')
 list2<-get_peaks(list1,expression)

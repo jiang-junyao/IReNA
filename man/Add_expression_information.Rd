@@ -11,6 +11,9 @@ Add_expression_information(Regulation1, GeneM0)
 
 \item{GeneM0}{expression profile}
 }
+\value{
+regulatory relationships with expression information
+}
 \description{
 Internal function
 }

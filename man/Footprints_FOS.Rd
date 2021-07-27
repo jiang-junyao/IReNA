@@ -29,3 +29,6 @@ return regulatory relationships of enriched transcription fators to genes
 \description{
 Calculate the FOS(footprints occupancy score) to identify enriched transcriptions factor, and use these transcription factors to identify significant regulatory relationships
 }
+\examples{
+regulatory_relationships <- Footprints_FOS(wig_list, Candid, MmscRNA_PHx_Exp_NewF)
+}

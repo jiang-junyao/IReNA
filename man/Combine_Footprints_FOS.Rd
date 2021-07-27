@@ -9,6 +9,9 @@ Combine_Footprints_FOS(FOS_list)
 \arguments{
 \item{FOS_list}{list contain footprints with FOS}
 }
+\value{
+dataframe contain FOS of all samples
+}
 \description{
 Inner function
 }

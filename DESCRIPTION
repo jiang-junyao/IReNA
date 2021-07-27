@@ -6,13 +6,15 @@ Authors@R:
            family = "Jun yao",
            role = c("aut", "cre"),
            email = "jiangjunyao789@163.com")
-Description: IReNA is a R package that can reconstruct regulatory networks through integrating scRNA-seq and ATAC-seq data.
+Description: IReNA(Integrated Regulatory Network analysis) is a R package to intergrate bulk RNA-seq or scRNA-seq and ATAC-seq data to reconstrcut regulatory network. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Depends: 
@@ -23,4 +25,5 @@ Imports:
     GenomicRanges,
     IRanges,
     Biostrings
-biocViews:SingleCell,RNASeq,ATACSeq,Network
+biocViews: SingleCell,RNASeq,ATACSeq,Network
+VignetteBuilder: knitr

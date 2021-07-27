@@ -9,6 +9,9 @@ Trans_WigToMultirows2(b)
 \arguments{
 \item{b}{wig}
 }
+\value{
+return transfered wig file
+}
 \description{
 Inner function
 }

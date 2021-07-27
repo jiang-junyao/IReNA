@@ -11,6 +11,9 @@ Cal_GenePairs_Cor2(RNA1, Pair1)
 
 \item{Pair1}{pair}
 }
+\value{
+correlation of gene pairs
+}
 \description{
 Inner function
 }

@@ -11,6 +11,9 @@ merge_extent_footprints(file1, motif)
 
 \item{motif}{motif file}
 }
+\value{
+return extented footprints
+}
 \description{
 Inner function to merge and extent footprints
 }

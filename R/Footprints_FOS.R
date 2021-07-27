@@ -9,7 +9,7 @@
 #' @return return regulatory relationships of enriched transcription fators to genes
 #' @export
 #'
-#' @examples
+#' @examples regulatory_relationships <- Footprints_FOS(wig_list, Candid, MmscRNA_PHx_Exp_NewF)
 Footprints_FOS <- function(Wig_list, Candid, expression_profile, FlankFold1 = 3, trans_wig = FALSE) {
   if (trans_wig == TRUE) {
     Wig_list2 <- Trans_WigToMultirows(Wig_list)
@@ -29,6 +29,7 @@ Footprints_FOS <- function(Wig_list, Candid, expression_profile, FlankFold1 = 3,
 #' Inner function
 #'
 #' @param Wig_list list that each element is wig dataframe
+#' @return transfered wig list
 Trans_WigToMultirows <- function(Wig_list) {
   list1 <- list()
   for (i in 1:length(Wig_list)) {
@@ -41,6 +42,7 @@ Trans_WigToMultirows <- function(Wig_list) {
 #' Inner function
 #'
 #' @param b wig
+#' @return return transfered wig file
 Trans_WigToMultirows2 <- function(b) {
   rownum <- c()
   col1 <- c()
@@ -70,6 +72,7 @@ Trans_WigToMultirows2 <- function(b) {
 #'
 #' @param cutsp_list list that each element is cuptsp
 #' @param Candid candidate gene
+#' @return return cutsp list with motif size
 Add_size_of_motif <- function(cutsp_list, Candid) {
   list1 <- list()
   con2 <- Candid
@@ -108,6 +111,7 @@ Add_size_of_motif <- function(cutsp_list, Candid) {
 #'
 #' @param cutsp2_list list that each element is cutsp2
 #' @param FlankFold1 threshold
+#' @return return FOS
 Cal_Footprints_FOS <- function(cutsp2_list, FlankFold1 = 3) {
   list1 <- list()
   for (i in 1:length(cutsp2_list)) {
@@ -122,6 +126,7 @@ Cal_Footprints_FOS <- function(cutsp2_list, FlankFold1 = 3) {
 #'
 #' @param FP1 data source
 #' @param FlankFold1 threshold
+#' @return calculate FOS
 Cal_Footprints_FOS2 <- function(FP1, FlankFold1 = 3) {
   FP2 <- apply(FP1, 1, function(X1) {
     MotifSize1 <- as.numeric(X1[3])
@@ -147,6 +152,7 @@ Cal_Footprints_FOS2 <- function(FP1, FlankFold1 = 3) {
 #' Inner function
 #'
 #' @param FOS_list list contain footprints with FOS
+#' @return dataframe contain FOS of all samples
 Combine_Footprints_FOS <- function(FOS_list) {
   for (i in 1:length(FOS_list)) {
     FOS1 <- FOS_list[[i]]
@@ -163,6 +169,7 @@ Combine_Footprints_FOS <- function(FOS_list) {
 #' Inner function
 #'
 #' @param FOS1 footprints occupancy score
+#' @return return filtered FOS
 Filter_Footprints <- function(FOS1) {
   mFOS1 <- apply(FOS1, 1, function(x1) {
     x2 <- as.numeric(x1[7:length(x1)])
@@ -181,6 +188,7 @@ Filter_Footprints <- function(FOS1) {
 #' Inner function
 #'
 #' @param FOSF filtered FOS
+#' @return return regulatory relationships
 get_potential_regulation <- function(FOSF) {
   con1 <- FOSF
   col1 <- c()
@@ -221,6 +229,7 @@ get_potential_regulation <- function(FOSF) {
 #' Inner function
 #'
 #' @param FOSF_Reg FOS with potential regulatory
+#' @return merged pairs
 Merge_same_pairs <- function(FOSF_Reg) {
   con1 <- FOSF_Reg
   hash1 <- list()
@@ -252,6 +261,7 @@ Merge_same_pairs <- function(FOSF_Reg) {
 #' Inner function
 #'
 #' @param FOSF_RegM merged FOS with potential regulatory
+#' @return return merged TFs
 Merge_TFs_genes <- function(FOSF_RegM) {
   con1 <- FOSF_RegM
   hash1 <- list()
@@ -314,6 +324,7 @@ Merge_TFs_genes <- function(FOSF_RegM) {
 #'
 #' @param Regulation1 regulaotry relationship
 #' @param GeneM0 expression profile
+#' @return regulatory relationships with expression information
 Add_expression_information <- function(Regulation1, GeneM0) {
   GeneM1 <- cbind(GeneM0[, 1:2], "scRNA", 0)
   colnames(GeneM1) <- c("Symbol", "Group", "ScBk", "PeakExpTime")
@@ -331,6 +342,7 @@ Add_expression_information <- function(Regulation1, GeneM0) {
 #' @param ScExp1 expression profile
 #' @param CorThr1 threshold
 #' @param ScCorThr1 threshold
+#' @return correlation of gene pairs
 Cal_Regulation_Cor <- function(Regulation1, ScExp1, CorThr1 = 0.8, ScCorThr1 = 0.2) {
   Ind1 <- match(c("TF", "Target"), colnames(Regulation1))
   print("Calculate correlation for scRNA-seq")
@@ -342,7 +354,7 @@ Cal_Regulation_Cor <- function(Regulation1, ScExp1, CorThr1 = 0.8, ScCorThr1 = 0
   Regulation2 <- cbind(Regulation1, BkCor, ScCor)
   Ind2 <- match(c("TFScBk", "TargetScBk"), colnames(Regulation2))
   Correlation <- t(apply(Regulation2, 1, function(x1) {
-    x3 <- F
+    x3 <- FALSE
     if ((x1[4] == "Bulk" & x1[9] == "Bulk" | is.na(x1[length(x1)])) & !is.na(x1[length(x1) - 1])) {
       x2 <- as.numeric(x1[length(x1) - 1])
       if (abs(x2) > CorThr1) {
@@ -372,7 +384,7 @@ Cal_Regulation_Cor <- function(Regulation1, ScExp1, CorThr1 = 0.8, ScCorThr1 = 0
 #'
 #' @param RNA1 expression
 #' @param Pair1 pair
-#'
+#' @return correlation of gene pairs
 Cal_GenePairs_Cor2 <- function(RNA1, Pair1) {
   dRNA1 <- dim(RNA1)[2]
   RNA2 <- cbind(RNA1[match(Pair1[, 1], rownames(RNA1)), ], RNA1[match(Pair1[, 2], rownames(RNA1)), ])

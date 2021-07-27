@@ -17,3 +17,7 @@ return data.frame contain footprints that overlap peaks
 \description{
 Overlap differential peaks and motif footprints
 }
+\examples{
+peak_bed <- get_bed(peak)
+overlapped <- overlap_footprints_peaks(combined, peak_bed)
+}

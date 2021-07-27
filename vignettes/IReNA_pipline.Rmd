@@ -1,0 +1,19 @@
+---
+title: "IReNA_pipline"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{IReNA_pipline}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(IReNA)
+```

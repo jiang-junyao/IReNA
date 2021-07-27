@@ -18,7 +18,7 @@ get_related_genes(footprints, motif, Species, txdb, tssRegion = c(-3000, 3000))
 \item{tssRegion}{Region Range of TSS}
 }
 \value{
-
+return a list, first element is bed format datafrmae, second element is annotated footprints dataframe
 }
 \description{
 This function first merge and extend footprint regions, and then integrate R package ChIPseeker to get footprint-related genes

@@ -11,6 +11,9 @@ Cal_Footprints_FOS(cutsp2_list, FlankFold1 = 3)
 
 \item{FlankFold1}{threshold}
 }
+\value{
+return FOS
+}
 \description{
 Inner function
 }

@@ -15,3 +15,6 @@ return bed format data frame
 \description{
 Extract 'chr', 'start', 'end' columns of peak file
 }
+\examples{
+peak_bed <- get_bed(peak)
+}

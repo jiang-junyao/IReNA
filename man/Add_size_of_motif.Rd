@@ -11,6 +11,9 @@ Add_size_of_motif(cutsp_list, Candid)
 
 \item{Candid}{candidate gene}
 }
+\value{
+return cutsp list with motif size
+}
 \description{
 Inner function
 }

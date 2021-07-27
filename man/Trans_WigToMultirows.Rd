@@ -9,6 +9,9 @@ Trans_WigToMultirows(Wig_list)
 \arguments{
 \item{Wig_list}{list that each element is wig dataframe}
 }
+\value{
+transfered wig list
+}
 \description{
 Inner function
 }

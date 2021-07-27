@@ -11,6 +11,9 @@ split_dataframe(dataframe1, sep = "\\t")
 
 \item{sep}{split symbol}
 }
+\value{
+return splited dataframe
+}
 \description{
 inner function to split dataframe
 }

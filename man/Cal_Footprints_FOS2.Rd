@@ -11,6 +11,9 @@ Cal_Footprints_FOS2(FP1, FlankFold1 = 3)
 
 \item{FlankFold1}{threshold}
 }
+\value{
+calculate FOS
+}
 \description{
 Inner function to calculate footprint occupancy score
 }

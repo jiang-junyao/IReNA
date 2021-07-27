@@ -2,6 +2,7 @@
 #'
 #' @param dataframe1 dataframe need to be splited
 #' @param sep split symbol
+#' @return return splited dataframe
 split_dataframe <- function(dataframe1, sep = "\t") {
   out1 <- strsplit(dataframe1[1, ], sep)[[1]]
   out1 <- matrix(out1, ncol = length(out1))

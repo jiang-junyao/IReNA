@@ -9,6 +9,9 @@ get_potential_regulation(FOSF)
 \arguments{
 \item{FOSF}{filtered FOS}
 }
+\value{
+return regulatory relationships
+}
 \description{
 Inner function
 }

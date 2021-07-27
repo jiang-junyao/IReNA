@@ -9,6 +9,9 @@ Filter_Footprints(FOS1)
 \arguments{
 \item{FOS1}{footprints occupancy score}
 }
+\value{
+return filtered FOS
+}
 \description{
 Inner function
 }

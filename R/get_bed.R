@@ -5,7 +5,7 @@
 #' @return return bed format data frame
 #' @export
 #'
-#' @examples
+#' @examples peak_bed <- get_bed(peak)
 get_bed <- function(peak) {
   col1 <- peak[, c("chr", "start", "end")]
   return(col1)
