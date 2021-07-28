@@ -14,6 +14,45 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(IReNA)
+# IReNA
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+IReNA (Integrated Regulatory Network Analysis) is to reconstruct regulatory networks through integrating scRNA-seq and ATAC-seq data.
+
+## Citation
+If you use IReNA package, please cite the following Science paper: https://science.sciencemag.org/content/370/6519/eabb8598.
+
+## Installation
+
+You can install the stable version of IReNA using:
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("IReNA")
 ```
+
+Or, you can install the development version of IReNA using:
+```r
+install.packages("devtools")
+devtools::install_github("jiang-junyao/IReNA")
+```
+
+##Example
+
+### Select DNA motif of transcription factors from TRANSFAC database
+IReNA contains DNA motif datasets for four species (Homo sapiens, Mus musculus, Zebrafish and Chicken) derived from TRANSFAC 2018 database. Following codes are used to call  the motif dataset from TRANSFAC or  user-defined motif dataset which should have the same format as these from TRANSFAC database.
+```{r}
+library(IReNA)
+###call Mus musculus motif database
+motif1 = Tranfac201803_Mm_MotifTFsF
+###call Homo sapiens motif database
+motif1 = Tranfac201803_Hs_MotifTFsF
+###call Zebrafish motif database
+motif1 = Tranfac201803_Zf_MotifTFsF
+###call Chicken motif database
+motif1 = Tranfac201803_Ch_MotifTFsF
+```
+

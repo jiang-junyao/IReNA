@@ -59,15 +59,16 @@ motif1 = Tranfac201803_Zf_MotifTFsF
 motif1 = Tranfac201803_Ch_MotifTFsF
 ```
 ### IReNA pipline
+First, we merge footprints whose distance is less than 4 and get fasta from each footprints based on reference genome through function get_merged_fasta(). Reference genome should be fasta/fa format, and you can download it from https://hgdownload.soe.ucsc.edu/downloads.html#alpaca or other genome database website.
 ```r
 library(IReNA)
 ###merge footprints whose distance is less than 4
 footprints <- read.table('mmATACPhxW_CuFiQ10No_sorted_fdr0.050000.bed',,sep='\t',header = T)
-fastadir='Genome/GRCm38Chr.fasta'
+fastadir='Genome/GRCm38Chr.fasta' 
 merged_fasta <- get_merged_fasta(fdr005,fastadir)
 write.table(merged_fasta,'merged_footprints.fasta',row.names=F,quote=F)
 ```
-In this step, because Fimo software only have linux version, we generate a shell script to run Fimo software in shell. If you are familiar with linux system, you can write your own commands as you like.
+In this step, because Fimo software only have linux version, and it takes too long to implement the corresponding function on Windows, we generate a shell script to run Fimo software in shell. If you are familiar with linux system, you can write your own commands as you like.
 ```r
 Dir2='D:\\GIBH\\IReNA2 R package\\IReNA2\\ATAC\\outputdir'
 find_motifs(motif1,step=20,Dir2,'merged_footprints.fasta')
@@ -76,7 +77,7 @@ mv fimo_all.txt fimo_all.sh
 chmod +x fimo_all.sh
 sh ./fimo_all.sh
 ```
-After you generated motif files, you can use winscp or other related software to transfer motif files from linux to windos, and continue the pipline in R. 
+After get the result of Fimo, we can use [winscp](https://winscp.net/eng/download.php) or other related software to transfer fimo result files from linux to windos. Then, we combine these Fimo consequence according to motif and motif PWM. Next, we load the peaks file and overlap differential peaks and motif footprints through overlap_footprints_peaks() function
 ```r
 ###Combine all footprints of motifs
 File1<-read.delim('D:\\GIBH\\IReNA2 R package\\IReNA2\\Public\\Tranfac201803_MotifPWM.txt',header = F)
@@ -85,19 +86,19 @@ peaks<-read.delim('D:\\GIBH\\IReNA2 R package\\IReNA2\\ATAC\\Peaks\\mmATACPhxW_F
 peak_bed<-get_bed(peaks)
 overlapped<-overlap_footprints_peaks(combied,peak_bed)
 ```
-The running time of overlap_footprints() is very slow, so it's highly recommanded to use bedtools to do overlap in linux system:
+However, the running time of overlap_footprints() is very slow, so it's highly recommanded to use bedtools to do overlap in linux system:
 ```r
 write.table(peak_bed,'peaks.bed',col.names=F,row.names=F,quote = F,sep = '\t')
 write.table(combied,'combied.txt',quote = F,row.names = F,col.names = F,sep = '\t')
 ### run the following commands in the shell
 bedtools intersect -a combied.txt -b peaks.bed -wa -wb > overlappd.txt
 ```
-Contiunue the pipline in R
+Next, we intergrate bioconductor package [ChIPseeker](https://bioconductor.org/packages/release/bioc/vignettes/ChIPseeker/inst/doc/ChIPseeker.html) to get footprint-related genes. Before we run get_related_genes(), we need to specify TxDb, which can be download from: http://bioconductor.org/packages/release/BiocViews.html#___TxDb.
 ```r
 ###Merge and extend footprint regions
 overlapped<-read.table('overlapped.txt')
 ###get footprint-related genes
-library(TxDb.Mmusculus.UCSC.mm10.knownGene )
+library(TxDb.Mmusculus.UCSC.mm10.knownGene)
 txdb<-TxDb.Mmusculus.UCSC.mm10.knownGene
 list1<-get_related_genes(overlapped,txdb = txdb,motif=Tranfac201803_Mm_MotifTFsF,Species = 'Mm')
 ###Get candidate genes/TFs-related peaks

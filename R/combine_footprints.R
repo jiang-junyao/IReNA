@@ -7,7 +7,10 @@
 #' @return return combined footprints
 #' @export
 #'
-#' @examples
+#' @examples #File1<-read.delim('Tranfac201803_MotifPWM.txt',header = F)
+#' Dir2 <- 'D:/GIBH/IReNA2 R package/IReNA2/ATAC/outputdir'
+#' #combied<-combine_footprints(motif1,File1,Dir2)
+
 combine_footprints <- function(motif, file1, Dir) {
   con1 <- motif
   con2 <- file1

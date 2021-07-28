@@ -9,6 +9,9 @@
 #' @export
 #'
 #' @examples
+#' motif <- Tranfac201803_Mm_MotifTFsF
+#' Dir2 <- 'D:/GIBH/IReNA2 R package/IReNA2/ATAC/outputdir'
+#' #find_motifs(motif1,step=20,Dir2,'merged_footprints.fasta')
 find_motifs <- function(motif, step = 20, Dir, sequence_dir) {
   con1 <- motif
   no1 <- 1
