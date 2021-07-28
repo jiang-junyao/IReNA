@@ -97,10 +97,11 @@ sh ./fimo_all.sh
 
 After get the result of Fimo, we can use
 [winscp](https://winscp.net/eng/download.php) or other related software
-to transfer fimo result files from linux to windos. Then, we combine
-these Fimo consequence according to motif and motif PWM. Next, we load
-the peaks file and overlap differential peaks and motif footprints
-through overlap\_footprints\_peaks() function
+to transfer fimo result files from linux to windos(If you run IReNA in
+linux, please ignore this part). Then, we combine these Fimo consequence
+according to motif and motif PWM. Next, we load the peaks file and
+overlap differential peaks and motif footprints through
+overlap\_footprints\_peaks() function
 
 ``` r
 ###Combine all footprints of motifs
@@ -139,8 +140,9 @@ expression<-read.delim('D:\\GIBH\\IReNA2 R package\\IReNA2\\scRNA\\MmscRNA_PHx_E
 list2<-get_peaks_genes(list1,expression)
 ```
 
-Calculate the FOS of footprints to determine enriched TFs, and then get
-regulatory relationships.
+In this step, we count the cuts of each position in footrprints by
+wig\_track(), and use hese cuts to calculate the FOS of footprints to
+identify enriched TFs which determine the regulatory relationship.
 
 ``` r
 bamfilepath1<-'mmATACCtrW00R1_CuFiQ10No_sorted.bam'
