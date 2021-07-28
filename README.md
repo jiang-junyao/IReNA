@@ -178,6 +178,7 @@ see <https://github.com/jiang-junyao/GReNA>
 ``` r
 devtools::install_github('jiang-junyao/GReNA')
 library(GReNA)
+TFs_list <- get_Enriched_TFs(regulatory_relationships, MmscRNA_PHx_Exp_NewF, TFFdrThr1=2)
 ###Perform enrichment analysis of TFs###Get the list of enriched TFs 
 TFs_list <- get_regulation_of_TFs_to_modules(TFs_list, Thr=10)
 ###Get regulatory networks which consist of enriched TFs
