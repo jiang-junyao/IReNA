@@ -99,14 +99,13 @@ After get the result of Fimo, we can use
 [winscp](https://winscp.net/eng/download.php) or other related software
 to transfer fimo result files from linux to windos(If you run IReNA in
 linux, please ignore this part). Then, we combine these Fimo consequence
-according to motif and motif PWM. Next, we load the peaks file and
-overlap differential peaks and motif footprints through
+according to motif and motif Position weight matrix. Next, we load the
+peaks file and overlap differential peaks and motif footprints through
 overlap\_footprints\_peaks() function
 
 ``` r
 ###Combine all footprints of motifs
-File1<-read.delim('D:\\GIBH\\IReNA2 R package\\IReNA2\\Public\\Tranfac201803_MotifPWM.txt',header = F)
-combied<-combine_footprints(motif1,File1,Dir2)
+combied<-combine_footprints(motif1,Dir2)
 peaks<-read.delim('D:\\GIBH\\IReNA2 R package\\IReNA2\\ATAC\\Peaks\\mmATACPhxW_FcLog15Fdr05Diff.txt')
 peak_bed<-get_bed(peaks)
 overlapped<-overlap_footprints_peaks(combied,peak_bed)

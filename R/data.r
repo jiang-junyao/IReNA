@@ -41,3 +41,6 @@
 #' data for demonstrating
 #' @format a list contain 2 datafrmame, the first one is footprints and the second one is bed format footprints
 "list1"
+
+#' Tranfac201803 database of motif Position weight matrix
+"Tranfac201803_MotifPWM"

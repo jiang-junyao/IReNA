@@ -4,12 +4,10 @@
 \alias{combine_footprints}
 \title{Combine all footprints of motifs from motif data base}
 \usage{
-combine_footprints(motif, file1, Dir)
+combine_footprints(motif, Dir)
 }
 \arguments{
 \item{motif}{motif file, you can choose our bulit-in motif database of 'mus musculus', 'homo sapiens', 'zebrafish' and 'chicken' by 'motif = Tranfac201803_Mm_MotifTFsF', 'motif = Tranfac201803_Hs_MotifTFsF', 'motif = Tranfac201803_Zf_MotifTFsF', 'motif = Tranfac201803_Ch_MotifTFsF' respectively, or you can upload your own motif data base, but the formata use be the same as our built-in motif database.}
-
-\item{file1}{???}
 
 \item{Dir}{character, indicating the path of Fimo consequence}
 }
@@ -21,6 +19,5 @@ Combine all footprints of motifs from motif data base
 }
 \examples{
 #File1<-read.delim('Tranfac201803_MotifPWM.txt',header = F)
-Dir2 <- 'D:/GIBH/IReNA2 R package/IReNA2/ATAC/outputdir'
-#combied<-combine_footprints(motif1,File1,Dir2)
+#combied<-combine_footprints(motif1,Dir2)
 }
