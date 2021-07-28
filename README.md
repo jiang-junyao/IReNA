@@ -133,7 +133,7 @@ bamfilepath2<-'mmATACCtrW00R2_CuFiQ10No_sorted.bam'
 cuts1<-wig_track(bamfilepath = bamfilepath1,bedfile = list2[[2]])
 cuts2<-wig_track(bamfilepath = bamfilepath2,bedfile = list2[[2]])
 wig_list<-list(cuts1,cuts2)
-regulatory_relationships=Footprints_FOS(wig_listlist2[[1]],MmscRNA_PHx_Exp_NewF)
+regulatory_relationships=Footprints_FOS(wig_list,list2[[1]],MmscRNA_PHx_Exp_NewF)
 ```
 
 Use functions in GReNA to get regulatory networks for enriched TFs of
