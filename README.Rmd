@@ -56,6 +56,7 @@ dnase2tf(datafilepath,hotspotfilename, mapfiledir, outputfilepath, assemseqdir, 
 ### Step 2: Select DNA motif of transcription factors from TRANSFAC database
 IReNA contains DNA motif datasets for four species (Homo sapiens, Mus musculus, Zebrafish and Chicken) derived from TRANSFAC 2018 database. Following codes are used to call  the motif dataset from TRANSFAC or  user-defined motif dataset which should have the same format as these from TRANSFAC database.
 ```r
+library(IReNA)
 ###call Mus musculus motif database
 motif1 <- Tranfac201803_Mm_MotifTFsF
 ###call Homo sapiens motif database
@@ -68,7 +69,6 @@ motif1 <- Tranfac201803_Ch_MotifTFsF
 ### Step 3: Perform IReNA
 First, we merge footprints whose distance is less than 4 and get fasta from each footprints based on reference genome through function get_merged_fasta(). Reference genome should be fasta/fa format, and you can download it from https://hgdownload.soe.ucsc.edu/downloads.html#alpaca or other genome database website.
 ```r
-library(IReNA)
 ###merge footprints whose distance is less than 4
 fdr005 <- read.table('mmATACPhxW_CuFiQ10No_sorted_fdr0.050000.bed',,sep='\t',header = T)
 fastadir <- 'Genome/GRCm38Chr.fasta' 

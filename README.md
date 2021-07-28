@@ -71,6 +71,7 @@ user-defined motif dataset which should have the same format as these
 from TRANSFAC database.
 
 ``` r
+library(IReNA)
 ###call Mus musculus motif database
 motif1 <- Tranfac201803_Mm_MotifTFsF
 ###call Homo sapiens motif database
@@ -91,7 +92,6 @@ you can download it from
 database website.
 
 ``` r
-library(IReNA)
 ###merge footprints whose distance is less than 4
 fdr005 <- read.table('mmATACPhxW_CuFiQ10No_sorted_fdr0.050000.bed',,sep='\t',header = T)
 fastadir <- 'Genome/GRCm38Chr.fasta' 
