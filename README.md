@@ -159,7 +159,7 @@ list2 <- get_peaks_genes(list1,expression)
 ```
 
 In this step, we count the cuts of each position in footrprints by
-wig\_track(), and use hese cuts to calculate the FOS of footprints to
+wig\_track(), and use these cuts to calculate the FOS of footprints to
 identify enriched TFs which determine the regulatory relationship.
 
 ``` r
