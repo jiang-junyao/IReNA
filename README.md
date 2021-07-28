@@ -118,7 +118,7 @@ overlapped<-read.table('overlapped.txt')
 ###get footprint-related genes
 library(TxDb.Mmusculus.UCSC.mm10.knownGene )
 txdb<-TxDb.Mmusculus.UCSC.mm10.knownGene
-list1<-get_related_genes(overlapped,txdb = txdb,Species = 'Mm')
+list1<-get_related_genes(overlapped,txdb = txdb,motif=Tranfac201803_Mm_MotifTFsF,Species = 'Mm')
 ###Get candidate genes/TFs-related peaks
 expression<-read.delim('D:\\GIBH\\IReNA2 R package\\IReNA2\\scRNA\\MmscRNA_PHx_Exp_NewF.txt')
 list2<-get_peaks_genes(list1,expression)
@@ -130,10 +130,10 @@ regulatory relationships.
 ``` r
 bamfilepath1<-'mmATACCtrW00R1_CuFiQ10No_sorted.bam'
 bamfilepath2<-'mmATACCtrW00R2_CuFiQ10No_sorted.bam'
-cuts1<-wig_track(bamfilepath1 = bamfilepath,bedfile = list2[[2]])
-cuts2<-wig_track(bamfilepath2 = bamfilepath,bedfile = list2[[2]])
+cuts1<-wig_track(bamfilepath = bamfilepath1,bedfile = list2[[2]])
+cuts2<-wig_track(bamfilepath = bamfilepath2,bedfile = list2[[2]])
 wig_list<-list(cuts1,cuts2)
-regulatory_relationships=Footprints_FOS(wig_listlist2[[1]],expression)
+regulatory_relationships=Footprints_FOS(wig_listlist2[[1]],MmscRNA_PHx_Exp_NewF)
 ```
 
 Use functions in GReNA to get regulatory networks for enriched TFs of

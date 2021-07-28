@@ -12,10 +12,10 @@
 #' @return return a list, first element is bed format datafrmae, second element is annotated footprints dataframe
 #' @export
 #'
-#' @examples txdb <- TxDb.Mmusculus.UCSC.mm10.knownGene::TxDb.Mmusculus.UCSC.mm10.knownGene
+#' @examples #txdb <- TxDb.Mmusculus.UCSC.mm10.knownGene::TxDb.Mmusculus.UCSC.mm10.knownGene
 #' peak_bed <- get_bed(peak)
 #' overlapped <- overlap_footprints_peaks(combined, peak_bed)
-#' list1 <- get_related_genes(overlapped,txdb = txdb,motif=Tranfac201803_Mm_MotifTFsF,Species = 'Mm')
+#' #list1 <- get_related_genes(overlapped,txdb = txdb,motif=Tranfac201803_Mm_MotifTFsF,Species = 'Mm')
 get_related_genes <- function(footprints, motif, Species, txdb, tssRegion = c(-3000, 3000)) {
   footprintslist <- merge_extent_footprints(footprints, motif)
   merged_footprints <- footprintslist[[2]]

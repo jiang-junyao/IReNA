@@ -19,3 +19,11 @@ return formated wig file
 \description{
 Function to get cuts of each position in footprints
 }
+\examples{
+bamfilepath1<-'mmATACCtrW00R1_CuFiQ10No_sorted.bam'
+bamfilepath2<-'mmATACCtrW00R2_CuFiQ10No_sorted.bam'
+list2<-get_peaks_genes(list1,MmscRNA_PHx_Exp_NewF)
+#cuts1<-wig_track(bamfilepath1 = bamfilepath,bedfile = list2[[2]])
+#cuts2<-wig_track(bamfilepath2 = bamfilepath,bedfile = list2[[2]])
+#wig_list<-list(cuts1,cuts2)
+}
