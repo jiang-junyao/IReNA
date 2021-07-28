@@ -93,7 +93,7 @@ database website.
 ``` r
 library(IReNA)
 ###merge footprints whose distance is less than 4
-footprints <- read.table('mmATACPhxW_CuFiQ10No_sorted_fdr0.050000.bed',,sep='\t',header = T)
+fdr005 <- read.table('mmATACPhxW_CuFiQ10No_sorted_fdr0.050000.bed',,sep='\t',header = T)
 fastadir <- 'Genome/GRCm38Chr.fasta' 
 merged_fasta <- get_merged_fasta(fdr005,fastadir)
 write.table(merged_fasta,'merged_footprints.fasta',row.names=F,quote=F)
