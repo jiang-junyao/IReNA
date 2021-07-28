@@ -25,7 +25,7 @@ get_peaks_genes <- function(list1, expression_profile) {
       acc121 <- strsplit(acc12[l], ",")[[1]]
 
       for (j in acc121) {
-        if (j %in% hash2[, 1]) {
+        if (j %in% rownames(hash2)) {
           acc122 <- c(acc122, j)
           test1 <- c(test1, j)
         }
