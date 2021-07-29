@@ -155,7 +155,7 @@ txdb <- TxDb.Mmusculus.UCSC.mm10.knownGene
 list1 <- get_related_genes(overlapped,txdb = txdb,motif=Tranfac201803_Mm_MotifTFsF,Species = 'Mm')
 ###Get candidate genes/TFs-related peaks
 expression <- read.delim('D:\\GIBH\\IReNA2 R package\\IReNA2\\scRNA\\MmscRNA_PHx_Exp_NewF.txt')
-list2 <- get_peaks_genes(list1,expression)
+list2 <- get_related_peaks(list1,expression)
 ```
 
 In this step, we count the cuts of each position in footrprints by

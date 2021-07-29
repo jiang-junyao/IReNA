@@ -6,8 +6,8 @@
 #' @export
 #'
 #' @examples
-#' list1 <- get_peaks_genes(list1,MmscRNA_PHx_Exp_NewF)
-get_peaks_genes <- function(list1, expression_profile) {
+#' list1 <- get_related_peaks(list1,MmscRNA_PHx_Exp_NewF)
+get_related_peaks <- function(list1, expression_profile) {
   print("Get candidate genes/TFs-related peaks")
   con1 <- list1[[2]]
   con2 <- list1[[1]]
