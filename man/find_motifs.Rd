@@ -4,16 +4,20 @@
 \alias{find_motifs}
 \title{Find motifs in the footprints through fimo software.}
 \usage{
-find_motifs(motif, step = 20, Dir, sequence_dir)
+find_motifs(motif, step = 20, fimodir, outputdir, Motifdir, sequencedir)
 }
 \arguments{
 \item{motif}{motif file, you can choose our bulit-in motif database of 'mus musculus', 'homo sapiens', 'zebrafish' and 'chicken' by 'motif = Tranfac201803_Mm_MotifTFsF', 'motif = Tranfac201803_Hs_MotifTFsF', 'motif = Tranfac201803_Zf_MotifTFsF', 'motif = Tranfac201803_Ch_MotifTFsF' respectively, or you can upload your own motif data base, but the formata use be the same as our built-in motif database.}
 
 \item{step}{numeric, indicating the numbers of motif in each group. Because there are so many motifs need to be calculated, so we divided every 20 motifs into groups and then calculated each group using FIMO at the same time by nohup}
 
-\item{Dir}{characater, indicating the directory of output files}
+\item{fimodir}{character, indicating path of fimo software, if you add fimo to the environment variable, just set this argument as 'fimo'}
 
-\item{sequence_dir}{sequence file directory}
+\item{outputdir}{character, indicating output path}
+
+\item{Motifdir}{character, indicating the path of meme motif file}
+
+\item{sequencedir}{sequence file directory}
 }
 \value{
 return scripts to run Fimo in command line
@@ -23,6 +27,8 @@ Find motifs in the footprints through fimo software.
 }
 \examples{
 motif <- Tranfac201803_Mm_MotifTFsF
-Dir2 <- 'D:/GIBH/IReNA2 R package/IReNA2/ATAC/outputdir'
+fimodir <- 'fimo'
+outputdir <- 'D:/GIBH/IReNA2 R package/IReNA2/ATAC/outputdir/'
+motifdir <- 'Mememotif/'
 #find_motifs(motif1,step=20,Dir2,'merged_footprints.fasta')
 }
