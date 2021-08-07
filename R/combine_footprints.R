@@ -1,18 +1,18 @@
 #' Combine all footprints of motifs from motif data base
 #'
 #' @param motif motif file, you can choose our bulit-in motif database of 'mus musculus', 'homo sapiens', 'zebrafish' and 'chicken' by 'motif = Tranfac201803_Mm_MotifTFsF', 'motif = Tranfac201803_Hs_MotifTFsF', 'motif = Tranfac201803_Zf_MotifTFsF', 'motif = Tranfac201803_Ch_MotifTFsF' respectively, or you can upload your own motif data base, but the formata use be the same as our built-in motif database.
+#' @param PWD position weight matrix
 #' @param Dir character, indicating the path of Fimo consequence
 #'
 #' @return return combined footprints
 #' @export
 #'
 #' @examples #File1<-read.delim('Tranfac201803_MotifPWM.txt',header = F)
-#' #combied<-combine_footprints(motif1,Dir2)
+#' #combied<-combine_footprints(motif1, PWM, Dir2)
 
-combine_footprints <- function(motif, Dir) {
-  File1 <- Tranfac201803_MotifPWM
+combine_footprints <- function(motif, PWM, Dir) {
   con1 <- motif
-  con2 <- file1
+  con2 <- PWM
   DirFile1 <- list.files(Dir)
   con3 <- read.table(paste0(Dir, DirFile1[1]), header = TRUE, sep = "\t")
   col1 <- con3[, c(3, 4, 5, 6, 8, 10, 1)]
@@ -25,9 +25,9 @@ combine_footprints <- function(motif, Dir) {
     }
   }
   for (i in 2:length(DirFile1)) {
-    info <- file.info(paste0(FootprintsDir1, "/", File1, "_Fimo/", DirFile1[i]))
+    info <- file.info(paste0(Dir, DirFile1[i]))
     if (info$size > 0) {
-      con12 <- read.table(paste0(FootprintsDir1, "/", File1, "_Fimo/", DirFile1[i]), header = TRUE, sep = "\t")
+      con12 <- read.table(paste0(Dir, DirFile1[i]), header = TRUE, sep = "\t")
       col2 <- con12[, c(3, 4, 5, 6, 8, 10, 1)]
       col1 <- rbind(col1, col2)
     }
