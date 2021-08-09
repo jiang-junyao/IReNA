@@ -56,7 +56,8 @@ overlap_footprints_peaks <- function(footprints, peak_bed) {
   merged <- matrix(ncol = 10)
   for (i in 1:nrow(footprints)) {
     range1 <- as.numeric(footprints[i, 2]):as.numeric(footprints[i, 3])
-    for (j in 1:nrow(peak_bed)) {
+    chr <- footprints[i,1]
+    for (j in 1:nrow(peak_bed[peak_bed[,1] == chr,])) {
       range2 <- peak_bed[j, 2]:peak_bed[j, 3]
       if (length(intersect(range1, range2)) > 0) {
         merged <- rbind(merged, c(footprints[i, ], peak_bed[j, ]))
