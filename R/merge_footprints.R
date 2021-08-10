@@ -79,7 +79,7 @@ getfasta <- function(merged_footprints, fastadir) {
   fasta1 <- c()
   for (i in 1:nrow(merged_footprints)) {
     name <- paste0(">", merged_footprints[i, 1], ":", merged_footprints[i, 2], "-", merged_footprints[i, 3])
-    sequence <- as.character(fasta[[merged_footprints[i, 1]]][(merged_footprints[i, 2] + 1):merged_footprints[i, 3]])
+    sequence <- toupper(as.character(fasta[[merged_footprints[i, 1]]][(merged_footprints[i, 2] + 1):merged_footprints[i, 3]]))
     fasta1 <- c(fasta1, name, sequence)
   }
   fasta1 <- as.data.frame(fasta1)
