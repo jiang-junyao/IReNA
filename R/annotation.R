@@ -53,6 +53,7 @@ get_related_genes <- function(footprints, motif, Species, txdb, tssRegion = c(-3
   merged_footprints2 <- merged_footprints2[, c(9, 8, 1:7)]
   colnames(merged_footprints2) <- c(paste0("V", 1:9))
   footprintslist[[2]] <- merged_footprints2
+  footprintslist[[1]] <- footprintslist[[1]][footprintslist[[1]]$V2 %in% merged_footprints2$V7,]
   return(footprintslist)
 }
 

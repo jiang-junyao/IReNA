@@ -229,6 +229,21 @@ list1 <- get_related_genes(overlapped,txdb = txdb,motif=Tranfac201803_Mm_MotifTF
 ###Get candidate genes/TFs-related peaks
 expression <- read.delim('D:\\GIBH\\IReNA2 R package\\IReNA2\\scRNA\\MmscRNA_PHx_Exp_NewF.txt')
 list2 <- get_related_peaks(list1,expression)
+write.table(list2[[1]],'filter_footprints.txt', quote = F, row.names = F, col.names = F, sep = '\t')
+```
+
+Use samtools or bedtools to extract footprints realated regions in bam
+to reduce analysis time of next step.
+
+``` r
+### Use bedtools
+bedtools intersect -a  sample1_rmdup.bam  -b filtered_footprint.bed  > sample1_filter.bam
+bedtools intersect -a  sample2_rmdup.bam  -b filtered_footprint.bed  > sample2_filter.bam
+bedtools intersect -a  sample3_rmdup.bam  -b filtered_footprint.bed  > sample3_filter.bam
+### Use samtools
+samtools view -hb -L filtered_footprint.bed sample1_rmdup.bam > sample1_filter.bam
+samtools view -hb -L filtered_footprint.bed sample2_rmdup.bam > sample2_filter.bam
+samtools view -hb -L filtered_footprint.bed sample3_rmdup.bam > sample3_filter.bam
 ```
 
 In this step, we count the cuts of each position in footrprints by
@@ -236,12 +251,14 @@ wig\_track(), and use these cuts to calculate the FOS of footprints to
 identify enriched TFs which determine the regulatory relationship.
 
 ``` r
-bamfilepath1 <- 'mmATACCtrW00R1_CuFiQ10No_sorted.bam'
-bamfilepath2 <- 'mmATACCtrW00R2_CuFiQ10No_sorted.bam'
-cuts1 <- wig_track(bamfilepath = bamfilepath1,bedfile = list2[[2]])
-cuts2 <- wig_track(bamfilepath = bamfilepath2,bedfile = list2[[2]])
-wig_list <- list(cuts1,cuts2)
-regulatory_relationships <- Footprints_FOS(wig_list,list2[[1]],MmscRNA_PHx_Exp_NewF)
+bamfilepath1 <- 'sample1_filter.bam'
+bamfilepath2 <- 'sample2_filter.bam'
+bamfilepath3 <- 'sample3_filter.bam'
+cuts1 <- wig_track(bamfilepath = bamfilepath1,bedfile = list2[[1]])
+cuts2 <- wig_track(bamfilepath = bamfilepath2,bedfile = list2[[1]])
+cuts3 <- wig_track(bamfilepath = bamfilepath3,bedfile = list2[[1]])
+wig_list <- list(cuts1,cuts2,cuts3)
+regulatory_relationships <- Footprints_FOS(wig_list,list2[[2]],MmscRNA_PHx_Exp_NewF)
 ```
 
 Use functions in GReNA to get regulatory networks for enriched TFs of
