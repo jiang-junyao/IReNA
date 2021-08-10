@@ -25,10 +25,10 @@ get_merged_fasta <- function(footprints, distance = 4, fastadir) {
 #' @return return merged footprints
 merge_footprints <- function(footprints, ditance = 4, revise = TRUE) {
   con1 <- footprints
-  str1 <- con1$chr[1]
-  start1 <- con1$start[1]
-  end1 <- con1$stop[1]
-  pva1 <- con1$p.value[1]
+  str1 <- con1[1,1]
+  start1 <- con1[1,2]
+  end1 <- con1[1,3]
+  pva1 <- con1[1,4]
   no1 <- 1
   out1 <- c()
   for (i in 2:nrow(con1)) {
