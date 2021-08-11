@@ -8,7 +8,8 @@ Footprints_FOS(
   Wig_list,
   Candid,
   expression_profile,
-  FlankFold1 = 3,
+  FOS_threshold = 1,
+  correlation_threshold = 0.5,
   trans_wig = FALSE
 )
 }
@@ -19,7 +20,9 @@ Footprints_FOS(
 
 \item{expression_profile}{dataframe, indicating expression profile of bulk RNA-seq or single-cell RNA-seq, rownames should be ENSEMBEL ID of genes.}
 
-\item{FlankFold1}{numeric, indicating}
+\item{FOS_threshold}{numeric, indicating the threshold of footprint occupancy score to identify significant footprints.}
+
+\item{correlation_threshold}{numeric, indicating the threshold of correlation between TFs and genes to identify significant regulatory relationship}
 
 \item{trans_wig}{logcial, if you use dnase_wig_tracks_both2.py to get wig_list, please set trans_wig parameter as TRUE.}
 }

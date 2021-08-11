@@ -4,10 +4,12 @@
 \alias{Filter_Footprints}
 \title{Inner function}
 \usage{
-Filter_Footprints(FOS1)
+Filter_Footprints(FOS1, FOS_cutoff)
 }
 \arguments{
 \item{FOS1}{footprints occupancy score}
+
+\item{FOS_cutoff}{numeric, indicating the threshold of footprint occupancy score to identify significant footprints}
 }
 \value{
 return filtered FOS

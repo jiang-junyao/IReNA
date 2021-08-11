@@ -44,6 +44,8 @@ pipline](https://github.com/jiang-junyao/ATAC-seq-pipline) for user who
 is not familiar with ATAC-seq upstream data anaylsis. If you are a old
 stager in ATAC-seq, just choose the pipline you perfer.
 
+## scRNA-seq data pre-processing.
+
 ## IReNA Input
 
 Before run IReNA, you need to prepare 7 files which will be used through
@@ -261,7 +263,10 @@ cuts1 <- wig_track(bamfilepath = bamfilepath1,bedfile = list2[[1]])
 cuts2 <- wig_track(bamfilepath = bamfilepath2,bedfile = list2[[1]])
 cuts3 <- wig_track(bamfilepath = bamfilepath3,bedfile = list2[[1]])
 wig_list <- list(cuts1,cuts2,cuts3)
-regulatory_relationships <- Footprints_FOS(wig_list,list2[[2]],MmscRNA_PHx_Exp_NewF)
+potential_regulation <- Footprints_FOS(wig_list,list2[[2]])
+### Calculate correaltion of each gene pairs
+correlation <- get_cor(MmscRNA_PHx_Exp_NewF, motif1, 0.5)
+regulatory_relationships <- correaltion[correlation$TF %in% potential_regulation$TF & correlation$Target %in% potential_regulation$Target,]
 ```
 
 Use functions in GReNA to get regulatory networks for enriched TFs of
