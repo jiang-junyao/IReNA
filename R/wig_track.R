@@ -19,17 +19,16 @@
 wig_track <- function(bamfilepath, bedfile, index = FALSE) {
   bed <- bedfile
   p_param <- Rsamtools::PileupParam(min_base_quality = 10L)
-  if (index == FALSE) {
+  if (index == TRUE) {
     Rsamtools::indexBam(bamfilepath)
   }
   res <- Rsamtools::pileup(bamfilepath, pileupParam = p_param)
   pos1 <- res$pos
   range <- c(bed[1, 3]:bed[nrow(bed), 3])
-  pos2 <- pos1[pos1 %in% range]
-  res2 <- res[res$pos %in% pos2, ]
   bed_cuts <- c()
   for (i in 1:nrow(bed)) {
     seq1 <- c(bed[i, 2]:bed[i, 3])
+    pos2 <- res[res$seqnames == bed[i,1],]
     pos3 <- res[res$pos %in% seq1, ]
     if (nrow(pos3) == 0) {
       cuts <- paste0(bed[i, 1], "\t", bed[i, 2], "\t", bed[i, 3], sep = "\t")
