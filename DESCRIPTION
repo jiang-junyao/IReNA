@@ -18,12 +18,29 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Depends: 
-    R (>= 4.0)
+    R (>= 4.0),
+    pheatmap,
+    DDRTree,
+    RcisTarget
 Imports: 
     Rsamtools,
     ChIPseeker,
     GenomicRanges,
     IRanges,
-    Biostrings
+    Biostrings,
+    igraph,
+    pbapply,
+    RCy3,
+    ROCR,
+    Seurat (>= 3.0.0),
+    stringr,
+    ggplot2,
+    dplyr,
+    gridExtra,
+    stats,
+    utils,
+    monocle,
+    VGAM,
+    BiocGenerics
 biocViews: SingleCell,RNASeq,ATACSeq,Network
 VignetteBuilder: knitr
