@@ -8,7 +8,7 @@
 
 IReNA (Integrated Regulatory Network Analysis) is to reconstruct
 regulatory networks through integrating scRNA-seq and ATAC-seq data.
-IReNA contains four main part to get regulatory network:
+IReNA contains four main part to reconstruct regulatory network:
 
 Part1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory
 relationships
@@ -23,12 +23,15 @@ If you **have ATAC-seq data**, use **part 3** to refine regulatory
 relationships. If you **don’t have ATAC-seq data**, use **part 2** to
 refine regulatory relaionships
 
-## Citation
+This README contains: (1) citation (2) Workflow of IReNA (3) ATAC-seq
+data preprocessing (4) IReNA input (5) test data download (6) Example
+
+## 1.Citation
 
 If you use IReNA package, please cite the following Science
 paper: <https://science.sciencemag.org/content/370/6519/eabb8598>.
 
-## Workflow
+## 2.Workflow
 
 ![workflow](Readme%20figure/Workflow.jpg)
 
@@ -51,7 +54,7 @@ install.packages("devtools")
 devtools::install_github("jiang-junyao/IReNA")
 ```
 
-## ATAC-seq data preprocessing
+## 3.ATAC-seq data preprocessing
 
 If you use ATAC-seq data to refine regulatory relaionships (part3), you
 need to preprocess ATAC-seq raw data(fastq) to get bam, peak and
@@ -62,7 +65,7 @@ of each sample, peaks file of all samples and footprints of all samples
 as IReNA input. If you are familiar with ATAC-seq data analysis, you can
 do it as you like.
 
-## IReNA Input
+## 4.IReNA Input
 
 Before run IReNA, you need to prepare 7 files which will be used through
 the analysis process, where bam file, Peak file, footprints file can be
@@ -152,18 +155,26 @@ matrix.
 PWM <- Tranfac201803_MotifPWM
 ```
 
-## Test data
+## 5.Test data download
 
-Test data can be download from …
+Test data used below can be download from
+<https://github.com/jiang-junyao/IReNA-test-data>
 
-## Example
+## 6.Example
 
-IReNA contains four main part to get regulatory network: (1) Analyze
-scRNA-seq or bulk RNA-seq data to get basic regulatory relationships (2)
-Use RcisTarget to refine regulatory relaionships (3) Analyze ATAC-seq
-data to refine regulatory relationships (4) Regultory network analysis.
-If you **have ATAC-seq data**, use **part 2** to refine regulatory
-relationships. If you **don’t have ATAC-seq data**, use **part 3** to
+IReNA contains four main part to reconstruct regulatory network:
+
+Part1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory
+relationships
+
+Part2: Use RcisTarget to refine regulatory relaionships
+
+Part3: Analyze ATAC-seq data to refine regulatory relationships
+
+Part4: Regultory network analysis.
+
+If you **have ATAC-seq data**, use **part 3** to refine regulatory
+relationships. If you **don’t have ATAC-seq data**, use **part 2** to
 refine regulatory relaionships
 
 ### Part1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory relationships
@@ -211,7 +222,7 @@ col1 <- c('#67C1E3','#EF9951','#00BFC4','#AEC7E8','#C067A9','#E56145','#2F4F4F')
 plot_kmeans_pheatmap(clustering, ModuleColor1 = col1,Range1=c(-1.5,1.5),NumRowBlank1=30)
 ```
 
-![workflow](Readme%20figure/Kmeans_plot.png)
+![Kmeans](Readme%20figure/Kmeans_plot.png)
 
 Adding Ensmble ID of the genes in the first column, then calculate the
 correlation of the gene pair and select gene pairs which contain at
@@ -419,10 +430,11 @@ tf_network <- get_partial_regulations(TFs_list)
 plot_network(tf_network, layout='circle', type='TF')
 ```
 
-Calculate the significance of regulations between any two modules using
-hypergeometric test, and use significant intramodular regulation
-relationship to construct intramodular regulatory networks. The
-significance is setting through the parameter ‘ModuleThr1’.
+![tf\_network](Readme%20figure/tf_network.png) Calculate the
+significance of regulations between any two modules using hypergeometric
+test, and use significant intramodular regulation relationship to
+construct intramodular regulatory networks. The significance is setting
+through the parameter ‘ModuleThr1’.
 
 ``` r
 ###Generate intermodular regulatory networks
@@ -431,7 +443,8 @@ intramodular_network <- merge_Module_Regulations(TFs_list, Kmeans_clustering_ENS
 plot_network(intramodular_network, layout='grid', type='module',legend = FALSE)
 ```
 
-It is strongly recommended to use Cytoscape(downloading link:
+![intramodular\_network](Readme%20figure/intramodular_network.png) It is
+strongly recommended to use Cytoscape(downloading link:
 <https://cytoscape.org/download.html>) to display the regulatory
 networks. We provide a function that can provide different Cytoscape
 styles. You need to intall and open Cytoscape before running the
