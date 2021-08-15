@@ -251,8 +251,7 @@ filtered_regulatory_relationships <- regulatory_relationships[regulatory_relatio
 ```
 
 ### Part4: Regulatory network analysis
-
-Run get_Enriched_TFs() to get enriched transcription factors(parameter TFFdrThr1 is the cutoff to filter enriched TFs), this step will generate a list which contain the following 5 dataframes: (1)“Cor_TFs.txt”: list of expressed TFs in the gene networks. (2)“Cor_EnTFs.txt”: list of TFs which significantly regulate gene modules (or enriched TFs). (3)“FOSF_RegMTF_Cor_EnTFs.txt”: regulatory pairs in which the source gene is enriched TF. (4)“FOSF_RegMTF_Cor_EnTFs.txt”: regulatory pairs in which both source gene and target gene are enriched TFs. (5)“FOSF_RegMTF_Cor_EnTFs.txt”: regulatory pairs only including regulations within each module but not those between modules, in this step
+After we get 'refined_regulatory_relationships' and 'Kmeans_clustering_ENS', we can reconstruct regulatory network. Run get_Enriched_TFs() to get enriched transcription factors(parameter TFFdrThr1 is the cutoff to filter enriched TFs), this step will generate a list which contain the following 5 dataframes: (1)“Cor_TFs.txt”: list of expressed TFs in the gene networks. (2)“Cor_EnTFs.txt”: list of TFs which significantly regulate gene modules (or enriched TFs). (3)“FOSF_RegMTF_Cor_EnTFs.txt”: regulatory pairs in which the source gene is enriched TF. (4)“FOSF_RegMTF_Cor_EnTFs.txt”: regulatory pairs in which both source gene and target gene are enriched TFs. (5)“FOSF_RegMTF_Cor_EnTFs.txt”: regulatory pairs only including regulations within each module but not those between modules, in this step
 ```r
 TFs_list <- get_Enriched_TFs(filtered_regulatory_relationships, Kmeans_clustering_ENS, TFFdrThr1=2)
 ```

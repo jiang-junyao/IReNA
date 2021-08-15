@@ -402,7 +402,9 @@ filtered_regulatory_relationships <- regulatory_relationships[regulatory_relatio
 
 ### Part4: Regulatory network analysis
 
-Run get\_Enriched\_TFs() to get enriched transcription factors(parameter
+After we get ‘refined\_regulatory\_relationships’ and
+‘Kmeans\_clustering\_ENS’, we can reconstruct regulatory network. Run
+get\_Enriched\_TFs() to get enriched transcription factors(parameter
 TFFdrThr1 is the cutoff to filter enriched TFs), this step will generate
 a list which contain the following 5 dataframes: (1)“Cor\_TFs.txt”: list
 of expressed TFs in the gene networks. (2)“Cor\_EnTFs.txt”: list of TFs
