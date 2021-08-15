@@ -430,11 +430,12 @@ tf_network <- get_partial_regulations(TFs_list)
 plot_network(tf_network, layout='circle', type='TF')
 ```
 
-![tf\_network](Readme%20figure/tf_network.png) Calculate the
-significance of regulations between any two modules using hypergeometric
-test, and use significant intramodular regulation relationship to
-construct intramodular regulatory networks. The significance is setting
-through the parameter ‘ModuleThr1’.
+![tf\_network](Readme%20figure/tf_network.png)
+
+Calculate the significance of regulations between any two modules using
+hypergeometric test, and use significant intramodular regulation
+relationship to construct intramodular regulatory networks. The
+significance is setting through the parameter ‘ModuleThr1’.
 
 ``` r
 ###Generate intermodular regulatory networks
@@ -443,8 +444,9 @@ intramodular_network <- merge_Module_Regulations(TFs_list, Kmeans_clustering_ENS
 plot_network(intramodular_network, layout='grid', type='module',legend = FALSE)
 ```
 
-![intramodular\_network](Readme%20figure/intramodular_network.png) It is
-strongly recommended to use Cytoscape(downloading link:
+![intramodular\_network](Readme%20figure/intramodular_network.png)
+
+It is strongly recommended to use Cytoscape(downloading link:
 <https://cytoscape.org/download.html>) to display the regulatory
 networks. We provide a function that can provide different Cytoscape
 styles. You need to intall and open Cytoscape before running the
