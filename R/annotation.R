@@ -57,11 +57,7 @@ get_related_genes <- function(footprints, motif, Species, txdb, tssRegion = c(-3
   return(footprintslist)
 }
 
-#' Inner function to merge and extent footprints
-#'
-#' @param file1 footprints
-#' @param motif motif file
-#' @return return extented footprints
+
 
 merge_extent_footprints <- function(file1, motif) {
   con1 <- file1

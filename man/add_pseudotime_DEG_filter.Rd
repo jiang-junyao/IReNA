@@ -8,7 +8,7 @@ add_pseudotime_DEG_filter(
   seurat_object,
   monocle_object,
   DEG = TRUE,
-  qvalue = 0.001,
+  qvalue = 0.05,
   nce = 0.1,
   ed = 0.1,
   normlize1 = TRUE

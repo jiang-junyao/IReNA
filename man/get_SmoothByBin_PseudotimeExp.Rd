@@ -6,7 +6,6 @@
 \usage{
 get_SmoothByBin_PseudotimeExp(
   seurat_object,
-  Spec1,
   FC = TRUE,
   Bin = 50,
   FcType = "Q95"
@@ -14,8 +13,6 @@ get_SmoothByBin_PseudotimeExp(
 }
 \arguments{
 \item{seurat_object}{seurat object, which meta.data contains pseudotime}
-
-\item{Spec1}{'Mm' for mus musculus, 'Zf' for zebrafish, 'Ch' for chicken , 'Hs' for homo sapiens}
 
 \item{FC}{TRUE or FALSE, whether to add FoldChangeQ95 to the first column, default is TRUE}
 

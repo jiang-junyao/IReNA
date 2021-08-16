@@ -1,15 +1,4 @@
-#' Internal function
-#'
-#' @param Exp1 the raw data, such as seurat_object@assays$RNA@data
-#' @param Pseudotime1 meta.data of seurat object
-#' @param PseudotimeRange1 give the set pseudotime range
-#' @param SmoothLength1 the bins which divide the pseudotime
-#' @param ByBin1 function used, Equal.Pseudotime and Equal.Cells
-#'
-#' @return return a expression profile
-#'
-#'
-#' @examples
+
 smoothByBin <- function(Exp1, Pseudotime1, PseudotimeRange1 = NULL, SmoothLength1 = 100, ByBin1 = c("Equal.Pseudotime", "Equal.Cells")) {
   if (ncol(Exp1) != nrow(Pseudotime1)) {
     stop("The length of pseudotime is not equal to the number of cells")
