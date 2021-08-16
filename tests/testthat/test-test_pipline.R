@@ -14,6 +14,7 @@ test_that("overlap & annotate", {
 })
 
 test_that("FOS", {
-  regulatory_relationships <- Footprints_FOS(wig_list, Candid, MmscRNA_PHx_Exp_NewF)
+  Kmeans_clustering_ENS <- add_ENSID(clustering, Spec1='Hs')
+  regulatory_relationships <- Footprints_FOS(wig_list, Candid, Kmeans_clustering_ENS)
   expect_equal(nrow(regulatory_relationships), 191)
 })

@@ -36,7 +36,7 @@
 
 #' data for demonstrating
 #' @format expression profile, first column is ENSEMBLE ID, second column is Symbol
-"MmscRNA_PHx_Exp_NewF"
+"clustering"
 
 #' data for demonstrating
 #' @format a list contain 2 datafrmame, the first one is footprints and the second one is bed format footprints

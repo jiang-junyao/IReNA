@@ -8,7 +8,8 @@
 #' @return return merged potiential regulation
 #' @export
 #'
-#' @examples regulatory_relationships <- Footprints_FOS(wig_list, Candid, MmscRNA_PHx_Exp_NewF)
+#' @examples Kmeans_clustering_ENS <- add_ENSID(clustering, Spec1='Hs')
+#' regulatory_relationships <- Footprints_FOS(wig_list, Candid, Kmeans_clustering_ENS)
 Footprints_FOS <- function(Wig_list, Candid, FOS_threshold = 1, trans_wig = FALSE) {
   if (trans_wig == TRUE) {
     Wig_list2 <- Trans_WigToMultirows(Wig_list)

@@ -60,7 +60,6 @@ smoothByBin <- function(Exp1, Pseudotime1, PseudotimeRange1 = NULL, SmoothLength
 #' Divide cells into bins across pseudotime and return expression profile
 #'
 #' @param seurat_object seurat object, which meta.data contains pseudotime
-#' @param Spec1 'Mm' for mus musculus, 'Zf' for zebrafish, 'Ch' for chicken , 'Hs' for homo sapiens
 #' @param FC TRUE or FALSE, whether to add FoldChangeQ95 to the first column, default is TRUE
 #' @param Bin numeric, the numbers of bin which divide the pseudotime, default is 50
 #' @param FcType 'Q95' or 'Q90', FoldChange threshold, default is 'Q95'
@@ -70,32 +69,10 @@ smoothByBin <- function(Exp1, Pseudotime1, PseudotimeRange1 = NULL, SmoothLength
 #'
 #' @examples
 #' get_SmoothByBin_PseudotimeExp(seurat_object_pseudotime, Spec1 = 'Mm', Bin = 50, FcType = "Q95")
-get_SmoothByBin_PseudotimeExp <- function(seurat_object, Spec1, FC = TRUE, Bin = 50, FcType = "Q95") {
+get_SmoothByBin_PseudotimeExp <- function(seurat_object, FC = TRUE, Bin = 50, FcType = "Q95") {
   TotalBin1 <- Bin
   FcType1 <- FcType
   ByBin1 <- c("Equal.Pseudotime")
-  File2 <- "mmP60RmmNMDA_pbmcSubC_MG"
-  SubG1 <- "Treatment"
-  if (Spec1 == "Mm") {
-    SubS1 <- c("mmCtrP", "mmNMDA", "mmNMFI")
-    File12 <- "NMDA"
-    SubS1 <- c("mmCtrP", "mmLD")
-    File12 <- "LD"
-  } else if (Spec1 == "Zf") {
-    SubS1 <- c("zfAd", "zfNMDA")
-    File12 <- "NMDA"
-    SubS1 <- c("zfAd", "zfLD")
-    File12 <- "LD"
-    SubS1 <- c("zfAd", "zfTR")
-    File12 <- "TR"
-  } else if (Spec1 == "Ch") {
-    SubS1 <- c("chP", "chNMDA")
-    File12 <- "NMDA"
-    # SubS1 <- c('chP', 'chNMFI', 'chFI'); File12 <- 'FI'
-  } else if (Spec1 == "Hs") {
-    SubS1 <- c("hsP", "hsNMDA")
-    File12 <- "NMDA"
-  }
   pbmc1 <- seurat_object
   # pbmc1 <- Seurat_SubsetData(pbmc, SubG1=SubG1, SubS1=SubS1); File2 <- paste0(File1, '_', File12)
   Exp1 <- smoothByBin(as.matrix(pbmc1@assays$RNA@data), pbmc1@meta.data, SmoothLength1 = TotalBin1, ByBin1 = ByBin1[1])
@@ -111,11 +88,11 @@ get_SmoothByBin_PseudotimeExp <- function(seurat_object, Spec1, FC = TRUE, Bin =
       return(x2)
     })
     Exp2 <- cbind(Fc1, Exp1)
-    colnames(Exp2)[1:ncol(Exp2)] <- c(paste0("FoldChange", FcType1), paste0(Spec1, File12, "SmExp", 1:ncol(Exp1)))
+    colnames(Exp2)[1:ncol(Exp2)] <- c(paste0("FoldChange", FcType1), paste0("SmExp", 1:ncol(Exp1)))
     var1 <- as.data.frame(Exp2)
     return(var1)
   } else {
-    colnames(Exp2)[1:ncol(Exp2)] <- c(paste0(Spec2, File12, "SmExp", 1:ncol(Exp1)))
+    colnames(Exp2)[1:ncol(Exp2)] <- c(paste0("SmExp", 1:ncol(Exp1)))
     var1 <- as.data.frame(Exp2)
     return(var1)
   }
