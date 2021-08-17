@@ -170,7 +170,9 @@ Kmeans_clustering_ENS[1:5,1:5]
 regulatory_relaionships <- get_cor(Kmeans_clustering_ENS, motif = motif1, 0.6, start_column = 4)
 ```
 ### Part2: Use RcisTarget to refine regulatory relaionships (without ATAC-seq data)
-For users who do not have ATAC-seq data, IReNA provides filter_regulation function (Based on RcisTarget) to refine regulation relaionships. Before run this function, you need to download Gene-motif rankings database from https://resources.aertslab.org/cistarget/, and set the Rankingspath1 as the path of downloaded Gene-motif rankings database. Due to the limitations of RcisTarget, this function currently only supports three species (Hs, Mm and Fly). **So if the species of your data is not included, and you don't have ATAC-seq data, you can use unrefined regulatory relaionships to perform part4 analysis directly.**
+For users who do not have ATAC-seq data, IReNA provides filter_regulation function (Based on RcisTarget) to refine regulation relaionships. Due to the limitations of RcisTarget, this function currently only supports three species (Hs, Mm and Fly). **So if the species of your data is not included, and you don't have ATAC-seq data, you can use unrefined regulatory relaionships to perform part4 analysis directly.**
+
+Before run this function, you need to download Gene-motif rankings database from https://resources.aertslab.org/cistarget/, and set the Rankingspath1 as the path of downloaded Gene-motif rankings database.
 ```r
 ###Refine regulatory relaionships
 Rankingspath1 <- 'hg19-500bp-upstream-7species.mc9nr1.feather' # download from https://resources.aertslab.org/cistarget/

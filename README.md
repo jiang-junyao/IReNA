@@ -31,7 +31,16 @@ data preprocessing (4) IReNA input (5) test data download (6) Example
 If you use IReNA package, please cite the following Science
 paper: <https://science.sciencemag.org/content/370/6519/eabb8598>.
 
-## 2.Workflow
+## 2.Test data download
+
+Test data used below can be download from
+<https://github.com/jiang-junyao/IReNA-test-data>. If you want raw data
+of ATAC-seq to run [ATAC-seq analysis
+pipline](https://github.com/jiang-junyao/ATAC-seq-pipline), you can
+download it from
+<https://www.ncbi.nlm.nih.gov/biosample?Db=biosample&DbFrom=bioproject&Cmd=Link&LinkName=bioproject_biosample&LinkReadableName=BioSample&ordinalpos=1&IdsFromResult=357084>
+
+## 3.Workflow
 
 ![workflow](Readme%20figure/Workflow.jpg)
 
@@ -54,7 +63,7 @@ install.packages("devtools")
 devtools::install_github("jiang-junyao/IReNA")
 ```
 
-## 3.ATAC-seq data preprocessing
+## 4.ATAC-seq data preprocessing
 
 If you use ATAC-seq data to refine regulatory relaionships (part3), you
 need to preprocess ATAC-seq raw data(fastq) to get bam, peak and
@@ -65,7 +74,7 @@ of each sample, peaks file of all samples and footprints of all samples
 as IReNA input. If you are familiar with ATAC-seq data analysis, you can
 do it as you like.
 
-## 4.IReNA Input
+## 5.IReNA Input
 
 Before run IReNA, you need to prepare 7 files which will be used through
 the analysis process, where bam file, Peak file, footprints file can be
@@ -154,15 +163,6 @@ matrix.
 ``` r
 PWM <- Tranfac201803_MotifPWM
 ```
-
-## 5.Test data download
-
-Test data used below can be download from
-<https://github.com/jiang-junyao/IReNA-test-data>. If you want raw data
-of ATAC-seq to run [ATAC-seq analysis
-pipline](https://github.com/jiang-junyao/ATAC-seq-pipline), you can
-download it from
-<https://www.ncbi.nlm.nih.gov/biosample?Db=biosample&DbFrom=bioproject&Cmd=Link&LinkName=bioproject_biosample&LinkReadableName=BioSample&ordinalpos=1&IdsFromResult=357084>
 
 ## 6.Example
 
@@ -258,24 +258,26 @@ Kmeans_clustering_ENS[1:5,1:5]
 
 ``` r
 ###Caculate the correlation
-regulatory_relaionships <- get_cor(Kmeans_clustering_ENS, 'Hs', motif = motif1)
+regulatory_relaionships <- get_cor(Kmeans_clustering_ENS, motif = motif1, 0.6, start_column = 4)
 ```
 
 ### Part2: Use RcisTarget to refine regulatory relaionships (without ATAC-seq data)
 
 For users who do not have ATAC-seq data, IReNA provides
 filter\_regulation function (Based on RcisTarget) to refine regulation
-relaionships. Before run this function, you need to download Gene-motif
-rankings database from <https://resources.aertslab.org/cistarget/>, and
-set the Rankingspath1 as the path of downloaded Gene-motif rankings
-database. Due to the limitations of RcisTarget, this function currently
-only supports three species (Hs, Mm and Fly). **So if the species of
-your data is not included, and you don’t have ATAC-seq data, you can use
-unrefined regulatory relaionships to perform part4 analysis directly.**
+relaionships. Due to the limitations of RcisTarget, this function
+currently only supports three species (Hs, Mm and Fly). **So if the
+species of your data is not included, and you don’t have ATAC-seq data,
+you can use unrefined regulatory relaionships to perform part4 analysis
+directly.**
+
+Before run this function, you need to download Gene-motif rankings
+database from <https://resources.aertslab.org/cistarget/>, and set the
+Rankingspath1 as the path of downloaded Gene-motif rankings database.
 
 ``` r
 ###Refine regulatory relaionships
-Rankingspath1 <- 'hg19-500bp-upstream-7species.mc9nr1.feather'
+Rankingspath1 <- 'hg19-500bp-upstream-7species.mc9nr1.feather' # download from https://resources.aertslab.org/cistarget/
 filtered_regulatory_relationships <- filter_regulation(regulatory_relationships, 'Hs', Rankingspath1)
 ```
 
