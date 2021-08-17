@@ -15,7 +15,7 @@ diff_peaks(Count, Group)
 return FDR q-value and foldchange of each peak, which can be used to identify differential peaks.
 }
 \description{
-Identify differential peaks
+Identify differential peaks based on edgeR, samples of peaks need to be divided into at least two groups.
 }
 \examples{
 group <- c(1,1,2,2)

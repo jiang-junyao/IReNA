@@ -2,7 +2,7 @@
 % Please edit documentation in R/preprocess.R
 \name{generate_gtf}
 \alias{generate_gtf}
-\title{Merge the peaks that are close to each other and modify the length of the peak to 500. Finally, return peaks related gtf file}
+\title{Merge peak and generate gft}
 \usage{
 generate_gtf(peak)
 }

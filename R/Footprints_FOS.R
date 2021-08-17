@@ -36,10 +36,7 @@ Trans_WigToMultirows <- function(Wig_list) {
   return(list1)
 }
 
-#' Inner function
-#'
-#' @param b wig
-#' @return return transfered wig file
+
 Trans_WigToMultirows2 <- function(b) {
   rownum <- c()
   col1 <- c()
