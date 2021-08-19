@@ -33,13 +33,14 @@ If you **have ATAC-seq data**, use **part 3** to refine regulatory relationships
 This README contains: (1) citation (2) test data download (3) Workflow of IReNA (4) ATAC-seq data preprocessing (5) IReNA input (6) Example 
 
 ## Installation
+IReNA need R version 4.0 or higher.
 
 First, install a few Bioconductor dependencies that aren't automatically installed:
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE))
 install.packages("BiocManager")
 BiocManager::install(c('Rsamtools', 'ChIPseeker', 'monocle',
-                       'RcisTarget', 'RCy3'))
+                       'RcisTarget', 'RCy3','clusterProfiler'))
 ```
 
 Second, install IReNA from GitHub:
@@ -257,29 +258,55 @@ filtered_regulatory_relationships <- regulatory_relationships[regulatory_relatio
 ```
 
 ### Part4: Regulatory network analysis
-After we get 'refined_regulatory_relationships' and 'Kmeans_clustering_ENS', we can reconstruct regulatory network. Run get_Enriched_TFs() to get enriched transcription factors(parameter TFFdrThr1 is the cutoff to filter enriched TFs), this step will generate a list which contain the following 5 dataframes: (1)“Cor_TFs.txt”: list of expressed TFs in the gene networks. (2)“Cor_EnTFs.txt”: list of TFs which significantly regulate gene modules (or enriched TFs). (3)“FOSF_RegMTF_Cor_EnTFs.txt”: regulatory pairs in which the source gene is enriched TF. (4)“FOSF_RegMTF_Cor_EnTFs.txt”: regulatory pairs in which both source gene and target gene are enriched TFs. (5)“FOSF_RegMTF_Cor_EnTFs.txt”: regulatory pairs only including regulations within each module but not those between modules, in this step
+After we get 'filtered_regulatory_relationships' and 'Kmeans_clustering_ENS', we can reconstruct regulatory network. Run network_analysis() to get regulatory, this step will generate a list which contain the following 9 dataframes: 
+
+(1)Cor_TFs.txt: list of expressed TFs in the gene networks. 
+
+(2)Cor_EnTFs.txt: list of TFs which significantly regulate gene modules (or enriched TFs). 
+
+(3)FOSF_RegMTF_Cor_EnTFs.txt: regulatory pairs in which the source gene is enriched TF. 
+
+(4)FOSF_RegMTF_Cor_EnTFs.txt: regulatory pairs in which both source gene and target gene are enriched TFs.
+
+(5)FOSF_RegMTF_Cor_EnTFs.txt: regulatory pairs only including regulations within each module but not those between modules, in this step
+
+(6)TF_list: enriched TFs which significantly regulate gene modules
+
+(7)TF_module_regulation: details of enriched TFs which significantly regulate gene modules
+
+(8)TF_network: regulatory network for enriched transcription factors of each module
+
+(9)intramodular_network: intramodular regulatory network
 ```r
-TFs_list <- get_Enriched_TFs(filtered_regulatory_relationships, Kmeans_clustering_ENS, TFFdrThr1=2)
+TFs_list <- network_analysis(regulatory_relationships,Kmeans_cluster_Ens,TFFDR1 = 10,TFFDR2 = 50)
 ```
-Identify enriched TFs which significantly regulate gene modules, and remove regulatory pairs which do not contain enriched TFs. The filtered regulatory pairs are used to plot regulatory networks.
-```r
-TFs_list <- get_regulation_of_TFs_to_modules(TFs_list, Thr=10)
-###Get regulatory networks which consist of enriched TFs
-tf_network <- get_partial_regulations(TFs_list)
-###display the network through igraph package
-plot_network(tf_network, layout='circle', type='TF')
+We can also make enrichment analysis for differentially expressed genes in each module. Before you run this function, you need to download the org.db for your species through BiocManager.
+```{r warning = FALSE, message = FALSE}
+### Download Homo sapiens org.db
+#BiocManger::install('org.Hs.eg.db')
+library(org.Hs.eg.db)
+### Enrichment analysis
+enrichment_KEGG <- enrich_module(Kmeans_clustering_ENS, org.Hs.eg.db, 'KEGG')
+#enrichment_GO <- enrich_module(Kmeans_cluster_ENS, org.Hs.eg.db, 'GO')
+head(enrichment_KEGG)
+```
+
+You can visualize regulatory network for enriched transcription factors of each module through plot_network() function by setting type parameter as 'TF'. This plot shows regulatory relationships between transcription factors in different modules that significantly regulate other modules.
+```
+plot_network(TFs_list,layout = 'circle',type = 'TF')
 ```
 ![tf_network](Readme figure/tf_network.png)
 
-Calculate the significance of regulations between any two modules using hypergeometric test, and use significant intramodular regulation relationship to construct intramodular regulatory networks. The significance is setting through the parameter ‘ModuleThr1’.
+You can visualize intramodular network through plot_network() function by setting type parameter as 'module'. This plot shows regulatory relationships between each modules. The transcription factor on each node play the most important roles in this module (transcription factor that have the most edges in regulatory network for enriched transcription factors of each module).
 ```r
-###Generate intermodular regulatory networks
-intramodular_network <- merge_Module_Regulations(TFs_list, Kmeans_clustering_ENS, ModuleThr1=0.05)
-###display the network through igraph package
-plot_network(intramodular_network, layout='grid', type='module',legend = FALSE)
+plot_network(TFs_list,layout = 'random',type = 'module',vertex.size = 25,vertex.label.cex = 1.1,edge.with = 2,arrow.size = 0.5)
 ```
 ![intramodular_network](Readme figure/intramodular_network.png)
-
+You can also visualize intramodular network with enriched function through plot_network() function by setting enrichment parameter as consequence of enrich_module(). In this graph, in addition to showing the most important transcription factors, it also shows the enriched function with the highest -log10(qvalue).
+```r
+plot_network(TFs_list,enrichment = enrichment_KEGG,layout = 'random',type = 'module',vertex.size = 25,vertex.label.cex = 1.1,edge.with = 2,arrow.size = 0.5)
+```
+![intramodular_network](Readme figure/enriched.png)
 It is strongly recommended to use Cytoscape(downloading link: https://cytoscape.org/download.html) to display the regulatory networks. We provide a function that can provide different Cytoscape styles. You need to intall and open Cytoscape before running the function.
 ```r
 ###optional: display the network in cytoscape, open cytoscape before running this function

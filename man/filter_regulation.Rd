@@ -2,7 +2,7 @@
 % Please edit documentation in R/reconstruct_network.R
 \name{filter_regulation}
 \alias{filter_regulation}
-\title{Filtering regulatory relationship through RcisTarget}
+\title{Filtering regulatory relationship}
 \usage{
 filter_regulation(correlation, Species, Rankingsdir)
 }
@@ -17,5 +17,5 @@ filter_regulation(correlation, Species, Rankingsdir)
 return filtered regulatory relationship
 }
 \description{
-Filtering regulatory relationship through RcisTarget
+Refine regulatory relationships through RcisTarget. Before run this function, you should download Gene-motif rankings database from https://resources.aertslab.org/cistarget, and set set the Rankingspath1 as the path of downloaded Gene-motif rankings database.
 }

@@ -4,12 +4,7 @@
 \alias{get_Enriched_TFs}
 \title{Get enriched transcription factors}
 \usage{
-get_Enriched_TFs(
-  GeneCor1,
-  Kmeans_result,
-  TFFdrThr1 = 2,
-  correlation_filter = 0
-)
+get_Enriched_TFs(GeneCor1, Kmeans_result, TFFdrThr1 = 2)
 }
 \arguments{
 \item{GeneCor1}{correlation data.frame, yield by get_cor}
@@ -17,8 +12,6 @@ get_Enriched_TFs(
 \item{Kmeans_result}{Kmeans result data.frame, row names should be ENSEMBEL ID}
 
 \item{TFFdrThr1}{numeric to filter enriched transcription factors, defalut is 2}
-
-\item{correlation_filter}{numeric to filter correlation, this parameter is used to further filter the correlation. If you don't want to filter correlation anymore, set this parameter as 0}
 }
 \value{
 return enriched TFs list which contain 5 dataframe,
@@ -29,7 +22,7 @@ return enriched TFs list which contain 5 dataframe,
 "FOSF_RegMTF_Cor_EnTFsTargM" is regulatory pairs only including regulations within each module but not those between modules
 }
 \description{
-Get enriched transcription factors
+Calculate enriched transcription factors in each module through hypergeometric test
 }
 \examples{
 Kmeans_clustering <- add_ENSID(Kmeans_clustering, Spec1 = "Hs")

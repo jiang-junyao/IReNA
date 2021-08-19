@@ -273,7 +273,7 @@ clustering_Kmeans <- function(RNA1, K1 = 1, ColumnGroup1 = NULL, Scale1 = "row",
 #' @export
 #'
 #' @examples
-#' add_ENSID(Kmeans_clustering, Spec1 = "Hs")
+#' add_ENSID(clustering, Spec1 = "Hs")
 add_ENSID <- function(Kmeans_result, GeneInf1 = NULL, Spec1 = "") {
   con2 <- Kmeans_result
   con1 <- Converse_GeneIDSymbol(rownames(Kmeans_result), GeneInf1, Spec1 = Spec1)

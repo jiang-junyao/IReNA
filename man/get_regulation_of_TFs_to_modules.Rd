@@ -2,7 +2,7 @@
 % Please edit documentation in R/reconstruct_network.R
 \name{get_regulation_of_TFs_to_modules}
 \alias{get_regulation_of_TFs_to_modules}
-\title{get regulation of TFs to modules}
+\title{Get regulation of TFs to modules}
 \usage{
 get_regulation_of_TFs_to_modules(TFs_list, Thr = 2)
 }
@@ -15,7 +15,7 @@ get_regulation_of_TFs_to_modules(TFs_list, Thr = 2)
 add TFs and TFs to module regulation relationship to TFs_list
 }
 \description{
-get regulation of TFs to modules
+Get regulation of TFs to modules
 }
 \examples{
 TFs_list = get_regulation_of_TFs_to_modules(TFs_list, Thr = 2)

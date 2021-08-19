@@ -28,6 +28,8 @@ of IReNA (4) ATAC-seq data preprocessing (5) IReNA input (6) Example
 
 ## Installation
 
+IReNA need R version 4.0 or higher.
+
 First, install a few Bioconductor dependencies that aren’t automatically
 installed:
 
@@ -35,7 +37,7 @@ installed:
 if (!requireNamespace("BiocManager", quietly = TRUE))
 install.packages("BiocManager")
 BiocManager::install(c('Rsamtools', 'ChIPseeker', 'monocle',
-                       'RcisTarget', 'RCy3'))
+                       'RcisTarget', 'RCy3','clusterProfiler'))
 ```
 
 Second, install IReNA from GitHub:
@@ -405,53 +407,116 @@ filtered_regulatory_relationships <- regulatory_relationships[regulatory_relatio
 
 ### Part4: Regulatory network analysis
 
-After we get ‘refined\_regulatory\_relationships’ and
+After we get ‘filtered\_regulatory\_relationships’ and
 ‘Kmeans\_clustering\_ENS’, we can reconstruct regulatory network. Run
-get\_Enriched\_TFs() to get enriched transcription factors(parameter
-TFFdrThr1 is the cutoff to filter enriched TFs), this step will generate
-a list which contain the following 5 dataframes: (1)“Cor\_TFs.txt”: list
-of expressed TFs in the gene networks. (2)“Cor\_EnTFs.txt”: list of TFs
-which significantly regulate gene modules (or enriched TFs).
-(3)“FOSF\_RegMTF\_Cor\_EnTFs.txt”: regulatory pairs in which the source
-gene is enriched TF. (4)“FOSF\_RegMTF\_Cor\_EnTFs.txt”: regulatory pairs
-in which both source gene and target gene are enriched TFs.
-(5)“FOSF\_RegMTF\_Cor\_EnTFs.txt”: regulatory pairs only including
+network\_analysis() to get regulatory, this step will generate a list
+which contain the following 9 dataframes:
+
+(1)Cor\_TFs.txt: list of expressed TFs in the gene networks.
+
+(2)Cor\_EnTFs.txt: list of TFs which significantly regulate gene modules
+(or enriched TFs).
+
+(3)FOSF\_RegMTF\_Cor\_EnTFs.txt: regulatory pairs in which the source
+gene is enriched TF.
+
+(4)FOSF\_RegMTF\_Cor\_EnTFs.txt: regulatory pairs in which both source
+gene and target gene are enriched TFs.
+
+(5)FOSF\_RegMTF\_Cor\_EnTFs.txt: regulatory pairs only including
 regulations within each module but not those between modules, in this
 step
 
+(6)TF\_list: enriched TFs which significantly regulate gene modules
+
+(7)TF\_module\_regulation: details of enriched TFs which significantly
+regulate gene modules
+
+(8)TF\_network: regulatory network for enriched transcription factors of
+each module
+
+(9)intramodular\_network: intramodular regulatory network
+
 ``` r
-TFs_list <- get_Enriched_TFs(filtered_regulatory_relationships, Kmeans_clustering_ENS, TFFdrThr1=2)
+TFs_list <- network_analysis(regulatory_relationships,Kmeans_cluster_Ens,TFFDR1 = 10,TFFDR2 = 50)
 ```
 
-Identify enriched TFs which significantly regulate gene modules, and
-remove regulatory pairs which do not contain enriched TFs. The filtered
-regulatory pairs are used to plot regulatory networks.
+We can also make enrichment analysis for differentially expressed genes
+in each module. Before you run this function, you need to download the
+org.db for your species through BiocManager.
 
 ``` r
-TFs_list <- get_regulation_of_TFs_to_modules(TFs_list, Thr=10)
-###Get regulatory networks which consist of enriched TFs
-tf_network <- get_partial_regulations(TFs_list)
-###display the network through igraph package
-plot_network(tf_network, layout='circle', type='TF')
+### Download Homo sapiens org.db
+#BiocManger::install('org.Hs.eg.db')
+library(org.Hs.eg.db)
+### Enrichment analysis
+enrichment_KEGG <- enrich_module(Kmeans_clustering_ENS, org.Hs.eg.db, 'KEGG')
+#enrichment_GO <- enrich_module(Kmeans_cluster_ENS, org.Hs.eg.db, 'GO')
+head(enrichment_KEGG)
+#>                ID                    Description module -log10(q-value)
+#> hsa03010 hsa03010                       Ribosome      1        5.848080
+#> hsa05171 hsa05171 Coronavirus disease - COVID-19      1        3.238478
+#> hsa03022 hsa03022    Basal transcription factors      1        2.624257
+#> hsa05016 hsa05016             Huntington disease      1        2.214404
+#> hsa05014 hsa05014  Amyotrophic lateral sclerosis      1        2.039228
+#> hsa05165 hsa05165 Human papillomavirus infection      2        4.145065
+#>          GeneRatio  BgRatio       pvalue     p.adjust       qvalue
+#> hsa03010    15/120 158/8091 9.491951e-09 1.480744e-06 1.418797e-06
+#> hsa05171    14/120 232/8091 7.726581e-06 6.026733e-04 5.774602e-04
+#> hsa03022     6/120  45/8091 4.767601e-05 2.479153e-03 2.375436e-03
+#> hsa05016    14/120 306/8091 1.633397e-04 6.370248e-03 6.103746e-03
+#> hsa05014    15/120 365/8091 3.056165e-04 9.535236e-03 9.136326e-03
+#> hsa05165    39/403 331/8091 3.737554e-07 1.083891e-04 7.160367e-05
+#>                                                                                                                                                                                                          geneID
+#> hsa03010                                                                                                                          6122/6143/6206/63931/6194/51187/6135/6161/6167/6159/6166/64979/9045/6136/6191
+#> hsa05171                                                                                                                                  6122/6143/6206/6194/51187/6135/6161/6167/103/6159/6166/9045/6136/6191
+#> hsa03022                                                                                                                                                                          9519/2962/6877/2071/2957/6879
+#> hsa05016                                                                                                                              9519/5978/5688/7019/51164/498/27089/54205/5708/203068/4536/4512/4535/2876
+#> hsa05014                                                                                                                       9782/5688/23064/468/51164/203228/498/27089/54205/5708/203068/4536/4512/4535/2876
+#> hsa05165 8312/5529/5610/64398/6932/3912/6655/51382/5595/7976/5518/5296/1021/3696/7473/4790/7450/1027/5528/3280/2335/6772/6654/894/5290/23352/3845/23493/3688/528/3716/5584/836/8313/10474/5293/3913/55844/64764
+#>          Count
+#> hsa03010    15
+#> hsa05171    14
+#> hsa03022     6
+#> hsa05016    14
+#> hsa05014    15
+#> hsa05165    39
 ```
+
+You can visualize regulatory network for enriched transcription factors
+of each module through plot\_network() function by setting type
+parameter as ‘TF’. This plot shows regulatory relationships between
+transcription factors in different modules that significantly regulate
+other modules.
+
+    plot_network(TFs_list,layout = 'circle',type = 'TF')
 
 ![tf\_network](Readme%20figure/tf_network.png)
 
-Calculate the significance of regulations between any two modules using
-hypergeometric test, and use significant intramodular regulation
-relationship to construct intramodular regulatory networks. The
-significance is setting through the parameter ‘ModuleThr1’.
+You can visualize intramodular network through plot\_network() function
+by setting type parameter as ‘module’. This plot shows regulatory
+relationships between each modules. The transcription factor on each
+node play the most important roles in this module (transcription factor
+that have the most edges in regulatory network for enriched
+transcription factors of each module).
 
 ``` r
-###Generate intermodular regulatory networks
-intramodular_network <- merge_Module_Regulations(TFs_list, Kmeans_clustering_ENS, ModuleThr1=0.05)
-###display the network through igraph package
-plot_network(intramodular_network, layout='grid', type='module',legend = FALSE)
+plot_network(TFs_list,layout = 'random',type = 'module',vertex.size = 25,vertex.label.cex = 1.1,edge.with = 2,arrow.size = 0.5)
 ```
 
-![intramodular\_network](Readme%20figure/intramodular_network.png)
+![intramodular\_network](Readme%20figure/intramodular_network.png) You
+can also visualize intramodular network with enriched function through
+plot\_network() function by setting enrichment parameter as consequence
+of enrich\_module(). In this graph, in addition to showing the most
+important transcription factors, it also shows the enriched function
+with the highest -log10(qvalue).
 
-It is strongly recommended to use Cytoscape(downloading link:
+``` r
+plot_network(TFs_list,enrichment = enrichment_KEGG,layout = 'random',type = 'module',vertex.size = 25,vertex.label.cex = 1.1,edge.with = 2,arrow.size = 0.5)
+```
+
+![intramodular\_network](Readme%20figure/enriched.png) It is strongly
+recommended to use Cytoscape(downloading link:
 <https://cytoscape.org/download.html>) to display the regulatory
 networks. We provide a function that can provide different Cytoscape
 styles. You need to intall and open Cytoscape before running the
