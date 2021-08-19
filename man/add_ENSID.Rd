@@ -2,7 +2,7 @@
 % Please edit documentation in R/smooth.R
 \name{add_ENSID}
 \alias{add_ENSID}
-\title{Add ENSEMBLE ID to the first column of your data.frame}
+\title{add ENSID}
 \usage{
 add_ENSID(Kmeans_result, GeneInf1 = NULL, Spec1 = "")
 }

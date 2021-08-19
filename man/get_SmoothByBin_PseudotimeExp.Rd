@@ -2,7 +2,7 @@
 % Please edit documentation in R/smooth.R
 \name{get_SmoothByBin_PseudotimeExp}
 \alias{get_SmoothByBin_PseudotimeExp}
-\title{Divide cells into bins across pseudotime and return expression profile}
+\title{get somoothbybin}
 \usage{
 get_SmoothByBin_PseudotimeExp(
   seurat_object,
@@ -12,11 +12,11 @@ get_SmoothByBin_PseudotimeExp(
 )
 }
 \arguments{
-\item{seurat_object}{seurat object, which meta.data contains pseudotime}
+\item{seurat_object}{seurat object, where meta.data should contain Pseudotime}
 
-\item{FC}{TRUE or FALSE, whether to add FoldChangeQ95 to the first column, default is TRUE}
+\item{FC}{logic, indicating whether to add FoldChangeQ95 to the first column, default is TRUE}
 
-\item{Bin}{numeric, the numbers of bin which divide the pseudotime, default is 50}
+\item{Bin}{numeric, indicating the numbers of bin which divide the pseudotime, default is 50}
 
 \item{FcType}{'Q95' or 'Q90', FoldChange threshold, default is 'Q95'}
 }

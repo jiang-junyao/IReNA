@@ -2,7 +2,7 @@
 % Please edit documentation in R/smooth.R
 \name{clustering_Kmeans}
 \alias{clustering_Kmeans}
-\title{This function is used to cluster the DEGs in the expression profile by K-means algorithmn}
+\title{clustering DEGs by K-means}
 \usage{
 clustering_Kmeans(
   RNA1,

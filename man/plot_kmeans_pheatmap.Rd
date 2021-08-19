@@ -2,7 +2,7 @@
 % Please edit documentation in R/smooth.R
 \name{plot_kmeans_pheatmap}
 \alias{plot_kmeans_pheatmap}
-\title{Display the result of clustering based on pheatmap, the first column should be KmeansGroup, from the third column to the last column should be expression value}
+\title{plot kmeans pheatmap}
 \usage{
 plot_kmeans_pheatmap(
   Kmeans_result,
@@ -33,7 +33,7 @@ plot_kmeans_pheatmap(
 
 \item{NumRowBlank1}{the blank between each group}
 
-\item{show_colnames}{TRUE or FALSE, whether show column names, default is FALSE}
+\item{show_colnames}{boolean values determining whether show column names, default is FALSE}
 
 \item{clustering_distance_rows}{distance measure used in clustering rows. Possible values are "correlation" for Pearson correlation and all the distances supported by dist, such as "euclidean", etc. If the value is none of the above it is assumed that a distance matrix is provided}
 
@@ -45,27 +45,27 @@ plot_kmeans_pheatmap(
 
 \item{fontsize}{font size}
 
-\item{legend1}{TRUE or FALSE, whether show the legend, default is TRUE}
+\item{legend1}{boolean values determining whether show the legend, default is TRUE}
 
 \item{border_color}{color of cell borders on heatmap, use NA if no border should be drawn.}
 
-\item{ByPanel}{TRUE or FALSE, if TRUE, reorder columns of heatmap according to the parameter ColumnGroup1, default is FALSE}
+\item{ByPanel}{boolean values, if TRUE, reorder columns of heatmap according to the parameter ColumnGroup1, default is FALSE}
 
 \item{Color1}{colors used in heat map}
 
-\item{Show.Module}{TRUE or FALSE, whether show the module, defalut is TURE}
+\item{Show.Module}{boolean values determining whether show the module, defalut is TURE}
 
 \item{Range1}{numeric, indicating the range of expression values which will affect the range of heat map, defalut is c(-3, 3)}
 
 \item{ColumnGroup1}{vector, if it is not NULL, this function wil sepate columns according to varible ColumnGroup1, default is NULL}
 }
 \value{
-figure
+Kmeans figure
 }
 \description{
-Display the result of clustering based on pheatmap, the first column should be KmeansGroup, from the third column to the last column should be expression value
+Display the result of clustering based on pheatmap, the input data.frame should contain KmeansGroup column.
 }
 \examples{
-plot_kmeans_pheatmap(Kmeans_clustering, Range1=c(-2,2))
+plot_kmeans_pheatmap(clustering, ModuleColor1 = col1,Range1=c(-3,3),NumRowBlank1=30,ModuleScale1 = 20)
 
 }
