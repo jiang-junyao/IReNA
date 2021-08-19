@@ -221,7 +221,7 @@ Visualize your clustering result through heatmap
 ``` r
 col1 <- c('#67C1E3','#EF9951','#00BFC4','#AEC7E8','#C067A9','#E56145','#2F4F4F')
 ###plot kmeans pheatmap
-plot_kmeans_pheatmap(clustering, ModuleColor1 = col1,Range1=c(-1.5,1.5),NumRowBlank1=30)
+plot_kmeans_pheatmap(clustering, ModuleColor1 = col1,Range1=c(-3,3),NumRowBlank1=30,ModuleScale1 = 20)
 ```
 
 ![Kmeans](Readme%20figure/Kmeans_plot.png)
