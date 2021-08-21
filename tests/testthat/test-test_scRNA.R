@@ -10,9 +10,7 @@ test_that("multiplication works", {
   Kmeans_clustering_ENS <- add_ENSID(clustering, Spec1='Hs')
   expect_equal(nrow(Kmeans_clustering_ENS),2680)
   motif1 <- Tranfac201803_Hs_MotifTFsF
-  regulatory_relationship <- get_cor (Kmeans_clustering_ENS,motif1,0.6)
-  TFs_list <- get_Enriched_TFs(regulatory_relationship, Kmeans_clustering_ENS, TFFdrThr1=2)
-  TFs_list <- get_regulation_of_TFs_to_modules(TFs_list, Thr=10)
-  tf_network <- get_partial_regulations(TFs_list)
-  expect_true(nrow(tf_network)>2000)
+  regulatory_relationships <- get_cor (Kmeans_clustering_ENS,motif1,0.6)
+  TFs_list <- network_analysis(regulatory_relationships,Kmeans_clustering_ENS,TFFDR1 = 10,TFFDR2 = 50)
+  expect_true(nrow(TFs_list[[8]])>500)
 })

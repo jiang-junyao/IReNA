@@ -16,7 +16,8 @@ return peaks related gtf file
 Merge the peaks that are close to each other and modify the length of the peak to 500. Finally, return peaks related gtf file
 }
 \examples{
-peaks <- peak[,c(1,2,3)]
+load(system.file("extdata", "test_peak.rda", package = "IReNA"))
+peaks <- test_peak[,c(1,2,3)]
 gtf <- generate_gtf(peaks)
 
 \dontrun{

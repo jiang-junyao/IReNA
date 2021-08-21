@@ -63,7 +63,7 @@ download it from
 
 ## 3.Workflow
 
-![workflow](Readme%20figure/Workflow.jpg)
+![workflow](Readme%20figure/Workflow.png)
 
 ## 4.ATAC-seq data preprocessing
 
@@ -219,9 +219,7 @@ clustering[1:5,1:5]
 Visualize your clustering result through heatmap
 
 ``` r
-col1 <- c('#67C1E3','#EF9951','#00BFC4','#AEC7E8','#C067A9','#E56145','#2F4F4F')
-###plot kmeans pheatmap
-plot_kmeans_pheatmap(clustering, ModuleColor1 = col1,Range1=c(-3,3),NumRowBlank1=30,ModuleScale1 = 20)
+plot_kmeans_pheatmap(test_clustering,ModuleColor1 = c('#67C7C1','#67C1E3','#5BA6DA','#EF9951','#FFBF0F','#C067A9'))
 ```
 
 ![Kmeans](Readme%20figure/Kmeans_plot.png)
@@ -454,19 +452,19 @@ enrichment_KEGG <- enrich_module(Kmeans_clustering_ENS, org.Hs.eg.db, 'KEGG')
 #enrichment_GO <- enrich_module(Kmeans_cluster_ENS, org.Hs.eg.db, 'GO')
 head(enrichment_KEGG)
 #>                ID                    Description module -log10(q-value)
-#> hsa03010 hsa03010                       Ribosome      1        5.848080
-#> hsa05171 hsa05171 Coronavirus disease - COVID-19      1        3.238478
-#> hsa03022 hsa03022    Basal transcription factors      1        2.624257
-#> hsa05016 hsa05016             Huntington disease      1        2.214404
-#> hsa05014 hsa05014  Amyotrophic lateral sclerosis      1        2.039228
-#> hsa05165 hsa05165 Human papillomavirus infection      2        4.145065
+#> hsa03010 hsa03010                       Ribosome      1        5.849500
+#> hsa05171 hsa05171 Coronavirus disease - COVID-19      1        3.239688
+#> hsa03022 hsa03022    Basal transcription factors      1        2.624850
+#> hsa05016 hsa05016             Huntington disease      1        2.215513
+#> hsa05014 hsa05014  Amyotrophic lateral sclerosis      1        2.040367
+#> hsa05165 hsa05165 Human papillomavirus infection      2        4.147775
 #>          GeneRatio  BgRatio       pvalue     p.adjust       qvalue
-#> hsa03010    15/120 158/8091 9.491951e-09 1.480744e-06 1.418797e-06
-#> hsa05171    14/120 232/8091 7.726581e-06 6.026733e-04 5.774602e-04
-#> hsa03022     6/120  45/8091 4.767601e-05 2.479153e-03 2.375436e-03
-#> hsa05016    14/120 306/8091 1.633397e-04 6.370248e-03 6.103746e-03
-#> hsa05014    15/120 365/8091 3.056165e-04 9.535236e-03 9.136326e-03
-#> hsa05165    39/403 331/8091 3.737554e-07 1.083891e-04 7.160367e-05
+#> hsa03010    15/120 158/8093 9.460965e-09 1.475910e-06 1.414165e-06
+#> hsa05171    14/120 232/8093 7.705080e-06 6.009962e-04 5.758533e-04
+#> hsa03022     6/120  45/8093 4.761093e-05 2.475768e-03 2.372194e-03
+#> hsa05016    14/120 306/8093 1.629229e-04 6.353992e-03 6.088171e-03
+#> hsa05014    15/120 365/8093 3.048162e-04 9.510266e-03 9.112401e-03
+#> hsa05165    39/403 331/8093 3.714300e-07 1.077147e-04 7.115817e-05
 #>                                                                                                                                                                                                          geneID
 #> hsa03010                                                                                                                          6122/6143/6206/63931/6194/51187/6135/6161/6167/6159/6166/64979/9045/6136/6191
 #> hsa05171                                                                                                                                  6122/6143/6206/6194/51187/6135/6161/6167/103/6159/6166/9045/6136/6191
@@ -487,36 +485,27 @@ You can visualize regulatory network for enriched transcription factors
 of each module through plot\_network() function by setting type
 parameter as ‘TF’. This plot shows regulatory relationships between
 transcription factors in different modules that significantly regulate
-other modules.
+other modules. The size of each vertex determine the significance of
+this transcription factor. Yellow edges are positive regulation,grey
+edges are negative regulation.
 
-    plot_network(TFs_list,layout = 'circle',type = 'TF')
+    plot_tf_network(TFs_list)
 
 ![tf\_network](Readme%20figure/tf_network.png)
 
-You can visualize intramodular network through plot\_network() function
-by setting type parameter as ‘module’. This plot shows regulatory
-relationships between each modules. The transcription factor on each
-node play the most important roles in this module (transcription factor
-that have the most edges in regulatory network for enriched
-transcription factors of each module).
+You can visualize intramodular network with enriched function through
+plot\_intramodular\_network() function by setting enrichment parameter
+as consequence of enrich\_module(). This plot shows enriched
+transcription factors(has the most edges), enriched fcuntion(has the
+highest -log10qvalue) and regulatory relationships between each modules.
 
 ``` r
-plot_network(TFs_list,layout = 'random',type = 'module',vertex.size = 25,vertex.label.cex = 1.1,edge.with = 2,arrow.size = 0.5)
+plot_intramodular_network(list1,enrichment_KEGG,layout = 'circle')
 ```
 
-![intramodular\_network](Readme%20figure/intramodular_network.png) You
-can also visualize intramodular network with enriched function through
-plot\_network() function by setting enrichment parameter as consequence
-of enrich\_module(). In this graph, in addition to showing the most
-important transcription factors, it also shows the enriched function
-with the highest -log10(qvalue).
+![intramodular\_network](Readme%20figure/intramodular_network.png)
 
-``` r
-plot_network(TFs_list,enrichment = enrichment_KEGG,layout = 'random',type = 'module',vertex.size = 25,vertex.label.cex = 1.1,edge.with = 2,arrow.size = 0.5)
-```
-
-![intramodular\_network](Readme%20figure/enriched.png) It is strongly
-recommended to use Cytoscape(downloading link:
+It is strongly recommended to use Cytoscape(downloading link:
 <https://cytoscape.org/download.html>) to display the regulatory
 networks. We provide a function that can provide different Cytoscape
 styles. You need to intall and open Cytoscape before running the
@@ -524,13 +513,13 @@ function.
 
 ``` r
 ###optional: display the network in cytoscape, open cytoscape before running this function
-initiate_cy(tf_network, layout1='degree-circle', type='TF')
-initiate_cy(intramodule_network, layout1='grid', type='module')
+initiate_cy(TFs_list, layout1='degree-circle', type='TF')
+initiate_cy(TFs_list, layout1='grid', type='module')
 ```
 
 ## Help and Suggestion
 
 If you have any question, comment or suggestion, please use github issue
 tracker to report coding related issues of CellChat or contact
-<cellchat.package@gmail.com>. I will answer you timely, and please
-remind me again if you have not received response more than three days.
+<jiangjunyao789@163.com>. I will answer you timely, and please remind me
+again if you have not received response more than three days.

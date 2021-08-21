@@ -18,8 +18,9 @@ return filtered motif
 Select the motif related to the input genes. Genes used here should be ENSEMBEL ID.
 }
 \examples{
+load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
 motif <- Tranfac201803_Hs_MotifTFsF
-Kmeans_clustering_ENS <- add_ENSID(clustering, Spec1='Hs')
+Kmeans_clustering_ENS <- add_ENSID(test_clustering, Spec1='Hs')
 gene <- rownames(Kmeans_clustering_ENS)
-filtered_motif <- motif_select(motif,gene)
+filtered_motif <- motifs_select(motif,gene)
 }

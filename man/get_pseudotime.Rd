@@ -2,7 +2,7 @@
 % Please edit documentation in R/scRNA1.R
 \name{get_pseudotime}
 \alias{get_pseudotime}
-\title{Use monocle to calculate the pseudotime and return a monocle object}
+\title{Calculate pseudotime of cells}
 \usage{
 get_pseudotime(seurat_object, reverse = TRUE, show_trajecotry = TRUE)
 }
@@ -20,5 +20,6 @@ return monocle object which contain pseudotime
 Use monocle to calculate the pseudotime and return a monocle object
 }
 \examples{
-get_pseudotime(seurat_object)
+load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
+get_pseudotime(test_seurat)
 }

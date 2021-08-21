@@ -22,5 +22,6 @@ return a table contain transcription factor with correlation > correlation_filte
 Calculate correlation of each gene pair, and remove genes that are below the threshold and are not transcription factors
 }
 \examples{
-get_cor(Kmeans_clustering, "Mm", 0.5, start_column=4)
+load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+get_cor(test_clustering, Tranfac201803_Hs_MotifTFsF, 0.5, start_column=3)
 }

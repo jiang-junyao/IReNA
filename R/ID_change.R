@@ -1,5 +1,5 @@
-#' Function to transfer Symbol ID to ENSEMBEL or ENSEMBEL to Symbol
-#'
+#' ID change
+#' @description Function to transfer Symbol ID to ENSEMBEL or ENSEMBEL to Symbol
 #' @param Gene1 vector, indicating original gene ids
 #' @param GeneInf1 data.frame, correspondence file of gene ID, row names should be ENSEMBLE ID, first column should be Symbol ID, if GeneInf1 = NULL this function will be built-in corresponding gene ID file.
 #' @param Spec1 If you don’t have a gene ID corresponding file, you can also use our built-in corresponding gene ID file, 'Mm' for mus musculus
@@ -7,7 +7,9 @@
 #' @return return a data.frame contain original gene ids and conversed gene ids
 #' @export
 #'
-#' @examples Converse_GeneIDSymbol(rownames(Kmeans_clustering), Spec1 = 'Hs')
+#' @examples load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+#'
+#' Converse_GeneIDSymbol(rownames(test_clustering), Spec1 = 'Hs')
 Converse_GeneIDSymbol <- function(Gene1, GeneInf1 = NULL, Spec1 = "") {
   if (is.null(GeneInf1)) {
     if (Spec1[1] == "") {

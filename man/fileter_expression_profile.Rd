@@ -20,6 +20,7 @@ return filtered expression profile
 this function is used to filter the bins in the expression profile which value is zero
 }
 \examples{
-expression_profile = clustering[,-1]
+load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+expression_profile = test_clustering[,-1]
 fileter_expression_profile(expression_profile)
 }

@@ -26,9 +26,9 @@ clustering_Kmeans(
 
 \item{Range1}{numeric, indicating the range of expression values, defalut is c(-Inf, Inf)}
 
-\item{Reorder1}{TRUE or FALSE, whether to order gene through hclustering, defalut is TRUE}
+\item{Reorder1}{logic, indicating whether to order gene through hclustering, defalut is TRUE}
 
-\item{RevOrder1}{TRUE or FALSE, whether to reverser the order}
+\item{RevOrder1}{logic, indicating whether to reverser the order}
 
 \item{NAcolum1}{vector, indicating which columns need to be removed due to NA values}
 }
@@ -39,6 +39,7 @@ return a data.frame, and the first column is K-means group
 This function is used to cluster the DEGs in the expression profile by K-means algorithmn
 }
 \examples{
-expression_profile = Kmeans_clustering[,-1];expression_profile<-na.omit(expression_profile)
-clustering_Kmeans(expression_profile, K1=7, Range1=c(-3,3))
+load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+expression_profile = test_clustering[,-1];expression_profile<-na.omit(expression_profile)
+clustering_Kmeans(expression_profile, K1=4, Range1=c(-3,3))
 }

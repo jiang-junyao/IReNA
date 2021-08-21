@@ -7,10 +7,11 @@
 #' @return return filtered motif
 #' @export
 #'
-#' @examples motif <- Tranfac201803_Hs_MotifTFsF
-#' Kmeans_clustering_ENS <- add_ENSID(clustering, Spec1='Hs')
+#' @examples load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+#' motif <- Tranfac201803_Hs_MotifTFsF
+#' Kmeans_clustering_ENS <- add_ENSID(test_clustering, Spec1='Hs')
 #' gene <- rownames(Kmeans_clustering_ENS)
-#' filtered_motif <- motif_select(motif,gene)
+#' filtered_motif <- motifs_select(motif,gene)
 motifs_select <- function(motif,gene){
   index <- c()
   for (i in 1:nrow(motif)) {
@@ -68,8 +69,9 @@ merge_sort_count <- function(count_all,gtf){
 #' @return return FDR q-value and foldchange of each peak, which can be used to identify differential peaks.
 #' @export
 #'
-#' @examples group <- c(1,1,2,2)
-#' peaks <- diff_peaks(peak[,4:7],group)
+#' @examples load(system.file("extdata", "test_peak.rda", package = "IReNA"))
+#' group <- c(1,1,2,2)
+#' peaks <- diff_peaks(test_peak[,4:7],group)
 diff_peaks <- function(Count,Group){
   Group1 <- factor(Group)
   Dge1 <- edgeR::DGEList(counts=Count, group=Group1)
@@ -99,7 +101,8 @@ diff_peaks <- function(Count,Group){
 #' @return return peaks related gtf file
 #' @export
 #'
-#' @examples peaks <- peak[,c(1,2,3)]
+#' @examples load(system.file("extdata", "test_peak.rda", package = "IReNA"))
+#' peaks <- test_peak[,c(1,2,3)]
 #' gtf <- generate_gtf(peaks)
 #'
 #' \dontrun{

@@ -22,6 +22,7 @@ return related transcription factors of footprints with FOS above FOS_threshold
 Calculate the FOS(footprints occupancy score) to identify enriched transcriptions factor, and use these transcription factors to identify significant regulatory relationships
 }
 \examples{
-Kmeans_clustering_ENS <- add_ENSID(clustering, Spec1='Hs')
-regulatory_relationships <- Footprints_FOS(wig_list, Candid, Kmeans_clustering_ENS)
+load(system.file("extdata", "Candid.rda", package = "IReNA"))
+load(system.file("extdata", "wig_list.rda", package = "IReNA"))
+regulatory_relationships <- Footprints_FOS(wig_list, Candid)
 }

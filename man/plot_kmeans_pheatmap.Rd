@@ -12,7 +12,7 @@ plot_kmeans_pheatmap(
   show_colnames = FALSE,
   clustering_distance_rows = "correlation",
   ModuleColor1 = NULL,
-  ModuleScale1 = 10,
+  ModuleScale1 = 20,
   cluster_cols = FALSE,
   fontsize = 10,
   legend1 = TRUE,
@@ -33,7 +33,7 @@ plot_kmeans_pheatmap(
 
 \item{NumRowBlank1}{the blank between each group}
 
-\item{show_colnames}{boolean values determining whether show column names, default is FALSE}
+\item{show_colnames}{logic, indicating whether show column names, default is FALSE}
 
 \item{clustering_distance_rows}{distance measure used in clustering rows. Possible values are "correlation" for Pearson correlation and all the distances supported by dist, such as "euclidean", etc. If the value is none of the above it is assumed that a distance matrix is provided}
 
@@ -45,27 +45,29 @@ plot_kmeans_pheatmap(
 
 \item{fontsize}{font size}
 
-\item{legend1}{boolean values determining whether show the legend, default is TRUE}
+\item{legend1}{logic, indicating whether show the legend, default is TRUE}
 
 \item{border_color}{color of cell borders on heatmap, use NA if no border should be drawn.}
 
-\item{ByPanel}{boolean values, if TRUE, reorder columns of heatmap according to the parameter ColumnGroup1, default is FALSE}
+\item{ByPanel}{logic, if TRUE, reorder columns of heatmap according to the parameter ColumnGroup1, default is FALSE}
 
 \item{Color1}{colors used in heat map}
 
-\item{Show.Module}{boolean values determining whether show the module, defalut is TURE}
+\item{Show.Module}{logic, indicating whether show the module, defalut is TURE}
 
 \item{Range1}{numeric, indicating the range of expression values which will affect the range of heat map, defalut is c(-3, 3)}
 
 \item{ColumnGroup1}{vector, if it is not NULL, this function wil sepate columns according to varible ColumnGroup1, default is NULL}
 }
 \value{
-Kmeans figure
+Kmeans clustering figure
 }
 \description{
 Display the result of clustering based on pheatmap, the input data.frame should contain KmeansGroup column.
 }
 \examples{
-plot_kmeans_pheatmap(clustering, ModuleColor1 = col1,Range1=c(-3,3),NumRowBlank1=30,ModuleScale1 = 20)
+col1 <- c('#67C1E3','#EF9951','#00BFC4','#AEC7E8','#C067A9','#E56145','#2F4F4F')
+load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+plot_kmeans_pheatmap(test_clustering, ModuleColor1 = col1,Range1=c(-3,3),NumRowBlank1=1,ModuleScale1 = 20)
 
 }

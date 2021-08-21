@@ -2,12 +2,12 @@
 % Please edit documentation in R/scRNA1.R
 \name{load_counts}
 \alias{load_counts}
-\title{Load data from datapath and return a seurat object}
+\title{load counts}
 \usage{
 load_counts(datapath, datatype = 0)
 }
 \arguments{
-\item{datapath}{data path of counts, if it is 10X data, please input the path of folder which containing matrix.mtx.gz, features.tsv.gz and barcodes.tsv.gz}
+\item{datapath}{character, indicating data path of counts, if it is 10X data, please input the path of folder which containing matrix.mtx.gz, features.tsv.gz and barcodes.tsv.gz}
 
 \item{datatype}{10X:datatype = 0, counts:datatype = 1, sparse matrix:datatype = 2}
 }
@@ -15,5 +15,8 @@ load_counts(datapath, datatype = 0)
 return a seurat object
 }
 \description{
-Load data from datapath and return a seurat object
+Load counts from datapath and return a seurat object
+}
+\examples{
+\dontrun{load_counts('D:/scRNA/10X',datatype=1)}
 }

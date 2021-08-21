@@ -2,7 +2,7 @@
 % Please edit documentation in R/ID_change.R
 \name{Converse_GeneIDSymbol}
 \alias{Converse_GeneIDSymbol}
-\title{Function to transfer Symbol ID to ENSEMBEL or ENSEMBEL to Symbol}
+\title{ID change}
 \usage{
 Converse_GeneIDSymbol(Gene1, GeneInf1 = NULL, Spec1 = "")
 }
@@ -20,5 +20,7 @@ return a data.frame contain original gene ids and conversed gene ids
 Function to transfer Symbol ID to ENSEMBEL or ENSEMBEL to Symbol
 }
 \examples{
-Converse_GeneIDSymbol(rownames(Kmeans_clustering), Spec1 = 'Hs')
+load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+
+Converse_GeneIDSymbol(rownames(test_clustering), Spec1 = 'Hs')
 }

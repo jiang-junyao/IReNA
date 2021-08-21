@@ -42,6 +42,8 @@ Imports:
     monocle,
     VGAM,
     BiocGenerics,
-    clusterProfiler
+    clusterProfiler,
+    edgeR,
+    limma
 biocViews: SingleCell,RNASeq,ATACSeq,Network
 VignetteBuilder: knitr

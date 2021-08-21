@@ -1,13 +1,13 @@
-#' Load data from datapath and return a seurat object
-#'
-#' @param datapath data path of counts, if it is 10X data, please input the path of folder which containing matrix.mtx.gz, features.tsv.gz and barcodes.tsv.gz
+#' load counts
+#' @description Load counts from datapath and return a seurat object
+#' @param datapath character, indicating data path of counts, if it is 10X data, please input the path of folder which containing matrix.mtx.gz, features.tsv.gz and barcodes.tsv.gz
 #' @param datatype 10X:datatype = 0, counts:datatype = 1, sparse matrix:datatype = 2
 #' @importFrom utils read.table
 #' @importFrom utils read.delim
 #' @return return a seurat object
 #' @export
 #'
-#' @examples \donttest{load_counts('D:/scRNA/10X,datatype=1)}
+#' @examples \dontrun{load_counts('D:/scRNA/10X',datatype=1)}
 load_counts <- function(datapath, datatype = 0) {
   if (datatype[1] == 1) {
     RAW1 <- read.table(datapath, sep = "\t", header = TRUE, row.names = 1)
@@ -45,8 +45,8 @@ load_counts <- function(datapath, datatype = 0) {
   return(sampproj)
 }
 
-#' Use monocle to calculate the pseudotime and return a monocle object
-#'
+#' Calculate pseudotime of cells
+#' @description Use monocle to calculate the pseudotime and return a monocle object
 #' @param seurat_object seurat object
 #' @param reverse TRUE or FALSE, whether to reverse the pseudotime, default is TURE
 #' @param show_trajecotry TRUE or FALSE, whether show the trajectory of pseudotime, default is TURE
@@ -64,7 +64,8 @@ load_counts <- function(datapath, datatype = 0) {
 #' @return return monocle object which contain pseudotime
 #' @export
 #'
-#' @examples get_pseudotime(seurat_object)
+#' @examples load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
+#' get_pseudotime(test_seurat)
 get_pseudotime <- function(seurat_object, reverse = TRUE, show_trajecotry = TRUE) {
   data <- as(as.matrix(seurat_object@assays$RNA@counts), "sparseMatrix")
   pd <- new("AnnotatedDataFrame", data = seurat_object@meta.data)
@@ -88,21 +89,23 @@ get_pseudotime <- function(seurat_object, reverse = TRUE, show_trajecotry = TRUE
   return(cds)
 }
 
-#' Add pseudotime to seurat object, and filter differential expressed genes according to pseudotime
-#'
+#' add pseudtoime and identify DEGs
+#' @description Add pseudotime to seurat object, and filter differential expressed genes according to pseudotime
 #' @param seurat_object seurat object, which has same cells and genes as monocle_object
 #' @param monocle_object monocle object, which include pesudotime and has same cells and genes as seurat_object
-#' @param DEG TRUE or FALSE, whether filter differential expressed genes for seurat object, default is TRUE
-#' @param qvalue q-value, one of the indicators for filtering differential genes, default is 0.001
-#' @param nce num cells expressed, one of the indicators for filtering differential genes, default is 0.1
-#' @param ed expression difference, one of the indicators for filtering differential genes, default is 0.1
-#' @param normlize1 TRUE or FALSE, whether normalize the data in seurat object
+#' @param DEG logic, indicating whether filter differential expressed genes for seurat object
+#' @param qvalue numeric, indicating q-value to indentify differentially expressed genes
+#' @param nce numeric, indicating num cells expressed to indentify differentially expressed genes
+#' @param ed numeric, indicating expression difference to indentify differentially expressed genes
+#' @param normlize1 logic, indicating whether normalize the data in seurat object
 #'
 #' @return return a seurat object
 #' @export
 #'
-#' @examples monocle_object = get_pseudotime(seurat_object)
-#' #add_pseudotime_DEG_filter(seurat_object = seurat_object,monocle_object = monocle_object, DEG = TRUE, qvalue = 0.001, nce = 0.1, ed = 0.1)
+#' @examples load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
+#' monocle_object = get_pseudotime(test_seurat)
+#' add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object, DEG = FALSE, normlize1 = FALSE)
+#' #add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object, DEG = TRUE, qvalue = 0.001, nce = 0.1, ed = 0.1)
 add_pseudotime_DEG_filter <- function(seurat_object, monocle_object, DEG = TRUE, qvalue = 0.05, nce = 0.1, ed = 0.1, normlize1 = TRUE) {
   se <- seurat_object
   mo <- monocle_object

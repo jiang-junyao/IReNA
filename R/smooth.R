@@ -56,8 +56,10 @@ smoothByBin <- function(Exp1, Pseudotime1, PseudotimeRange1 = NULL, SmoothLength
 #' @return return a expression profile
 #' @export
 #'
-#' @examples
-#' get_SmoothByBin_PseudotimeExp(seurat_object_pseudotime, Spec1 = 'Mm', Bin = 50, FcType = "Q95")
+#' @examples load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
+#' monocle_object = get_pseudotime(test_seurat)
+#' seurat_object_pseudotime=add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object, DEG = FALSE, normlize1 = FALSE)
+#' get_SmoothByBin_PseudotimeExp(seurat_object_pseudotime, Bin = 50, FcType = "Q95")
 get_SmoothByBin_PseudotimeExp <- function(seurat_object, FC = TRUE, Bin = 50, FcType = "Q95") {
   TotalBin1 <- Bin
   FcType1 <- FcType
@@ -96,7 +98,8 @@ get_SmoothByBin_PseudotimeExp <- function(seurat_object, FC = TRUE, Bin = 50, Fc
 #' @return return filtered expression profile
 #' @export
 #'
-#' @examples expression_profile = clustering[,-1]
+#' @examples load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+#' expression_profile = test_clustering[,-1]
 #' fileter_expression_profile(expression_profile)
 fileter_expression_profile <- function(expression_profile, filterfc = TRUE, FC = 0.1) {
   pro <- expression_profile
@@ -124,8 +127,8 @@ fileter_expression_profile <- function(expression_profile, filterfc = TRUE, FC =
 #' @param ColumnGroup1 vector, if it is not NULL, this function wil sepate columns according to varible ColumnGroup1, default is NULL
 #' @param Scale1 character, indicating if the values should be centered and scaled in either the row direction or the column direction, or none. Corresponding values are "row", "column" and "none"
 #' @param Range1 numeric, indicating the range of expression values, defalut is c(-Inf, Inf)
-#' @param Reorder1 TRUE or FALSE, whether to order gene through hclustering, defalut is TRUE
-#' @param RevOrder1 TRUE or FALSE, whether to reverser the order
+#' @param Reorder1 logic, indicating whether to order gene through hclustering, defalut is TRUE
+#' @param RevOrder1 logic, indicating whether to reverser the order
 #' @param NAcolum1 vector, indicating which columns need to be removed due to NA values
 #' @importFrom stats kmeans
 #' @importFrom stats cor
@@ -134,8 +137,9 @@ fileter_expression_profile <- function(expression_profile, filterfc = TRUE, FC =
 #' @return return a data.frame, and the first column is K-means group
 #' @export
 #'
-#' @examples expression_profile = Kmeans_clustering[,-1];expression_profile<-na.omit(expression_profile)
-#' clustering_Kmeans(expression_profile, K1=7, Range1=c(-3,3))
+#' @examples load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+#' expression_profile = test_clustering[,-1];expression_profile<-na.omit(expression_profile)
+#' clustering_Kmeans(expression_profile, K1=4, Range1=c(-3,3))
 clustering_Kmeans <- function(RNA1, K1 = 1, ColumnGroup1 = NULL, Scale1 = "row", Range1 = c(-Inf, Inf), Reorder1 = TRUE, RevOrder1 = -1, NAcolum1 = NULL) {
   RowGroup1 = NULL;NumColumnBlank1 = NULL
   if (Scale1 == "row") {
@@ -273,7 +277,8 @@ clustering_Kmeans <- function(RNA1, K1 = 1, ColumnGroup1 = NULL, Scale1 = "row",
 #' @export
 #'
 #' @examples
-#' add_ENSID(clustering, Spec1 = "Hs")
+#' load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+#' add_ENSID(test_clustering, Spec1 = "Hs")
 add_ENSID <- function(Kmeans_result, GeneInf1 = NULL, Spec1 = "") {
   con2 <- Kmeans_result
   con1 <- Converse_GeneIDSymbol(rownames(Kmeans_result), GeneInf1, Spec1 = Spec1)
@@ -284,33 +289,36 @@ add_ENSID <- function(Kmeans_result, GeneInf1 = NULL, Spec1 = "") {
   con2 <- con2[, c(ncol(con2), 1:(ncol(con2) - 2))]
   return(con2)
 }
+
 #' plot kmeans pheatmap
 #' @description  Display the result of clustering based on pheatmap, the input data.frame should contain KmeansGroup column.
 #' @param Kmeans_result expression profile which should contain column "KmeansGroup"
 #' @param start_column numeric, indicating the start column of expression value, defalut is 3
 #' @param Gene1 custom labels for rows that are used instead of rownames
 #' @param NumRowBlank1 the blank between each group
-#' @param show_colnames boolean values determining whether show column names, default is FALSE
+#' @param show_colnames logic, indicating whether show column names, default is FALSE
 #' @param clustering_distance_rows distance measure used in clustering rows. Possible values are "correlation" for Pearson correlation and all the distances supported by dist, such as "euclidean", etc. If the value is none of the above it is assumed that a distance matrix is provided
 #' @param ModuleColor1 each color for each module
 #' @param ModuleScale1 change the relative proportion of module bar and expression heatmap
 #' @param cluster_cols boolean values determining if columns should be clustered or hclust object.
 #' @param fontsize font size
-#' @param legend1 boolean values determining whether show the legend, default is TRUE
+#' @param legend1 logic, indicating whether show the legend, default is TRUE
 #' @param border_color color of cell borders on heatmap, use NA if no border should be drawn.
-#' @param ByPanel boolean values, if TRUE, reorder columns of heatmap according to the parameter ColumnGroup1, default is FALSE
+#' @param ByPanel logic, if TRUE, reorder columns of heatmap according to the parameter ColumnGroup1, default is FALSE
 #' @param Color1 colors used in heat map
-#' @param Show.Module boolean values determining whether show the module, defalut is TURE
+#' @param Show.Module logic, indicating whether show the module, defalut is TURE
 #' @param ColumnGroup1 vector, if it is not NULL, this function wil sepate columns according to varible ColumnGroup1, default is NULL
 #' @param Range1 numeric, indicating the range of expression values which will affect the range of heat map, defalut is c(-3, 3)
 #' @importFrom pheatmap pheatmap
 #' @importFrom gridExtra grid.arrange
 #' @export
-#' @return Kmeans figure
+#' @return Kmeans clustering figure
 #' @examples
-#' plot_kmeans_pheatmap(clustering, ModuleColor1 = col1,Range1=c(-3,3),NumRowBlank1=30,ModuleScale1 = 20)
+#' col1 <- c('#67C1E3','#EF9951','#00BFC4','#AEC7E8','#C067A9','#E56145','#2F4F4F')
+#' load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+#' plot_kmeans_pheatmap(test_clustering, ModuleColor1 = col1,Range1=c(-3,3),NumRowBlank1=1,ModuleScale1 = 20)
 #'
-plot_kmeans_pheatmap <- function(Kmeans_result, start_column = 3, Gene1 = NULL, NumRowBlank1 = 20, show_colnames = FALSE, clustering_distance_rows = "correlation", ModuleColor1 = NULL, ModuleScale1 = 10, cluster_cols = FALSE, fontsize = 10,
+plot_kmeans_pheatmap <- function(Kmeans_result, start_column = 3, Gene1 = NULL, NumRowBlank1 = 20, show_colnames = FALSE, clustering_distance_rows = "correlation", ModuleColor1 = NULL, ModuleScale1 = 20, cluster_cols = FALSE, fontsize = 10,
                                  legend1 = TRUE, border_color = "white", ByPanel = FALSE, Color1 = NULL, Show.Module = TRUE, Range1 = c(-3, 3), ColumnGroup1 = NULL) {
   RNA1 <- Kmeans_result
   g1<-unique(RNA1$KmeansGroup)

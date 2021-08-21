@@ -2,7 +2,7 @@
 % Please edit documentation in R/scRNA1.R
 \name{add_pseudotime_DEG_filter}
 \alias{add_pseudotime_DEG_filter}
-\title{Add pseudotime to seurat object, and filter differential expressed genes according to pseudotime}
+\title{add pseudtoime and identify DEGs}
 \usage{
 add_pseudotime_DEG_filter(
   seurat_object,
@@ -19,15 +19,15 @@ add_pseudotime_DEG_filter(
 
 \item{monocle_object}{monocle object, which include pesudotime and has same cells and genes as seurat_object}
 
-\item{DEG}{TRUE or FALSE, whether filter differential expressed genes for seurat object, default is TRUE}
+\item{DEG}{logic, indicating whether filter differential expressed genes for seurat object}
 
-\item{qvalue}{q-value, one of the indicators for filtering differential genes, default is 0.001}
+\item{qvalue}{numeric, indicating q-value to indentify differentially expressed genes}
 
-\item{nce}{num cells expressed, one of the indicators for filtering differential genes, default is 0.1}
+\item{nce}{numeric, indicating num cells expressed to indentify differentially expressed genes}
 
-\item{ed}{expression difference, one of the indicators for filtering differential genes, default is 0.1}
+\item{ed}{numeric, indicating expression difference to indentify differentially expressed genes}
 
-\item{normlize1}{TRUE or FALSE, whether normalize the data in seurat object}
+\item{normlize1}{logic, indicating whether normalize the data in seurat object}
 }
 \value{
 return a seurat object
@@ -36,6 +36,8 @@ return a seurat object
 Add pseudotime to seurat object, and filter differential expressed genes according to pseudotime
 }
 \examples{
-monocle_object = get_pseudotime(seurat_object)
-#add_pseudotime_DEG_filter(seurat_object = seurat_object,monocle_object = monocle_object, DEG = TRUE, qvalue = 0.001, nce = 0.1, ed = 0.1)
+load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
+monocle_object = get_pseudotime(test_seurat)
+add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object, DEG = FALSE, normlize1 = FALSE)
+#add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object, DEG = TRUE, qvalue = 0.001, nce = 0.1, ed = 0.1)
 }

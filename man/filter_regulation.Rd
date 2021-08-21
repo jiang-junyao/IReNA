@@ -11,11 +11,15 @@ filter_regulation(correlation, Species, Rankingsdir)
 
 \item{Species}{character, indicating species of your data, and used to choose annotation file in RcisTarget. Because of the limitaion of RcisTarget, this function only support three species: 'Mm', 'Hs' and 'Fly'}
 
-\item{Rankingspath}{path of Gene-motif rankings file, which can be downloaded in https://resources.aertslab.org/cistarget. For more details about motif ranking file, you can read https://bioconductor.riken.jp/packages/3.9/bioc/vignettes/RcisTarget/inst/doc/RcisTarget.html#gene-motif_rankings}
+\item{Rankingsdir}{path of Gene-motif rankings file, which can be downloaded in https://resources.aertslab.org/cistarget. For more details about motif ranking file, you can read https://bioconductor.riken.jp/packages/3.9/bioc/vignettes/RcisTarget/inst/doc/RcisTarget.html#gene-motif_rankings}
 }
 \value{
 return filtered regulatory relationship
 }
 \description{
 Refine regulatory relationships through RcisTarget. Before run this function, you should download Gene-motif rankings database from https://resources.aertslab.org/cistarget, and set set the Rankingspath1 as the path of downloaded Gene-motif rankings database.
+}
+\examples{
+Rankingspath1 <- 'hg19-500bp-upstream-7species.mc9nr.feather'
+ # filtered_regulatory_relationships <- filter_regulation(regulatory_relationships, 'Hs', Rankingspath1)
 }

@@ -18,6 +18,7 @@ return FDR q-value and foldchange of each peak, which can be used to identify di
 Identify differential peaks based on edgeR, samples of peaks need to be divided into at least two groups.
 }
 \examples{
+load(system.file("extdata", "test_peak.rda", package = "IReNA"))
 group <- c(1,1,2,2)
-peaks <- diff_peaks(peak[,4:7],group)
+peaks <- diff_peaks(test_peak[,4:7],group)
 }

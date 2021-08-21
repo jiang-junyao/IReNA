@@ -20,5 +20,6 @@ add ENSEMBL ID to the first column of data frame
 Add ENSEMBLE ID to the first column of your data.frame
 }
 \examples{
-add_ENSID(clustering, Spec1 = "Hs")
+load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+add_ENSID(test_clustering, Spec1 = "Hs")
 }

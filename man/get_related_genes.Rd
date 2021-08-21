@@ -2,7 +2,7 @@
 % Please edit documentation in R/annotation.R
 \name{get_related_genes}
 \alias{get_related_genes}
-\title{This function first merge and extend footprint regions, and then integrate R package ChIPseeker to get footprint-related genes}
+\title{Annotate peaks}
 \usage{
 get_related_genes(footprints, motif, Species, txdb, tssRegion = c(-3000, 3000))
 }
@@ -25,7 +25,9 @@ This function first merge and extend footprint regions, and then integrate R pac
 }
 \examples{
 #txdb <- TxDb.Mmusculus.UCSC.mm10.knownGene::TxDb.Mmusculus.UCSC.mm10.knownGene
-peak_bed <- get_bed(peak)
+load(system.file("extdata", "combined.rda", package = "IReNA"))
+load(system.file("extdata", "test_peak.rda", package = "IReNA"))
+peak_bed <- get_bed(test_peak)
 overlapped <- overlap_footprints_peaks(combined, peak_bed)
 #list1 <- get_related_genes(overlapped,txdb = txdb,motif=Tranfac201803_Mm_MotifTFsF,Species = 'Mm')
 }

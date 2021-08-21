@@ -2,7 +2,7 @@
 % Please edit documentation in R/merge_footprints.R
 \name{get_merged_fasta}
 \alias{get_merged_fasta}
-\title{This function first merges footprints whose distances is less than 4, and then obtains the sequence of each footprint based on the reference genome, and  output the sequence in FASTA format}
+\title{merge footprints and return corresponding sequence}
 \usage{
 get_merged_fasta(footprints, distance = 4, fastadir)
 }

@@ -8,8 +8,9 @@
 #' @return return related transcription factors of footprints with FOS above FOS_threshold
 #' @export
 #'
-#' @examples Kmeans_clustering_ENS <- add_ENSID(clustering, Spec1='Hs')
-#' regulatory_relationships <- Footprints_FOS(wig_list, Candid, Kmeans_clustering_ENS)
+#' @examples load(system.file("extdata", "Candid.rda", package = "IReNA"))
+#' load(system.file("extdata", "wig_list.rda", package = "IReNA"))
+#' regulatory_relationships <- Footprints_FOS(wig_list, Candid)
 Footprints_FOS <- function(Wig_list, Candid, FOS_threshold = 1, trans_wig = FALSE) {
   if (trans_wig == TRUE) {
     Wig_list2 <- Trans_WigToMultirows(Wig_list)
@@ -113,11 +114,7 @@ Cal_Footprints_FOS <- function(cutsp2_list, FlankFold1 = 3) {
   return(list1)
 }
 
-#' Inner function to calculate footprint occupancy score
-#'
-#' @param FP1 data source
-#' @param FlankFold1 threshold
-#' @return calculate FOS
+
 Cal_Footprints_FOS2 <- function(FP1, FlankFold1 = 3) {
   FP2 <- apply(FP1, 1, function(X1) {
     MotifSize1 <- as.numeric(X1[3])
@@ -307,7 +304,8 @@ Merge_TFs_genes <- function(FOSF_RegM) {
 #' @return return a table contain transcription factor with correlation > correlation_filter and correlation < -correlation_filter
 #' @export
 #'
-#' @examples get_cor(Kmeans_clustering, "Mm", 0.5, start_column=4)
+#' @examples load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+#' get_cor(test_clustering, Tranfac201803_Hs_MotifTFsF, 0.5, start_column=3)
 
 get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
   print("get correlation for gene pairs")
