@@ -18,10 +18,12 @@ Part2: Use RcisTarget to refine regulatory relaionships
 Part3: Analyze ATAC-seq data to refine regulatory relationships
 
 Part4: Regultory network analysis.
-![workflow](Readme%20figure/Workflow1.png) If you **have ATAC-seq
-data**, use **part 3** to refine regulatory relationships. If you
-**don’t have ATAC-seq data**, use **part 2** to refine regulatory
-relaionships
+
+![workflow](Readme%20figure/Workflow1.png)
+
+If you **have ATAC-seq data**, use **part 3** to refine regulatory
+relationships. If you **don’t have ATAC-seq data**, use **part 2** to
+refine regulatory relaionships
 
 This README contains: (1) citation (2) test data download (3) Workflow
 of IReNA (4) ATAC-seq data preprocessing (5) IReNA input (6) Example
