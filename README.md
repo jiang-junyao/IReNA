@@ -517,6 +517,10 @@ initiate_cy(TFs_list, layout1='degree-circle', type='TF')
 initiate_cy(TFs_list, layout1='grid', type='module')
 ```
 
+This is the picture we processed through cytoscape, which can show the
+regulatory relationship of modularized transcription factors.
+![Cytoscape\_network](Readme%20figure/Cytoscape_network.png)
+
 ## Help and Suggestion
 
 If you have any question, comment or suggestion, please use github issue

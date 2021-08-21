@@ -309,6 +309,8 @@ It is strongly recommended to use Cytoscape(downloading link: https://cytoscape.
 initiate_cy(TFs_list, layout1='degree-circle', type='TF')
 initiate_cy(TFs_list, layout1='grid', type='module')
 ```
+This is the picture we processed through cytoscape, which can show the regulatory relationship of modularized transcription factors.
+![Cytoscape_network](Readme figure/Cytoscape_network.png)
 
 ## Help and Suggestion
 If you have any question, comment or suggestion, please use github issue tracker to report coding related issues of CellChat or contact jiangjunyao789@163.com. I will answer you timely, and please remind me again if you have not received response more than three days.
