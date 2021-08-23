@@ -14,10 +14,6 @@
 #' @format contain motifs and its corresponding genes
 "Tranfac201803_Ch_MotifTFsF"
 
-
-#' Tranfac201803 database of motif Position weight matrix
-"Tranfac201803_MotifPWM"
-
 #' Mus musculus Gene ID correspondence
 #' @format contain ENSEMBEL ID, Symbol ID and NCBI ID
 "MmscRNA_genes"

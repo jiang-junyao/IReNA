@@ -8,6 +8,7 @@
 
 IReNA (Integrated Regulatory Network Analysis) is to reconstruct
 regulatory networks through integrating scRNA-seq and ATAC-seq data.
+
 IReNA contains four main part to reconstruct regulatory network:
 
 Part1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory
@@ -25,34 +26,44 @@ If you **have ATAC-seq data**, use **part 3** to refine regulatory
 relationships. If you **don’t have ATAC-seq data**, use **part 2** to
 refine regulatory relaionships
 
-This README contains: (1) citation (2) test data download (3) Workflow
-of IReNA (4) ATAC-seq data preprocessing (5) IReNA input (6) Example
+This README contains: (1) Installation (2) test data download (3)
+Workflow of IReNA (4) ATAC-seq data preprocessing (5) IReNA input (6)
+Tutorial (7) citation (8) Help and Suggestion
 
-## Installation
+## 1.Installation
 
-IReNA need R version 4.0 or higher.
+IReNA needs R version 4.0 or higher,
+[Bioconductor](http://bioconductor.org/) version 3.12.
 
-First, install a few Bioconductor dependencies that aren’t automatically
-installed:
+First install Bioconductor, open R and run:
 
 ``` r
 if (!requireNamespace("BiocManager", quietly = TRUE))
 install.packages("BiocManager")
-BiocManager::install(c('Rsamtools', 'ChIPseeker', 'monocle',
-                       'RcisTarget', 'RCy3','clusterProfiler'))
+BiocManager::install(version = "3.12")
 ```
 
-Second, install IReNA from GitHub:
+Next, install a few Bioconductor dependencies that aren’t automatically
+installed:
+
+``` r
+BiocManager::install(c('Rsamtools', 'ChIPseeker', 'monocle',
+                       'RcisTarget', 'RCy3', 'clusterProfiler'))
+```
+
+Then, install IReNA from GitHub:
 
 ``` r
 install.packages("devtools")
 devtools::install_github("jiang-junyao/IReNA")
 ```
 
-## 1.Citation
+Finally, check whether IReNA was installed correctly, start a new R
+session and run:
 
-If you use IReNA package, please cite the following Science
-paper: <https://science.sciencemag.org/content/370/6519/eabb8598>.
+``` r
+library(IReNA)
+```
 
 ## 2.Test data download
 
@@ -151,7 +162,7 @@ motif1 <- Tranfac201803_Zf_MotifTFsF
 motif1 <- Tranfac201803_Ch_MotifTFsF
 ```
 
-## 6.Example
+## 6.Tutorial
 
 IReNA contains four main part to reconstruct regulatory network:
 
@@ -520,7 +531,12 @@ This is the picture we processed through cytoscape, which can show the
 regulatory relationship of modularized transcription factors.
 ![Cytoscape\_network](Readme%20figure/Cytoscape_network.png)
 
-## Help and Suggestion
+## 7.Citation
+
+If you use IReNA package, please cite the following Science
+paper: <https://science.sciencemag.org/content/370/6519/eabb8598>.
+
+## 8.Help and Suggestion
 
 If you have any question, comment or suggestion, please use github issue
 tracker to report coding related issues of CellChat or contact
