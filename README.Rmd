@@ -34,6 +34,8 @@ Part 4: Regultory network analysis.
 
 If you **have ATAC-seq data**, use **part 3** to refine regulatory relationships. If you **don't have ATAC-seq data**, use **part 2** to refine regulatory relaionships
 
+If you use ATAC-seq to refine regulatory relationships, you also need a linux system PC or server with the following softwares: [samtools](http://www.htslib.org/), [bedtools](https://bedtools.readthedocs.io/en/latest/) and [fimo](https://meme-suite.org/meme/doc/fimo.html).
+
 This README contains:  (1) Installation (2) test data download (3) Workflow of IReNA (4) ATAC-seq data preprocessing (5) IReNA input (6) Tutorial (7) citation (8) Help and Suggestion
 
 ## 1.Installation
@@ -203,7 +205,7 @@ For users who have ATAC-seq data, IReNA provides several functions to calculate 
 filtered_footprints <- read.table('footprints.bed',sep = '\t')
 fastadir <- 'Genome/hg38.fa' 
 merged_fasta <- get_merged_fasta(filtered_footprints,fastadir)
-write.table(merged_fasta,'merged_footprints.fasta',row.names=F,quote=F)
+write.table(merged_fasta,'merged_footprints.fasta',row.names=F,quote=F,col.names=F)
 ```
 In this step, because [fimo](https://meme-suite.org/meme/doc/fimo.html) software only have linux version, and it takes too long to implement the corresponding function on Windows, we generate a shell script to run Fimo software in shell. If you are familiar with linux system and Fimo, you can write your own commands as you like.
 
@@ -214,7 +216,7 @@ Before run find_motifs() function, you should set the following four parameters:
 
 ```r
 ### Identify differentially expressed genes related motifs
-motif1 <- motif_select(Tranfac201803_Hs_MotifTFsF, rownames(Kmeans_clustering_ENS)) ###Kmeans_clustering_ENS was obtained in part1
+motif1 <- motifs_select(Tranfac201803_Hs_MotifTFsF, rownames(Kmeans_clustering_ENS)) ###Kmeans_clustering_ENS was obtained in part1
 ### run find_motifs()
 fimodir <- 'fimo'
 outputdir1 <- 'D:/GIBH/IReNA2 R package/IReNA2/ATAC/fimo/'
@@ -223,52 +225,63 @@ motifdir <- '/public/home/user/fimo/Mememotif/'
 sequencedir <- '/public/home/user/fimo/merged_footprints.fasta'
 find_motifs(motif1,step=20,fimodir, outputdir1, outputdir, motifdir, sequencedir)
 ```
-Then you need to use [winscp](https://winscp.net/eng/download.php) or other related software to transfer script in outputdir1 to Linux system, and run following commands (If you make analysis in linux system, ignore transfer part).
+Then you need to use [winscp](https://winscp.net/eng/download.php) or other related software to transfer script in outputdir1 to '/public/home/user/fimo' directory in Linux system, and run following commands (If you make analysis in linux system, ignore transfer part).
 ```
 ### run the following commands in the shell
 cd /public/home/user/fimo/
+mkdir output
 sh ./fimo_all.sh
 ```
-After get the result of Fimo, you can use [winscp](https://winscp.net/eng/download.php) or other related software to transfer fimo result files from linux to windos(If you use R in linux, please ignore this part). Then, we combine these Fimo consequence according to motif and motif Position weight matrix, and Dir2 folder should only contain fimo result files. Next, we load the peaks file and overlap differential peaks and motif footprints through overlap_footprints_peaks() function
+After get the result of Fimo, you can use [winscp](https://winscp.net/eng/download.php) or other related software to transfer all files in output directory (fimo result files) from linux to windos(If you use R in linux, please ignore this part). Then, we combine these Fimo consequence in Dir2. Notably Dir2 folder should only contain fimo result files. Next, we load the peaks file and overlap differential peaks and motif footprints through overlap_footprints_peaks() function
 ```r
 ###Combine all footprints of motifs
-Dir2 <- 'D:/GIBH/IReNA2 R package/IReNA2/ATAC/fimo/'
-combied <- combine_footprints(Dir2)
-peaks <- read.delim('D:\\IReNA\\ATAC\\Peaks\\peaks_merged.txt')
-overlapped <- overlap_footprints_peaks(combied,peaks)
+Dir2 <- 'D:/GIBH/IReNA2 R package/IReNA2/ATAC/fimo/output/'
+combined <- combine_footprints(Dir2)
+peaks <- read.delim('D:\\IReNA\\ATAC\\Peaks\\differential_peaks.bed')
+overlapped <- overlap_footprints_peaks(combined,peaks)
 ```
 However, the running time of overlap_footprints() is too long, so it's highly recommanded to use bedtools to do overlap in linux system. If you want to use bedtools to do overlap, you need to output 'combined_footprints' dataframe, and transfer it to shell.(If you make analysis in linux system, ignore transfer part)
 ```r
 ### output combined_footprints
-write.table(combined_footprints,'combied.txt',quote = F,row.names = F,col.names = F,sep = '\t')
-### run the following commands in the shell
-bedtools intersect -a combied_footprints.txt -b peaks_merged.bed -wa -wb > overlappd.txt
+write.table(combined,'combined.txt',quote = F,row.names = F,col.names = F,sep = '\t')
+### Transfer combied.txt and differential_peaks.bed to linux system, and then run the following commands in the shell
+bedtools intersect -a combined.txt -b differential_peaks.bed -wa -wb > overlappd.txt
 ```
-Next, we intergrate bioconductor package [ChIPseeker](https://bioconductor.org/packages/release/bioc/vignettes/ChIPseeker/inst/doc/ChIPseeker.html) to get footprint-related genes. Before we run get_related_genes(), we need to specify TxDb, which can be download from: http://bioconductor.org/packages/release/BiocViews.html#___TxDb. Kmeans_clustering_ENS used here was obtained in part1.
+Next, we intergrate bioconductor package [ChIPseeker](https://bioconductor.org/packages/release/bioc/vignettes/ChIPseeker/inst/doc/ChIPseeker.html) to get footprint-related genes. Before we run get_related_genes(), we need to specify TxDb, which can be download from: [](http://bioconductor.org/packages/release/BiocViews.html#___TxDb). Kmeans_clustering_ENS used here was obtained in part1.
 ```r
 ### If you make overlap by bedtools, read 'overlapped.txt' to R
 overlapped <- read.table('overlapped.txt')
 ###get footprint-related genes
-library(TxDb.Mmusculus.UCSC.mm10.knownGene)
-txdb <- TxDb.Mmusculus.UCSC.mm10.knownGene
-list1 <- get_related_genes(overlapped,txdb = txdb,motif=Tranfac201803_Mm_MotifTFsF,Species = 'Mm')
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+list1 <- get_related_genes(overlapped,txdb = txdb,motif=Tranfac201803_Mm_MotifTFsF,Species = 'Hs')
 ###Get candidate genes/TFs-related peaks
 list2 <- get_related_peaks(list1,Kmeans_clustering_ENS)
 ### output filtered footprints
-write.table(list2[[1]],'filter_footprints.bed', quote = F, row.names = F, col.names = F, sep = '\t')
+write.table(list2[[1]],'filtered_footprints.bed', quote = F, row.names = F, col.names = F, sep = '\t')
+```
+
+Then, because of the size of original bam file is too large, so we need to use samtools to extract footprints realated regions in bam to reduce running time of function which analyze bam files in IReNA. (If you use our [test data](https://github.com/jiang-junyao/IReNA-test-data), just skip this step)
+```
+### transfer filtered_footprints.bed to linux system and run the following codes
+samtools view -hb -L filtered_footprint.bed SSC_patient1.bam > SSC1_filter.bam
+samtools view -hb -L filtered_footprint.bed SSC_patient2.bam > SSC2_filter.bam
+samtools view -hb -L filtered_footprint.bed esc.bam > esc_filter.bam
 ```
 
 In this step, we count the cuts of each position in footrprints by wig_track(), and use these cuts to calculate the FOS of footprints to identify enriched TFs which determine the regulatory relationship. regulatory_relationships used here was calculated in part1.
 ```r
+### calculate cuts of each each position in footprints
 bamfilepath1 <- 'SSC1_filter.bam'
 bamfilepath2 <- 'SSC2_filter.bam'
-bamfilepath3 <- 'esc.bam'
+bamfilepath3 <- 'esc_filter.bam'
 cuts1 <- wig_track(bamfilepath = bamfilepath1,bedfile = list2[[1]])
 cuts2 <- wig_track(bamfilepath = bamfilepath2,bedfile = list2[[1]])
 cuts3 <- wig_track(bamfilepath = bamfilepath3,bedfile = list2[[1]])
 wig_list <- list(cuts1,cuts2,cuts3)
+### get related genes of footprints with high FOS
 potential_regulation <- Footprints_FOS(wig_list,list2[[2]])
-### Calculate correaltion of each gene pairs
+### Use related genes of footprints with high FOS to refine regulatory relationships
 filtered_regulatory_relationships <- regulatory_relationships[regulatory_relationships$TF %in% potential_regulation$TF & regulatory_relationships$Target %in% potential_regulation$Target,]
 ```
 
