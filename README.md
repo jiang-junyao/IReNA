@@ -8,17 +8,21 @@
 
 IReNA (Integrated Regulatory Network Analysis) is to reconstruct
 regulatory networks through integrating scRNA-seq and ATAC-seq data.
+Compared with other regulatory network analysis method (SCENIC), IReNA
+provides modularized regulatory network analysis to discover the
+biological significance of transcription factors and the regulatory role
+of each module throughout the process.
 
 IReNA contains four main part to reconstruct regulatory network:
 
-Part1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory
+Part 1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory
 relationships between transcription factors and genes.
 
-Part2: Use RcisTarget to refine regulatory relaionships
+Part 2: Use RcisTarget to refine regulatory relaionships
 
-Part3: Analyze ATAC-seq data to refine regulatory relationships
+Part 3: Analyze ATAC-seq data to refine regulatory relationships
 
-Part4: Regultory network analysis.
+Part 4: Regultory network analysis.
 
 ![workflow](Readme%20figure/Workflow1.png)
 
@@ -166,20 +170,20 @@ motif1 <- Tranfac201803_Ch_MotifTFsF
 
 IReNA contains four main part to reconstruct regulatory network:
 
-Part1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory
+Part 1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory
 relationships
 
-Part2: Use RcisTarget to refine regulatory relaionships
+Part 2: Use RcisTarget to refine regulatory relaionships
 
-Part3: Analyze ATAC-seq data to refine regulatory relationships
+Part 3: Analyze ATAC-seq data to refine regulatory relationships
 
-Part4: Regultory network analysis.
+Part 4: Regultory network analysis.
 
 If you **have ATAC-seq data**, use **part3** to refine regulatory
 relationships. If you **don’t have ATAC-seq data**, use **part2** to
-refine regulatory relaionships
+refine regulatory relaionships.
 
-### Part1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory relationships
+### Part 1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory relationships
 
 IReNA supports two input format: (i)path of raw counts, you can input
 path of raw counts and use function in GReNA to load data and convert it
@@ -229,7 +233,7 @@ clustering[1:5,1:5]
 Visualize your clustering result through heatmap
 
 ``` r
-plot_kmeans_pheatmap(test_clustering,ModuleColor1 = c('#67C7C1','#67C1E3','#5BA6DA','#EF9951','#FFBF0F','#C067A9'))
+plot_kmeans_pheatmap(clustering,ModuleColor1 = c('#67C7C1','#67C1E3','#5BA6DA','#EF9951','#FFBF0F','#C067A9'))
 ```
 
 ![Kmeans](Readme%20figure/Kmeans_plot.png)
@@ -255,10 +259,10 @@ Kmeans_clustering_ENS[1:5,1:5]
 ``` r
 ### Caculate the correlation
 motif1 <- Tranfac201803_Hs_MotifTFsF
-regulatory_relaionships <- get_cor(Kmeans_clustering_ENS, motif = motif1, 0.6, start_column = 4)
+regulatory_relationships <- get_cor(Kmeans_clustering_ENS, motif = motif1, 0.6, start_column = 4)
 ```
 
-### Part2: Use RcisTarget to refine regulatory relaionships (without ATAC-seq data)
+### Part 2: Use RcisTarget to refine regulatory relaionships (without ATAC-seq data)
 
 For users who do not have ATAC-seq data, IReNA provides
 filter\_regulation function (Based on RcisTarget) to refine regulation
@@ -286,7 +290,7 @@ Rankingspath1 <- 'hg19-500bp-upstream-7species.mc9nr1.feather' # download from h
 filtered_regulatory_relationships <- filter_regulation(regulatory_relationships, 'Hs', Rankingspath1)
 ```
 
-### Part3: Analyze ATAC-seq data to refine regulatory relationships (have ATAC-seq data)
+### Part 3: Analyze ATAC-seq data to refine regulatory relationships (have ATAC-seq data)
 
 For users who have ATAC-seq data, IReNA provides several functions to
 calculate related transcription factors of footprints with high FOS to
@@ -413,7 +417,7 @@ potential_regulation <- Footprints_FOS(wig_list,list2[[2]])
 filtered_regulatory_relationships <- regulatory_relationships[regulatory_relationships$TF %in% potential_regulation$TF & regulatory_relationships$Target %in% potential_regulation$Target,]
 ```
 
-### Part4: Regulatory network analysis
+### Part 4: Regulatory network analysis
 
 After we get ‘filtered\_regulatory\_relationships’ and
 ‘Kmeans\_clustering\_ENS’, we can reconstruct regulatory network. Run

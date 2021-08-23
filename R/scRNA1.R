@@ -49,7 +49,6 @@ load_counts <- function(datapath, datatype = 0) {
 #' @description Use monocle to calculate the pseudotime and return a monocle object
 #' @param seurat_object seurat object
 #' @param reverse TRUE or FALSE, whether to reverse the pseudotime, default is TURE
-#' @param show_trajecotry TRUE or FALSE, whether show the trajectory of pseudotime, default is TURE
 #' @import monocle
 #' @import pbapply
 #' @import ROCR
@@ -58,7 +57,6 @@ load_counts <- function(datapath, datatype = 0) {
 #' @importFrom BiocGenerics estimateDispersions
 #' @importFrom monocle reduceDimension
 #' @importFrom monocle orderCells
-#' @importFrom monocle plot_cell_trajectory
 #' @importFrom VGAM negbinomial.size
 #' @importFrom DDRTree DDRTree
 #' @return return monocle object which contain pseudotime
@@ -66,7 +64,7 @@ load_counts <- function(datapath, datatype = 0) {
 #'
 #' @examples load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
 #' get_pseudotime(test_seurat)
-get_pseudotime <- function(seurat_object, reverse = TRUE, show_trajecotry = TRUE) {
+get_pseudotime <- function(seurat_object, reverse = TRUE) {
   data <- as(as.matrix(seurat_object@assays$RNA@counts), "sparseMatrix")
   pd <- new("AnnotatedDataFrame", data = seurat_object@meta.data)
   fData <- data.frame(gene_short_name = row.names(data), row.names = row.names(data))
@@ -83,9 +81,6 @@ get_pseudotime <- function(seurat_object, reverse = TRUE, show_trajecotry = TRUE
                                   method = "DDRTree"
   )
   cds <- monocle::orderCells(cds, reverse = reverse)
-  if (show_trajecotry == TRUE) {
-    monocle::plot_cell_trajectory(cds, color_by = "Pseudotime")
-  }
   return(cds)
 }
 

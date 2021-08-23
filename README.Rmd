@@ -18,17 +18,17 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-IReNA (Integrated Regulatory Network Analysis) is to reconstruct regulatory networks through integrating scRNA-seq and ATAC-seq data. 
+IReNA (Integrated Regulatory Network Analysis) is to reconstruct regulatory networks through integrating scRNA-seq and ATAC-seq data. Compared with other regulatory network analysis method (SCENIC), IReNA provides modularized regulatory network analysis to discover the biological significance of transcription factors and the regulatory role of each module throughout the process.
 
 IReNA contains four main part to reconstruct regulatory network: 
 
-Part1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory relationships between transcription factors and genes.
+Part 1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory relationships between transcription factors and genes.
 
-Part2: Use RcisTarget to refine regulatory relaionships
+Part 2: Use RcisTarget to refine regulatory relaionships
 
-Part3: Analyze ATAC-seq data to refine regulatory relationships
+Part 3: Analyze ATAC-seq data to refine regulatory relationships
 
-Part4: Regultory network analysis. 
+Part 4: Regultory network analysis. 
 
 ![workflow](Readme figure/Workflow1.png)
 
@@ -122,18 +122,18 @@ motif1 <- Tranfac201803_Ch_MotifTFsF
 ## 6.Tutorial
 IReNA contains four main part to reconstruct regulatory network: 
 
-Part1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory relationships
+Part 1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory relationships
 
-Part2: Use RcisTarget to refine regulatory relaionships
+Part 2: Use RcisTarget to refine regulatory relaionships
 
-Part3: Analyze ATAC-seq data to refine regulatory relationships
+Part 3: Analyze ATAC-seq data to refine regulatory relationships
 
-Part4: Regultory network analysis. 
+Part 4: Regultory network analysis. 
 
-If you **have ATAC-seq data**, use **part3** to refine regulatory relationships. If you **don't have ATAC-seq data**, use **part2** to refine regulatory relaionships
+If you **have ATAC-seq data**, use **part3** to refine regulatory relationships. If you **don't have ATAC-seq data**, use **part2** to refine regulatory relaionships.
 
 
-### Part1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory relationships
+### Part 1: Analyze scRNA-seq or bulk RNA-seq data to get basic regulatory relationships
 IReNA supports two input format: (i)path of raw counts, you can input path of raw counts and use function in GReNA to load data and convert it to Seurat object; (ii)Seurat object. After you upload the data, IReNA can calculate pseudotime according to R package monocle and add it to the metadata of Seurat object.
 
 Our test seurat object only contains differentially expressed genes, so we set the parameter 'DEG' in add_pseudotime_DEG_filter() function as FALSE, if you seurat object contain all genes, please set this parameter as TRUE. In paraell, our test seurat object have been normalized, so we set the parameter 'normlize1' in add_pseudotime_DEG_filter() function as FALSE, if your seurat object only contains raw counts, please set this parameter as TRUE.
@@ -168,7 +168,7 @@ clustering[1:5,1:5]
 
 Visualize your clustering result through heatmap
 ```r
-plot_kmeans_pheatmap(test_clustering,ModuleColor1 = c('#67C7C1','#67C1E3','#5BA6DA','#EF9951','#FFBF0F','#C067A9'))
+plot_kmeans_pheatmap(clustering,ModuleColor1 = c('#67C7C1','#67C1E3','#5BA6DA','#EF9951','#FFBF0F','#C067A9'))
 ```
 ![Kmeans](Readme figure/Kmeans_plot.png)
 
@@ -181,9 +181,9 @@ Kmeans_clustering_ENS[1:5,1:5]
 ```r
 ### Caculate the correlation
 motif1 <- Tranfac201803_Hs_MotifTFsF
-regulatory_relaionships <- get_cor(Kmeans_clustering_ENS, motif = motif1, 0.6, start_column = 4)
+regulatory_relationships <- get_cor(Kmeans_clustering_ENS, motif = motif1, 0.6, start_column = 4)
 ```
-### Part2: Use RcisTarget to refine regulatory relaionships (without ATAC-seq data)
+### Part 2: Use RcisTarget to refine regulatory relaionships (without ATAC-seq data)
 For users who do not have ATAC-seq data, IReNA provides filter_regulation function (Based on RcisTarget) to refine regulation relaionships. Due to the limitations of RcisTarget, this function currently only supports three species (Hs, Mm and Fly). **So if the species of your data is not included, and you don't have ATAC-seq data, you can use unrefined regulatory relaionships to perform part4 analysis directly.**
 
 Before run this function, you need to download Gene-motif rankings database from https://resources.aertslab.org/cistarget/, and set the Rankingspath1 as the path of downloaded Gene-motif rankings database. If you don’t know which database to choose, we suggest that using 'hg19-500bp-upstream-7species.mc9nr' for human, using 'mm9-500bp-upstream-10species.mc9nr' for mouse, using 'dm6-5kb-upstream-full-tx-11species.mc8nr' for Fly. You can download it manually, or use R code:
@@ -196,7 +196,7 @@ Rankingspath1 <- 'hg19-500bp-upstream-7species.mc9nr1.feather' # download from h
 filtered_regulatory_relationships <- filter_regulation(regulatory_relationships, 'Hs', Rankingspath1)
 ```
 
-### Part3: Analyze ATAC-seq data to refine regulatory relationships (have ATAC-seq data)
+### Part 3: Analyze ATAC-seq data to refine regulatory relationships (have ATAC-seq data)
 For users who have ATAC-seq data, IReNA provides several functions to calculate related transcription factors of footprints with high FOS to refine regulatory relationships. We merge footprints whose distance is less than 4 and get sequence from each footprints based on reference genome through function get_merged_fasta(). Reference genome should be fasta/fa format, and you can download it from https://hgdownload.soe.ucsc.edu/downloads.html#alpaca or other genome database website.
 ```r
 ###merge footprints whose distance is less than 4
@@ -272,7 +272,7 @@ potential_regulation <- Footprints_FOS(wig_list,list2[[2]])
 filtered_regulatory_relationships <- regulatory_relationships[regulatory_relationships$TF %in% potential_regulation$TF & regulatory_relationships$Target %in% potential_regulation$Target,]
 ```
 
-### Part4: Regulatory network analysis
+### Part 4: Regulatory network analysis
 After we get 'filtered_regulatory_relationships' and 'Kmeans_clustering_ENS', we can reconstruct regulatory network. Run network_analysis() to get regulatory, this step will generate a list which contain the following 9 dataframes: 
 
 (1)Cor_TFs.txt: list of expressed TFs in the gene networks. 
