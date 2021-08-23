@@ -200,9 +200,9 @@ filtered_regulatory_relationships <- filter_regulation(regulatory_relationships,
 For users who have ATAC-seq data, IReNA provides several functions to calculate related transcription factors of footprints with high FOS to refine regulatory relationships. We merge footprints whose distance is less than 4 and get sequence from each footprints based on reference genome through function get_merged_fasta(). Reference genome should be fasta/fa format, and you can download it from https://hgdownload.soe.ucsc.edu/downloads.html#alpaca or other genome database website.
 ```r
 ###merge footprints whose distance is less than 4
-filtered_footprints <- read.table('filtered_footprints.bed')
-fastadir <- 'Genome/GRCm38Chr.fasta' 
-merged_fasta <- get_merged_fasta(footprints_80th,fastadir)
+filtered_footprints <- read.table('footprints.bed',sep = '\t')
+fastadir <- 'Genome/hg38.fa' 
+merged_fasta <- get_merged_fasta(filtered_footprints,fastadir)
 write.table(merged_fasta,'merged_footprints.fasta',row.names=F,quote=F)
 ```
 In this step, because [fimo](https://meme-suite.org/meme/doc/fimo.html) software only have linux version, and it takes too long to implement the corresponding function on Windows, we generate a shell script to run Fimo software in shell. If you are familiar with linux system and Fimo, you can write your own commands as you like.

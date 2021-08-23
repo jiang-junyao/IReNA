@@ -4,14 +4,12 @@
 \alias{get_pseudotime}
 \title{Calculate pseudotime of cells}
 \usage{
-get_pseudotime(seurat_object, reverse = TRUE, show_trajecotry = TRUE)
+get_pseudotime(seurat_object, reverse = TRUE)
 }
 \arguments{
 \item{seurat_object}{seurat object}
 
 \item{reverse}{TRUE or FALSE, whether to reverse the pseudotime, default is TURE}
-
-\item{show_trajecotry}{TRUE or FALSE, whether show the trajectory of pseudotime, default is TURE}
 }
 \value{
 return monocle object which contain pseudotime
