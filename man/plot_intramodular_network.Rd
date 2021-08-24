@@ -78,5 +78,5 @@ Kmeans_clustering <- add_ENSID(test_clustering, Spec1 = "Hs")
 cor0.6 <- get_cor(Kmeans_clustering, Tranfac201803_Hs_MotifTFsF, 0.6, start_column=3)
 TFs_list <- network_analysis(cor0.6,Kmeans_clustering)
 #enrichment <- enrich_module(Kmeans_cluster_Ens, org.Hs.eg.db, 'KEGG')
-#plot_network(TFs_list,enrichment,layout = 'random')
+#plot_intramodular_network(TFs_list,enrichment,layout = 'random')
 }

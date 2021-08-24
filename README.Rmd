@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 # IReNA
 
 <!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/jiang-junyao/IReNA/branch/master/graph/badge.svg)](https://codecov.io/gh/jiang-junyao/IReNA?branch=master)
+[![R-CMD-check](https://github.com/jiang-junyao/IReNA/workflows/R-CMD-check/badge.svg)](https://github.com/jiang-junyao/IReNA/actions)
 <!-- badges: end -->
 
 IReNA (Integrated Regulatory Network Analysis) is to reconstruct regulatory networks through integrating scRNA-seq and ATAC-seq data. Compared with other regulatory network analysis method (SCENIC), IReNA provides modularized regulatory network analysis to discover the biological significance of transcription factors and the regulatory role of each module throughout the process.
@@ -150,7 +152,7 @@ clustering <- test_clustering
 ###Read seurat_object
 seurat_object <- readRDS('seurat_object.rds')
 ###calculate the pseudotime and return monocle object
-monocle_object <- get_pseudotime(seurat_object,show_trajecotry = TRUE)
+monocle_object <- get_pseudotime(seurat_object)
 ###Add pseudotime to the Seurat object
 seurat_with_time <- add_pseudotime_DEG_filter(seurat_object, monocle_object,DEG = FALSE,normlize1 = FALSE)
 ```
@@ -306,7 +308,7 @@ After we get 'filtered_regulatory_relationships' and 'Kmeans_clustering_ENS', we
 
 (9)intramodular_network: intramodular regulatory network
 ```r
-TFs_list <- network_analysis(regulatory_relationships,Kmeans_cluster_Ens,TFFDR1 = 10,TFFDR2 = 50)
+TFs_list <- network_analysis(filtered_regulatory_relationships,Kmeans_cluster_Ens,TFFDR1 = 10,TFFDR2 = 50)
 ```
 We can also make enrichment analysis for differentially expressed genes in each module. Before you run this function, you need to download the org.db for your species through BiocManager.
 ```{r warning = FALSE, message = FALSE}

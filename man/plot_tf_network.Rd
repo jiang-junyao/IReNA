@@ -71,5 +71,5 @@ load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
 Kmeans_clustering <- add_ENSID(test_clustering, Spec1 = "Hs")
 cor0.6 <- get_cor(Kmeans_clustering, Tranfac201803_Hs_MotifTFsF, 0.7, start_column=3)
 TFs_list <- network_analysis(cor0.6,Kmeans_clustering)
-plot_network(TFs_list)
+plot_tf_network(TFs_list)
 }

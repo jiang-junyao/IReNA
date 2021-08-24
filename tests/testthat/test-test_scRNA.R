@@ -1,7 +1,7 @@
 test_that("multiplication works", {
-  seurat_object <- readRDS('D:\\GIBH\\IReNA2 R package\\IReNA-test-data\\IReNA-test-data\\scRNA-seq\\seurat_object.rds')
+  seurat_object <- readRDS('D:\\GIBH\\IReNA2 R package\\GReNA\\seurat_object.rds')
   monocle_object <- readRDS('D:\\GIBH\\IReNA2 R package\\GReNA\\monocle_object.rds')
-  seurat_with_time <- add_pseudotime_DEG_filter(seurat_object, monocle_object,DEG = FALSE,normlize1 = F)
+  seurat_with_time <- add_pseudotime_DEG_filter(seurat_object, monocle_object,DEG = FALSE,normlize1 = FALSE)
   expression_profile <- get_SmoothByBin_PseudotimeExp(seurat_with_time)
   expression_profile_filter <- fileter_expression_profile(expression_profile, FC=0.01)
   clustering <- clustering_Kmeans(expression_profile_filter, K1=4)
@@ -12,5 +12,5 @@ test_that("multiplication works", {
   motif1 <- Tranfac201803_Hs_MotifTFsF
   regulatory_relationships <- get_cor (Kmeans_clustering_ENS,motif1,0.6)
   TFs_list <- network_analysis(regulatory_relationships,Kmeans_clustering_ENS,TFFDR1 = 10,TFFDR2 = 50)
-  expect_true(nrow(TFs_list[[8]])>500)
+  expect_true(nrow(TFs_list[[8]])>100)
 })

@@ -5,6 +5,7 @@
 #' @param Rankingsdir path of Gene-motif rankings file, which can be downloaded in https://resources.aertslab.org/cistarget. For more details about motif ranking file, you can read https://bioconductor.riken.jp/packages/3.9/bioc/vignettes/RcisTarget/inst/doc/RcisTarget.html#gene-motif_rankings
 #' @importFrom RcisTarget importRankings
 #' @importFrom RcisTarget cisTarget
+#' @importFrom utils data
 #' @return return filtered regulatory relationship
 #' @export
 #'
@@ -13,13 +14,13 @@
 filter_regulation<-function(correlation,Species,Rankingsdir){
   gene1 <- correlation$TFSymbol
   if (Species == 'Hs') {
-    data('motifAnnotations_hgnc')
+    utils::data('motifAnnotations_hgnc')
     geneannotate <- motifAnnotations_hgnc
   }else if (Species == 'Mm') {
-    data('motifAnnotations_mgi')
+    utils::data('motifAnnotations_mgi')
     geneannotate <- motifAnnotations_mgi
   }else if (Species == 'Fly') {
-    data('motifAnnotations_dmel')
+    utils::data('motifAnnotations_dmel')
     geneannotate <- motifAnnotations_dmel
   }
   motifRankings <- RcisTarget::importRankings(Rankingsdir)
