@@ -21,8 +21,6 @@ Part 3: Analyze ATAC-seq data to refine regulatory relationships
 
 Part 4: Regultory network analysis.
 
-![workflow](Readme%20figure/Workflow1.png)
-
 If you **have ATAC-seq data**, use **part 3** to refine regulatory
 relationships. If you **don’t have ATAC-seq data**, use **part 2** to
 refine regulatory relaionships
@@ -82,8 +80,6 @@ download it from
 <https://www.ncbi.nlm.nih.gov/biosample?Db=biosample&DbFrom=bioproject&Cmd=Link&LinkName=bioproject_biosample&LinkReadableName=BioSample&ordinalpos=1&IdsFromResult=357084>
 
 ## 3.Workflow
-
-![workflow](Readme%20figure/Workflow.png)
 
 ## 4.ATAC-seq data preprocessing
 
@@ -238,8 +234,6 @@ Visualize your clustering result through heatmap
 ``` r
 plot_kmeans_pheatmap(clustering,ModuleColor1 = c('#67C7C1','#67C1E3','#5BA6DA','#EF9951','#FFBF0F','#C067A9'))
 ```
-
-![Kmeans](Readme%20figure/Kmeans_plot.png)
 
 Adding Ensmble ID of the genes in the first column, then calculate the
 correlation of the gene pair and select gene pairs which contain at
@@ -522,8 +516,6 @@ edges are negative regulation.
 
     plot_tf_network(TFs_list)
 
-![tf\_network](Readme%20figure/tf_network.png)
-
 You can visualize intramodular network with enriched function through
 plot\_intramodular\_network() function by setting enrichment parameter
 as consequence of enrich\_module(). This plot shows enriched
@@ -533,8 +525,6 @@ highest -log10qvalue) and regulatory relationships between each modules.
 ``` r
 plot_intramodular_network(list1,enrichment_KEGG,layout = 'circle')
 ```
-
-![intramodular\_network](Readme%20figure/intramodular_network.png)
 
 It is strongly recommended to use Cytoscape(downloading link:
 <https://cytoscape.org/download.html>) to display the regulatory
@@ -550,7 +540,6 @@ initiate_cy(TFs_list, layout1='grid', type='module')
 
 This is the picture we processed through cytoscape, which can show the
 regulatory relationship of modularized transcription factors.
-![Cytoscape\_network](Readme%20figure/Cytoscape_network.png)
 
 ## 7.Citation
 

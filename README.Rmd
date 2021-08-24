@@ -28,7 +28,6 @@ Part 3: Analyze ATAC-seq data to refine regulatory relationships
 
 Part 4: Regultory network analysis. 
 
-![workflow](Readme figure/Workflow1.png)
 
 If you **have ATAC-seq data**, use **part 3** to refine regulatory relationships. If you **don't have ATAC-seq data**, use **part 2** to refine regulatory relaionships
 
@@ -67,7 +66,6 @@ library(IReNA)
 Test data used below can be download from https://github.com/jiang-junyao/IReNA-test-data. If you want raw data of ATAC-seq to run [ATAC-seq analysis pipline](https://github.com/jiang-junyao/ATAC-seq-pipline), you can download it from https://www.ncbi.nlm.nih.gov/biosample?Db=biosample&DbFrom=bioproject&Cmd=Link&LinkName=bioproject_biosample&LinkReadableName=BioSample&ordinalpos=1&IdsFromResult=357084
 
 ## 3.Workflow
-![workflow](Readme figure/Workflow.png)
 
 
 ## 4.ATAC-seq data preprocessing
@@ -170,7 +168,6 @@ Visualize your clustering result through heatmap
 ```r
 plot_kmeans_pheatmap(clustering,ModuleColor1 = c('#67C7C1','#67C1E3','#5BA6DA','#EF9951','#FFBF0F','#C067A9'))
 ```
-![Kmeans](Readme figure/Kmeans_plot.png)
 
 Adding Ensmble ID of the genes in the first column, then calculate the correlation of the gene pair and select gene pairs which contain at least one gene in transcription factors database and have absolute value of correlation larger than 0.6(setting by the parameter correlatio_filter).
 ```{r}
@@ -321,13 +318,11 @@ You can visualize regulatory network for enriched transcription factors of each 
 ```
 plot_tf_network(TFs_list)
 ```
-![tf_network](Readme figure/tf_network.png)
 
 You can visualize intramodular network with enriched function through plot_intramodular_network() function by setting enrichment parameter as consequence of enrich_module(). This plot shows enriched transcription factors(has the most edges), enriched fcuntion(has the highest -log10qvalue) and regulatory relationships between each modules.
 ```r
 plot_intramodular_network(list1,enrichment_KEGG,layout = 'circle')
 ```
-![intramodular_network](Readme figure/intramodular_network.png)
 
 It is strongly recommended to use Cytoscape(downloading link: https://cytoscape.org/download.html) to display the regulatory networks. We provide a function that can provide different Cytoscape styles. You need to intall and open Cytoscape before running the function.
 ```r
@@ -336,7 +331,6 @@ initiate_cy(TFs_list, layout1='degree-circle', type='TF')
 initiate_cy(TFs_list, layout1='grid', type='module')
 ```
 This is the picture we processed through cytoscape, which can show the regulatory relationship of modularized transcription factors.
-![Cytoscape_network](Readme figure/Cytoscape_network.png)
 
 ## 7.Citation
 If you use IReNA package, please cite the following Science paper: https://science.sciencemag.org/content/370/6519/eabb8598.
