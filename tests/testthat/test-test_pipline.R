@@ -1,9 +1,3 @@
-test_that("merge footprints & get fasta", {
-  load(system.file("extdata", "fdr005.rda", package = "IReNA"))
-  fastadir <- "D:\\GIBH\\IReNA2 R package\\IReNA2\\Public\\GRCm38Chr\\Genome\\GRCm38Chr.fasta"
-  fasta <- get_merged_fasta(fdr005,fastadir)
-  expect_equal(nrow(fasta), 1770)
-})
 
 test_that("overlap & annotate", {
   load(system.file("extdata", "test_peak.rda", package = "IReNA"))
