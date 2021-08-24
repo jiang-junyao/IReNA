@@ -314,7 +314,7 @@ After we get 'filtered_regulatory_relationships' and 'Kmeans_clustering_ENS', we
 TFs_list <- network_analysis(regulatory_relationships,Kmeans_cluster_Ens,TFFDR1 = 10,TFFDR2 = 50)
 ```
 We can also make enrichment analysis for differentially expressed genes in each module. Before you run this function, you need to download the org.db for your species through BiocManager.
-```{r warning = FALSE, message = FALSE}
+```
 ### Download Homo sapiens org.db
 #BiocManger::install('org.Hs.eg.db')
 library(org.Hs.eg.db)
