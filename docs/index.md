@@ -25,6 +25,18 @@ Syntax highlighted code block
 
 **Bold** and _Italic_ and `Code` text
 
+```r
+library(IReNA)
+###call Mus musculus motif database
+motif1 <- Tranfac201803_Mm_MotifTFsF
+###call Homo sapiens motif database
+motif1 <- Tranfac201803_Hs_MotifTFsF
+###call Zebrafish motif database
+motif1 <- Tranfac201803_Zf_MotifTFsF
+###call Chicken motif database
+motif1 <- Tranfac201803_Ch_MotifTFsF
+```
+
 [Link](url) and ![Image](src)
 ```
 
