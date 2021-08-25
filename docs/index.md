@@ -24,6 +24,7 @@ Syntax highlighted code block
 2. List
 
 **Bold** and _Italic_ and `Code` text
+```
 
 ```r
 library(IReNA)
@@ -38,7 +39,7 @@ motif1 <- Tranfac201803_Ch_MotifTFsF
 ```
 
 [Link](url) and ![Image](src)
-```
+
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
