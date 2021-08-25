@@ -559,7 +559,7 @@ regulatory relationship of modularized transcription factors.
 ![Cytoscape\_network](Readme%20figure/Cytoscape_network.png)
 ![Cytoscape\_intramodular](Readme%20figure/Cytoscape_intramodular.png)
 
-## 7.Citation
+## 7.How to cite
 
 If you use IReNA package, please cite the following Science
 paper: <https://science.sciencemag.org/content/370/6519/eabb8598>.

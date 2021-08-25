@@ -342,7 +342,7 @@ These are the picture we processed through cytoscape, which can show the regulat
 ![Cytoscape_network](Readme figure/Cytoscape_network.png)
 ![Cytoscape_intramodular](Readme figure/Cytoscape_intramodular.png)
 
-## 7.Citation
+## 7.How to cite
 If you use IReNA package, please cite the following Science paper: https://science.sciencemag.org/content/370/6519/eabb8598.
 
 ## 8.Help and Suggestion
