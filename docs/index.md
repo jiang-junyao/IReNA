@@ -26,7 +26,7 @@ Syntax highlighted code block
 **Bold** and _Italic_ and `Code` text
 ```
 
-```r
+```{r}
 library(IReNA)
 ###call Mus musculus motif database
 motif1 <- Tranfac201803_Mm_MotifTFsF
@@ -36,6 +36,7 @@ motif1 <- Tranfac201803_Hs_MotifTFsF
 motif1 <- Tranfac201803_Zf_MotifTFsF
 ###call Chicken motif database
 motif1 <- Tranfac201803_Ch_MotifTFsF
+print(123)
 ```
 
 [Link](url) and ![Image](src)
