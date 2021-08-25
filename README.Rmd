@@ -323,8 +323,11 @@ plot_tf_network(TFs_list)
 ```
 ![tf_network](Readme figure/tf_network.png)
 
-You can visualize intramodular network with enriched function through plot_intramodular_network() function by setting enrichment parameter as consequence of enrich_module(). This plot shows enriched transcription factors(has the most edges), enriched fcuntion(has the highest -log10qvalue) and regulatory relationships between each modules.
+You can visualize intramodular network with enriched function through plot_intramodular_network() function. Before run this function, you can select one enriched function of each module that you want to present in the plot. If you input all enriched functions, this function will automatically select the function with the highest -log10(qvalue) in each module to present in the plot. What's more transcription factor with the most edge numbers in each module will be presented in the plot too.
 ```r
+### select functions that you want to present in the figure
+enrichment_KEGG <- enrichment_KEGG[c(3,8,15,16),]
+### plotting
 plot_intramodular_network(list1,enrichment_KEGG,layout = 'circle')
 ```
 ![intramodular_network](Readme figure/intramodular_network.png)
@@ -335,8 +338,9 @@ It is strongly recommended to use Cytoscape(downloading link: https://cytoscape.
 initiate_cy(TFs_list, layout1='degree-circle', type='TF')
 initiate_cy(TFs_list, layout1='grid', type='module')
 ```
-This is the picture we processed through cytoscape, which can show the regulatory relationship of modularized transcription factors.
+These are the picture we processed through cytoscape, which can show the regulatory relationship of modularized transcription factors.
 ![Cytoscape_network](Readme figure/Cytoscape_network.png)
+![Cytoscape_intramodular](Readme figure/Cytoscape_intramodular.png)
 
 ## 7.Citation
 If you use IReNA package, please cite the following Science paper: https://science.sciencemag.org/content/370/6519/eabb8598.

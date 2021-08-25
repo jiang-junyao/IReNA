@@ -525,12 +525,18 @@ edges are negative regulation.
 ![tf\_network](Readme%20figure/tf_network.png)
 
 You can visualize intramodular network with enriched function through
-plot\_intramodular\_network() function by setting enrichment parameter
-as consequence of enrich\_module(). This plot shows enriched
-transcription factors(has the most edges), enriched fcuntion(has the
-highest -log10qvalue) and regulatory relationships between each modules.
+plot\_intramodular\_network() function. Before run this function, you
+can select one enriched function of each module that you want to present
+in the plot. If you input all enriched functions, this function will
+automatically select the function with the highest -log10(qvalue) in
+each module to present in the plot. What’s more transcription factor
+with the most edge numbers in each module will be presented in the plot
+too.
 
 ``` r
+### select functions that you want to present in the figure
+enrichment_KEGG <- enrichment_KEGG[c(3,8,15,16),]
+### plotting
 plot_intramodular_network(list1,enrichment_KEGG,layout = 'circle')
 ```
 
@@ -548,9 +554,10 @@ initiate_cy(TFs_list, layout1='degree-circle', type='TF')
 initiate_cy(TFs_list, layout1='grid', type='module')
 ```
 
-This is the picture we processed through cytoscape, which can show the
+These are the picture we processed through cytoscape, which can show the
 regulatory relationship of modularized transcription factors.
 ![Cytoscape\_network](Readme%20figure/Cytoscape_network.png)
+![Cytoscape\_intramodular](Readme%20figure/Cytoscape_intramodular.png)
 
 ## 7.Citation
 
