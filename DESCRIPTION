@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "jiangjunyao789@163.com")
 Description: IReNA(Integrated Regulatory Network analysis) is a R package to intergrate bulk RNA-seq or scRNA-seq and ATAC-seq data to reconstrcut regulatory network. 
-License: MIT + file LICENSE
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
