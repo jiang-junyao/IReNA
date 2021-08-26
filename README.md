@@ -51,7 +51,7 @@ library(IReNA)
 If you use **both ATAC-seq data and scRNA-seq or bulk RNA-seq data** to
 reconstruct regulatory network, please run [ATAC-seq raw data
 preprocessing](https://jiang-junyao.github.io/IReNA/ATAC-seq-preprocessing)
-first to get bam file, peaks file and footprints file, and run codes of
+first to get bam file, peaks file and footprints file, then run codes of
 **part 1**, **part 3** and **part 4** in [IReNA
 tutorial](https://jiang-junyao.github.io/IReNA/tutorial). If you **only
 use scRNA-seq or bulk RNA-seq data** to reconstruct regulatory network,
