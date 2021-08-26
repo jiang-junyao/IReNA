@@ -542,11 +542,11 @@ plot_intramodular_network(list1,enrichment_KEGG,layout = 'circle')
 
 ![intramodular\_network](Readme%20figure/intramodular_network.png)
 
-It is strongly recommended to use Cytoscape(downloading link:
-<https://cytoscape.org/download.html>) to display the regulatory
-networks. We provide a function that can provide different Cytoscape
-styles. You need to intall and open Cytoscape before running the
-function.
+It is strongly recommended to use
+[Cytoscape](https://cytoscape.org/download.html) to display the
+regulatory networks. We provide a function that can provide different
+Cytoscape styles. You need to intall and open Cytoscape before running
+the function.
 
 ``` r
 ###optional: display the network in cytoscape, open cytoscape before running this function
@@ -559,7 +559,7 @@ regulatory relationship of modularized transcription factors.
 ![Cytoscape\_network](Readme%20figure/Cytoscape_network.png)
 ![Cytoscape\_intramodular](Readme%20figure/Cytoscape_intramodular.png)
 
-## 7.How to cite
+## 7.How to cite this package
 
 If you use IReNA package, please cite the following Science
 paper: <https://science.sciencemag.org/content/370/6519/eabb8598>.
