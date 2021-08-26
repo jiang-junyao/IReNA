@@ -1,5 +1,7 @@
 # IReNA
 
+[toc]
+
 IReNA (Integrated Regulatory Network Analysis) is to reconstruct
 regulatory networks through integrating scRNA-seq and ATAC-seq data.
 Compared with other regulatory network analysis method (SCENIC), IReNA
