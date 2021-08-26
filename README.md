@@ -1,3 +1,36 @@
+IReNA: integrated regulatory network analysis of single-cell
+transcriptomes
+================
+
+-   [IReNA](#irena)
+    -   [1.Installation](#1installation)
+    -   [2.Test data download](#2test-data-download)
+    -   [3.Workflow](#3workflow)
+    -   [4.ATAC-seq data preprocessing](#4atac-seq-data-preprocessing)
+    -   [5.IReNA Input](#5irena-input)
+        -   [(1).Bam file of each sample](#1bam-file-of-each-sample)
+        -   [(2).Peak file of all samples](#2peak-file-of-all-samples)
+        -   [(3).Raw counts of scRNA-seq data, or Seurat object, or bulk
+            RNA-seq expression
+            profile.](#3raw-counts-of-scrna-seq-data-or-seurat-object-or-bulk-rna-seq-expression-profile)
+        -   [(4).Footprints file](#4footprints-file)
+        -   [(5).Reference genome of your
+            species](#5reference-genome-of-your-species)
+        -   [(6).Motif database](#6motif-database)
+    -   [6.Tutorial](#6tutorial)
+        -   [Part 1: Analyze scRNA-seq or bulk RNA-seq data to get basic
+            regulatory
+            relationships](#part-1-analyze-scrna-seq-or-bulk-rna-seq-data-to-get-basic-regulatory-relationships)
+        -   [Part 2: Use RcisTarget to refine regulatory relaionships
+            (without ATAC-seq
+            data)](#part-2-use-rcistarget-to-refine-regulatory-relaionships-without-atac-seq-data)
+        -   [Part 3: Analyze ATAC-seq data to refine regulatory
+            relationships (have ATAC-seq
+            data)](#part-3-analyze-atac-seq-data-to-refine-regulatory-relationships-have-atac-seq-data)
+        -   [Part 4: Regulatory network
+            analysis](#part-4-regulatory-network-analysis)
+    -   [7.How to cite this package](#7how-to-cite-this-package)
+    -   [8.Help and Suggestion](#8help-and-suggestion)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -32,10 +65,6 @@ linux system PC or server with the following softwares:
 [samtools](http://www.htslib.org/),
 [bedtools](https://bedtools.readthedocs.io/en/latest/) and
 [fimo](https://meme-suite.org/meme/doc/fimo.html).
-
-This README contains: (1) Installation (2) test data download (3)
-Workflow of IReNA (4) ATAC-seq data preprocessing (5) IReNA input (6)
-Tutorial (7) citation (8) Help and Suggestion
 
 ## 1.Installation
 
