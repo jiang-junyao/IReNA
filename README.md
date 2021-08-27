@@ -75,6 +75,6 @@ paper: <https://science.sciencemag.org/content/370/6519/eabb8598>.
 ## Help and Suggestion
 
 If you have any question, comment or suggestion, please use github issue
-tracker to report coding related issues of CellChat or contact
+tracker to report coding related issues of IReNA or contact
 <jiangjunyao789@163.com>. I will answer you timely, and please remind me
 again if you have not received response more than three days.
