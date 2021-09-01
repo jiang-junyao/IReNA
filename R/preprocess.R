@@ -53,10 +53,10 @@ merge_sort_count <- function(count_all,gtf){
   gtf$num <- 1:nrow(gtf)
   gtf <- gtf[order(gtf[,10]), ]
   count_all <- cbind(count_all,gtf[,c(1,4,5,11)])
-  count_all <- count_all[order(count_all[,8]), ]
+  count_all <- count_all[order(count_all[,ncol(count_all)]), ]
   rownames(count_all) <- count_all[,1]
   count_all <- count_all[,-1]
-  count_all <- count_all[,c(4,5,6,1,2,3)]
+  count_all <- count_all[,c((ncol(count_all)-3):(ncol(count_all)-1),1:(ncol(count_all)-4))]
   return(count_all)
 }
 
