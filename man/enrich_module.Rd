@@ -13,7 +13,8 @@ enrich_module(
 )
 }
 \arguments{
-\item{Kmeans_result}{Kmeans result data.frame, row names should be ENSEMBEL ID, and the first column should be gene Symbol ID, the second column should be KmeansGroup}
+\item{Kmeans_result}{Kmeans result data.frame, row names should be ENSEMBEL ID,
+and the first column should be gene Symbol ID, the second column should be KmeansGroup}
 
 \item{org.db}{org.db of your species.}
 
@@ -27,7 +28,9 @@ enrich_module(
 data.frame contains enrichment functions for each module
 }
 \description{
-This function integrate clusterprofile make enrichment analysis for each moudle. Before run this function, you need to download the org.db for your species through BiocManager.
+This function integrate clusterprofile make enrichment analysis
+for each moudle. Before run this function, you need to download the org.db for
+your species through BiocManager.
 }
 \examples{
 \dontrun{

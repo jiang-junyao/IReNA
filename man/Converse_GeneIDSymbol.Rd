@@ -9,9 +9,12 @@ Converse_GeneIDSymbol(Gene1, GeneInf1 = NULL, Spec1 = "")
 \arguments{
 \item{Gene1}{vector, indicating original gene ids}
 
-\item{GeneInf1}{data.frame, correspondence file of gene ID, row names should be ENSEMBLE ID, first column should be Symbol ID, if GeneInf1 = NULL this function will be built-in corresponding gene ID file.}
+\item{GeneInf1}{data.frame, correspondence file of gene ID, row names should
+be ENSEMBLE ID, first column should be Symbol ID, if GeneInf1 = NULL this
+function will be built-in corresponding gene ID file.}
 
-\item{Spec1}{If you don’t have a gene ID corresponding file, you can also use our built-in corresponding gene ID file, 'Mm' for mus musculus}
+\item{Spec1}{If you don’t have a gene ID corresponding file, you can also use
+our built-in corresponding gene ID file, 'Mm' for mus musculus}
 }
 \value{
 return a data.frame contain original gene ids and conversed gene ids

@@ -2,24 +2,31 @@
 % Please edit documentation in R/Footprints_FOS.R
 \name{get_cor}
 \alias{get_cor}
-\title{Calculate correlation of each gene pair, and remove genes that are below the threshold and are not transcription factors}
+\title{Calculate correlation of each gene pair, and remove genes that are below the
+threshold and are not transcription factors}
 \usage{
 get_cor(Kmeans_result, motif, correlation_filter, start_column = 4)
 }
 \arguments{
 \item{Kmeans_result}{Kmeans result, column names should be ENSEMBL ID}
 
-\item{motif}{motif file, you can choose our bulit-in motif database of 'mus musculus', 'homo sapiens', 'zebrafish' and 'chicken' by 'motif = Tranfac201803_Mm_MotifTFsF', 'motif = Tranfac201803_Hs_MotifTFsF', 'motif = Tranfac201803_Zf_MotifTFsF', 'motif = Tranfac201803_Ch_MotifTFsF' respectively, or you can upload your own motif data base, but the formata use be the same as our built-in motif database.}
+\item{motif}{motif file, you can choose our bulit-in motif database of
+'mus musculus', 'homo sapiens', 'zebrafish' and 'chicken' by 'motif = Tranfac201803_Mm_MotifTFsF',
+'motif = Tranfac201803_Hs_MotifTFsF', 'motif = Tranfac201803_Zf_MotifTFsF',
+'motif = Tranfac201803_Ch_MotifTFsF' respectively, or you can upload your own motif data base, but the formata use be the same as our built-in motif database.}
 
 \item{correlation_filter}{numeric, indicating correlation threshold}
 
-\item{start_column}{numeric, indicating the start column of expression value, defalut is 4}
+\item{start_column}{numeric, indicating the start column of expression value,
+defalut is 4}
 }
 \value{
-return a table contain transcription factor with correlation > correlation_filter and correlation < -correlation_filter
+return a table contain transcription factor with correlation >
+correlation_filter and correlation < -correlation_filter
 }
 \description{
-Calculate correlation of each gene pair, and remove genes that are below the threshold and are not transcription factors
+Calculate correlation of each gene pair, and remove genes that are below the
+threshold and are not transcription factors
 }
 \examples{
 load(system.file("extdata", "test_clustering.rda", package = "IReNA"))

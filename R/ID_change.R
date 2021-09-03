@@ -1,8 +1,11 @@
 #' ID change
 #' @description Function to transfer Symbol ID to ENSEMBEL or ENSEMBEL to Symbol
 #' @param Gene1 vector, indicating original gene ids
-#' @param GeneInf1 data.frame, correspondence file of gene ID, row names should be ENSEMBLE ID, first column should be Symbol ID, if GeneInf1 = NULL this function will be built-in corresponding gene ID file.
-#' @param Spec1 If you don’t have a gene ID corresponding file, you can also use our built-in corresponding gene ID file, 'Mm' for mus musculus
+#' @param GeneInf1 data.frame, correspondence file of gene ID, row names should
+#' be ENSEMBLE ID, first column should be Symbol ID, if GeneInf1 = NULL this
+#' function will be built-in corresponding gene ID file.
+#' @param Spec1 If you don’t have a gene ID corresponding file, you can also use
+#' our built-in corresponding gene ID file, 'Mm' for mus musculus
 #'
 #' @return return a data.frame contain original gene ids and conversed gene ids
 #' @export

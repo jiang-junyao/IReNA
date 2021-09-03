@@ -17,15 +17,20 @@ add_pseudotime_DEG_filter(
 \arguments{
 \item{seurat_object}{seurat object, which has same cells and genes as monocle_object}
 
-\item{monocle_object}{monocle object, which include pesudotime and has same cells and genes as seurat_object}
+\item{monocle_object}{monocle object, which include pesudotime and has same
+cells and genes as seurat_object}
 
-\item{DEG}{logic, indicating whether filter differential expressed genes for seurat object}
+\item{DEG}{logic, indicating whether filter differential expressed genes for
+seurat object}
 
-\item{qvalue}{numeric, indicating q-value to indentify differentially expressed genes}
+\item{qvalue}{numeric, indicating q-value to indentify differentially
+expressed genes}
 
-\item{nce}{numeric, indicating num cells expressed to indentify differentially expressed genes}
+\item{nce}{numeric, indicating num cells expressed to indentify differentially
+expressed genes}
 
-\item{ed}{numeric, indicating expression difference to indentify differentially expressed genes}
+\item{ed}{numeric, indicating expression difference to indentify differentially
+expressed genes}
 
 \item{normlize1}{logic, indicating whether normalize the data in seurat object}
 }
@@ -33,7 +38,8 @@ add_pseudotime_DEG_filter(
 return a seurat object
 }
 \description{
-Add pseudotime to seurat object, and filter differential expressed genes according to pseudotime
+Add pseudotime to seurat object, and filter differential
+expressed genes according to pseudotime
 }
 \examples{
 load(system.file("extdata", "test_seurat.rda", package = "IReNA"))

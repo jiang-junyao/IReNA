@@ -20,13 +20,16 @@ clustering_Kmeans(
 
 \item{K1}{numbers of bin}
 
-\item{ColumnGroup1}{vector, if it is not NULL, this function wil sepate columns according to varible ColumnGroup1, default is NULL}
+\item{ColumnGroup1}{vector, if it is not NULL, this function wil sepate columns
+according to varible ColumnGroup1, default is NULL}
 
-\item{Scale1}{character, indicating if the values should be centered and scaled in either the row direction or the column direction, or none. Corresponding values are "row", "column" and "none"}
+\item{Scale1}{character, indicating if the values should be centered and scaled
+in either the row direction or the column direction, or none. Corresponding values are "row", "column" and "none"}
 
 \item{Range1}{numeric, indicating the range of expression values, defalut is c(-Inf, Inf)}
 
-\item{Reorder1}{logic, indicating whether to order gene through hclustering, defalut is TRUE}
+\item{Reorder1}{logic, indicating whether to order gene through hclustering,
+defalut is TRUE}
 
 \item{RevOrder1}{logic, indicating whether to reverser the order}
 
@@ -36,7 +39,8 @@ clustering_Kmeans(
 return a data.frame, and the first column is K-means group
 }
 \description{
-This function is used to cluster the DEGs in the expression profile by K-means algorithmn
+This function is used to cluster the DEGs in the expression
+profile by K-means algorithmn
 }
 \examples{
 load(system.file("extdata", "test_clustering.rda", package = "IReNA"))

@@ -27,7 +27,8 @@ plot_kmeans_pheatmap(
 \arguments{
 \item{Kmeans_result}{expression profile which should contain column "KmeansGroup"}
 
-\item{start_column}{numeric, indicating the start column of expression value, defalut is 3}
+\item{start_column}{numeric, indicating the start column of expression value,
+defalut is 3}
 
 \item{Gene1}{custom labels for rows that are used instead of rownames}
 
@@ -35,7 +36,10 @@ plot_kmeans_pheatmap(
 
 \item{show_colnames}{logic, indicating whether show column names, default is FALSE}
 
-\item{clustering_distance_rows}{distance measure used in clustering rows. Possible values are "correlation" for Pearson correlation and all the distances supported by dist, such as "euclidean", etc. If the value is none of the above it is assumed that a distance matrix is provided}
+\item{clustering_distance_rows}{distance measure used in clustering rows.
+Possible values are "correlation" for Pearson correlation and all the
+distances supported by dist, such as "euclidean", etc. If the value
+is none of the above it is assumed that a distance matrix is provided}
 
 \item{ModuleColor1}{each color for each module}
 
@@ -47,23 +51,28 @@ plot_kmeans_pheatmap(
 
 \item{legend1}{logic, indicating whether show the legend, default is TRUE}
 
-\item{border_color}{color of cell borders on heatmap, use NA if no border should be drawn.}
+\item{border_color}{color of cell borders on heatmap, use NA if no border
+should be drawn.}
 
-\item{ByPanel}{logic, if TRUE, reorder columns of heatmap according to the parameter ColumnGroup1, default is FALSE}
+\item{ByPanel}{logic, if TRUE, reorder columns of heatmap according to the
+parameter ColumnGroup1, default is FALSE}
 
 \item{Color1}{colors used in heat map}
 
 \item{Show.Module}{logic, indicating whether show the module, defalut is TURE}
 
-\item{Range1}{numeric, indicating the range of expression values which will affect the range of heat map, defalut is c(-3, 3)}
+\item{Range1}{numeric, indicating the range of expression values which will
+affect the range of heat map, defalut is c(-3, 3)}
 
-\item{ColumnGroup1}{vector, if it is not NULL, this function wil sepate columns according to varible ColumnGroup1, default is NULL}
+\item{ColumnGroup1}{vector, if it is not NULL, this function wil sepate columns
+according to varible ColumnGroup1, default is NULL}
 }
 \value{
 Kmeans clustering figure
 }
 \description{
-Display the result of clustering based on pheatmap, the input data.frame should contain KmeansGroup column.
+Display the result of clustering based on pheatmap, the input
+data.frame should contain KmeansGroup column.
 }
 \examples{
 col1 <- c('#67C1E3','#EF9951','#00BFC4','#AEC7E8','#C067A9','#E56145','#2F4F4F')

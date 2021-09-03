@@ -12,11 +12,14 @@ get_SmoothByBin_PseudotimeExp(
 )
 }
 \arguments{
-\item{seurat_object}{seurat object, where meta.data should contain Pseudotime}
+\item{seurat_object}{seurat object, where meta.data should contain
+Pseudotime}
 
-\item{FC}{logic, indicating whether to add FoldChangeQ95 to the first column, default is TRUE}
+\item{FC}{logic, indicating whether to add FoldChangeQ95 to the first column,
+default is TRUE}
 
-\item{Bin}{numeric, indicating the numbers of bin which divide the pseudotime, default is 50}
+\item{Bin}{numeric, indicating the numbers of bin which divide the pseudotime,
+default is 50}
 
 \item{FcType}{'Q95' or 'Q90', FoldChange threshold, default is 'Q95'}
 }
@@ -24,7 +27,8 @@ get_SmoothByBin_PseudotimeExp(
 return a expression profile
 }
 \description{
-Divide cells into bins across pseudotime and return expression profile
+Divide cells into bins across pseudotime and return expression
+profile
 }
 \examples{
 load(system.file("extdata", "test_seurat.rda", package = "IReNA"))

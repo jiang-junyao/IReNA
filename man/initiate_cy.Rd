@@ -11,9 +11,12 @@ initiate_cy(TFs_list, colour = NULL, type = "TF", layout1 = "degree-circle")
 
 \item{colour}{vector, indicating colors for border of each node}
 
-\item{type}{network type, 'TF' indicate TFs network, 'module' indicate intramodular network}
+\item{type}{network type, 'TF' indicate TFs network, 'module' indicate
+intramodular network}
 
-\item{layout1}{the layout to display the network, options: "degree-circle", "attributes-layout", "kamada-kawai", "force-directed", "cose", "hierarchical", "attribute-circle", "stacked-node-layout", "circular", "grid"}
+\item{layout1}{the layout to display the network, options: "degree-circle",
+"attributes-layout", "kamada-kawai", "force-directed", "cose", "hierarchical",
+"attribute-circle", "stacked-node-layout", "circular", "grid"}
 }
 \value{
 Cytoscape visualization

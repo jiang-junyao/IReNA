@@ -1,6 +1,7 @@
 #' load counts
 #' @description Load counts from datapath and return a seurat object
-#' @param datapath character, indicating data path of counts, if it is 10X data, please input the path of folder which containing matrix.mtx.gz, features.tsv.gz and barcodes.tsv.gz
+#' @param datapath character, indicating data path of counts, if it is 10X data,
+#' please input the path of folder which containing matrix.mtx.gz, features.tsv.gz and barcodes.tsv.gz
 #' @param datatype 10X:datatype = 0, counts:datatype = 1, sparse matrix:datatype = 2
 #' @importFrom utils read.table
 #' @importFrom utils read.delim
@@ -85,13 +86,19 @@ get_pseudotime <- function(seurat_object, reverse = TRUE) {
 }
 
 #' add pseudtoime and identify DEGs
-#' @description Add pseudotime to seurat object, and filter differential expressed genes according to pseudotime
+#' @description Add pseudotime to seurat object, and filter differential
+#' expressed genes according to pseudotime
 #' @param seurat_object seurat object, which has same cells and genes as monocle_object
-#' @param monocle_object monocle object, which include pesudotime and has same cells and genes as seurat_object
-#' @param DEG logic, indicating whether filter differential expressed genes for seurat object
-#' @param qvalue numeric, indicating q-value to indentify differentially expressed genes
-#' @param nce numeric, indicating num cells expressed to indentify differentially expressed genes
-#' @param ed numeric, indicating expression difference to indentify differentially expressed genes
+#' @param monocle_object monocle object, which include pesudotime and has same
+#' cells and genes as seurat_object
+#' @param DEG logic, indicating whether filter differential expressed genes for
+#' seurat object
+#' @param qvalue numeric, indicating q-value to indentify differentially
+#' expressed genes
+#' @param nce numeric, indicating num cells expressed to indentify differentially
+#' expressed genes
+#' @param ed numeric, indicating expression difference to indentify differentially
+#' expressed genes
 #' @param normlize1 logic, indicating whether normalize the data in seurat object
 #'
 #' @return return a seurat object
@@ -101,7 +108,9 @@ get_pseudotime <- function(seurat_object, reverse = TRUE) {
 #' monocle_object = get_pseudotime(test_seurat)
 #' add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object, DEG = FALSE, normlize1 = FALSE)
 #' #add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object, DEG = TRUE, qvalue = 0.001, nce = 0.1, ed = 0.1)
-add_pseudotime_DEG_filter <- function(seurat_object, monocle_object, DEG = TRUE, qvalue = 0.05, nce = 0.1, ed = 0.1, normlize1 = TRUE) {
+add_pseudotime_DEG_filter <- function(seurat_object, monocle_object, DEG = TRUE,
+                                      qvalue = 0.05, nce = 0.1, ed = 0.1,
+                                      normlize1 = TRUE) {
   se <- seurat_object
   mo <- monocle_object
   #### add_pseduotime
@@ -118,7 +127,8 @@ add_pseudotime_DEG_filter <- function(seurat_object, monocle_object, DEG = TRUE,
     mo <- estimateDispersions(mo)
     mo <- detectGenes(mo, min_expr = 3)
     diff1 <- monocle::differentialGeneTest(mo,
-                                           fullModelFormulaStr = "~Pseudotime", relative_expr = TRUE
+                                           fullModelFormulaStr = "~Pseudotime",
+                                           relative_expr = TRUE
     )
     sig_genes <- subset(diff1, qval < qvalue)
     sig_genes <- subset(sig_genes, num_cells_expressed > nce)

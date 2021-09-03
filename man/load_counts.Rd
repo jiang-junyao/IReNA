@@ -7,7 +7,8 @@
 load_counts(datapath, datatype = 0)
 }
 \arguments{
-\item{datapath}{character, indicating data path of counts, if it is 10X data, please input the path of folder which containing matrix.mtx.gz, features.tsv.gz and barcodes.tsv.gz}
+\item{datapath}{character, indicating data path of counts, if it is 10X data,
+please input the path of folder which containing matrix.mtx.gz, features.tsv.gz and barcodes.tsv.gz}
 
 \item{datatype}{10X:datatype = 0, counts:datatype = 1, sparse matrix:datatype = 2}
 }

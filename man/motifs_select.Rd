@@ -7,15 +7,23 @@
 motifs_select(motif, gene)
 }
 \arguments{
-\item{motif}{motif file, you can choose our bulit-in motif database of 'mus musculus', 'homo sapiens', 'zebrafish' and 'chicken' by 'motif = Tranfac201803_Mm_MotifTFsF', 'motif = Tranfac201803_Hs_MotifTFsF', 'motif = Tranfac201803_Zf_MotifTFsF', 'motif = Tranfac201803_Ch_MotifTFsF' respectively, or you can upload your own motif data base, but the formata use be the same as our built-in motif database.}
+\item{motif}{motif file, you can choose our bulit-in motif database of
+'mus musculus', 'homo sapiens', 'zebrafish' and 'chicken' by
+'motif = Tranfac201803_Mm_MotifTFsF', 'motif = Tranfac201803_Hs_MotifTFsF',
+'motif = Tranfac201803_Zf_MotifTFsF', 'motif = Tranfac201803_Ch_MotifTFsF'
+respectively, or you can upload your own motif data base, but the formata
+use be the same as our built-in motif database.}
 
-\item{gene}{character, indicating genes used to filter motif. You can use differentially expressed genes of corresponding scRNA-seq or bulk RNA-seq data, or just use expressed genes.}
+\item{gene}{character, indicating genes used to filter motif. You can use
+differentially expressed genes of corresponding scRNA-seq or bulk RNA-seq data,
+or just use expressed genes.}
 }
 \value{
 return filtered motif
 }
 \description{
-Select the motif related to the input genes. Genes used here should be ENSEMBEL ID.
+Select the motif related to the input genes. Genes used here
+should be ENSEMBEL ID.
 }
 \examples{
 load(system.file("extdata", "test_clustering.rda", package = "IReNA"))

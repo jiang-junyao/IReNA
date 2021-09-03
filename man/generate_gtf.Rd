@@ -27,7 +27,8 @@ gtf <- generate_gtf(peaks)
  sample4_peaks <- read.delim("sample4_peaks.narrowPeak", header=FALSE)
  sample5_peaks <- read.delim("sample5_peaks.narrowPeak", header=FALSE)
  sample6_peaks <- read.delim("sample6_peaks.narrowPeak", header=FALSE)
- all_peak <- rbind(sample1_peaks, sample2_peaks, sample3_peaks, sample4_peaks, sample5_peaks, sample6_peaks)
+ all_peak <- rbind(sample1_peaks, sample2_peaks, sample3_peaks, sample4_peaks,
+ sample5_peaks, sample6_peaks)
  peaks_merged_gtf <- merge_peak(all_peak)
 }
 }
