@@ -89,13 +89,14 @@ filter_regulation<-function(correlation,Species,Rankingsdir){
 #' motif1 <- Tranfac201803_Hs_MotifTFsF
 #' regulatory_relationships <- get_cor(Kmeans_cluster_Ens,motif1,0.7)
 #' TFs_list <- network_analysis(regulatory_relationships,Kmeans_cluster_Ens)
-network_analysis <- function(regulatory_relationships, Kmeans_result, TFFDR1 = 2,
-                             TFFDR2 =10, ModuleFDR = 0.05){
+network_analysis <- function(regulatory_relationships, Kmeans_result, TFFDR1 = 2
+                             ,TFFDR2 =10, ModuleFDR = 0.05){
   TFs_list <- get_Enriched_TFs(regulatory_relationships, Kmeans_result,
                                TFFdrThr1 = TFFDR1)
   TFs_list <- get_regulation_of_TFs_to_modules(TFs_list, TFFDR2)
   TFs_list <- get_partial_regulations(TFs_list)
-  TFs_list <- merge_Module_Regulations(TFs_list, Kmeans_result, ModuleThr1 = ModuleFDR)
+  TFs_list <- merge_Module_Regulations(TFs_list, Kmeans_result, ModuleThr1 =
+                                         ModuleFDR)
   return(TFs_list)
 }
 
@@ -154,8 +155,9 @@ get_Enriched_TFs <- function(GeneCor1, Kmeans_result, TFFdrThr1 = 2) {
         pTF4 <- cbind(pTF4, pTF32)
       }
     }
-    colnames(pTF4)[(ncol(pTF4) - 5):ncol(pTF4)] <- paste0(c("Pnum", "Pp", "Pfdr", "Nnum", "Np", "Nfdr"),
-                                                          uGroup1[i])
+    colnames(pTF4)[(ncol(pTF4) - 5):ncol(pTF4)] <- paste0(c("Pnum", "Pp", "Pfdr"
+                                                            , "Nnum", "Np",
+                                                            "Nfdr"), uGroup1[i])
   }
   pTF4Mod <- Module1[match(rownames(pTF4), rownames(Module1)), ]
   Ind1 <- 1:length(uGroup1)
@@ -402,7 +404,7 @@ enrich_module <- function(Kmeans_result, org.db, enrich.db, fun_num = 5,
                   OrgDb = org.db)
     if (enrich.db =='KEGG') {
       k1 <- clusterProfiler::enrichKEGG(gene = gene1$ENTREZID,
-                                        pvalueCutoff = pvalueCutoff)
+                                        pvalueCutoff = pvalueCutoff,use_internal_data = TRUE)
     }else if(enrich.db =='GO'){
       k1 = clusterProfiler::enrichGO(gene = gene1$ENTREZID,
                     OrgDb = org.db,
