@@ -357,5 +357,7 @@ get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
   var1$TargetGroup <- TargetGroup
   col1 <- var1[, c("TF", "TFSymbol", "TFGroup", "Target", "TargetSymbol",
                    "TargetGroup", "Correlation")]
+  col1 <- col1[duplicated(col1),]
+
   return(col1)
 }
