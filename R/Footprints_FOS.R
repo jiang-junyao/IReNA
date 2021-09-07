@@ -325,11 +325,16 @@ get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
   print("get correlation for gene pairs")
   a <- Kmeans_result
   b <- motif
+  motifgene <- c()
+  for (i in 1:nrow(b)) {
+    gene1 <- strsplit(b[i,5],';')[[1]]
+    motifgene <- c(motifgene,gene1)
+  }
   Exp1 <- cor(t(a[start_column:ncol(a)]))
   col1 <- matrix(c("TF", "TFSymbol", "Target", "TargetSymbol", "Correlation"), nrow = 1)
   newdata <- subset(Exp1 > correlation_filter | Exp1 < -correlation_filter)
   for (i in 1:nrow(Exp1)) {
-    if (rownames(Exp1)[i] %in% b$EnsemblID) {
+    if (rownames(Exp1)[i] %in% motifgene) {
       acc2 <- Exp1[i, ][newdata[i, ]]
       for (j in 1:length(acc2)) {
         if (rownames(Exp1)[i] != names(acc2)[j]) {
@@ -357,7 +362,7 @@ get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
   var1$TargetGroup <- TargetGroup
   col1 <- var1[, c("TF", "TFSymbol", "TFGroup", "Target", "TargetSymbol",
                    "TargetGroup", "Correlation")]
-  col1 <- col1[duplicated(col1),]
+  col1 <- col1[!duplicated(col1),]
 
   return(col1)
 }
