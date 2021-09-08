@@ -366,3 +366,19 @@ get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
 
   return(col1)
 }
+
+#' filter regulatory relationships based on footprints with high FOS
+#' @description overlap footprints information with regulatory relationships
+#' @param FOS footprints information, generated in \link{Footprints_FOS}
+#' @param regulary_relationships generated in \link{get_cor}
+#'
+#' @return overlapped regulatory relationships
+#' @export
+#'
+#' @examples
+filter_ATAC <- function(FOS,regulary_relationships){
+  pair1 <- paste(FOS[,1],FOS[,2])
+  pair2 <- paste(regulary_relationships[,1],regulary_relationships[,4])
+  filtered <- regulary_relationships[pair2 %in% pair1,]
+  return(filtered)
+}
