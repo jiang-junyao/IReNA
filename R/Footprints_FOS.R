@@ -338,7 +338,7 @@ get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
       acc2 <- Exp1[i, ][newdata[i, ]]
       for (j in 1:length(acc2)) {
         if (rownames(Exp1)[i] != names(acc2)[j]) {
-          if (names(acc2)[j] %in% b$EnsemblID) {
+          if (names(acc2)[j] %in% motifgene) {
             var2 <- c(names(acc2)[j], a[names(acc2)[j], ]$Symbol, rownames(Exp1)[i],
                       a[rownames(Exp1)[i], ]$Symbol, acc2[j])
             col1 <- rbind(col1, var2)
