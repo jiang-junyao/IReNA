@@ -459,3 +459,27 @@ enrich_module <- function(Kmeans_result, org.db, enrich.db, fun_num = 5,
   acc21 <- acc21[,c(1,2,11,10,3:9)]
   return(acc21)
 }
+
+#' Generate grn format regulatory relationships
+#'
+#' @param regulatory_relationships regulatory relationships , columns should
+#' contain 'TF', 'TFSymbol', 'TFGroup', 'Target', 'TargetSymbol', 'TargetGroup'
+#' and 'Correlation'
+#'
+#' @return grn format regulatory relationships
+#' @export
+#'
+#' @examples load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+#' Kmeans_cluster_Ens <- add_ENSID(test_clustering,Spec1='Hs')
+#' motif1 <- Tranfac201803_Hs_MotifTFsF
+#' regulatory_relationships <- get_cor(Kmeans_cluster_Ens,motif1,0.9)
+#' grn <- output_grn(regulatory_relationships)
+output_grn <- function(regulatory_relationships){
+  ID <- paste(regulatory_relationships$TFSymbol,regulatory_relationships$TargetSymbol,sep = '_')
+  Attribution <- paste0('TFSymbol:',regulatory_relationships$TFSymbol,';','TargetSymbol:',regulatory_relationships$TargetSymbol)
+  final <- regulatory_relationships[,c('TF','TFGroup','Target','TargetGroup','Correlation')]
+  final$ID <- ID
+  final$Attribution <- Attribution
+  final <- final[,c(6,1:5,7)]
+  return(final)
+}
