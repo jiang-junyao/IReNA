@@ -483,3 +483,27 @@ output_grn <- function(regulatory_relationships){
   final <- final[,c(6,1:5,7)]
   return(final)
 }
+
+
+#' Sort Transcription factor based on degree.
+#' @description Sort Transcription factor based on degree.
+#' @param regulatory_relationships
+#'
+#' @return Matrix contains sorted transcription factors
+#' @export
+#'
+#' @examples load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+#' correlation <- get_cor(test_clustering, Tranfac201803_Hs_MotifTFsF, 0.7, start_column=3)
+#' TFs_degree <- sort_TFs_degree
+sort_TFs_degree <- function(regulatory_relationships){
+  TFs <- table(regulatory_relationships$TFSymbol)
+  Target <- table(regulatory_relationships$TargetSymbol)
+  Target <- Target[names(Target) %in% names(TFs)]
+  for (i in 1:length(Target)) {
+    name1 <- names(Target[i])
+    TFs[name1] <- TFs[name1] + Target[i]
+  }
+  result <- as.matrix(sort(TFs,decreasing = T))
+  colnames(result)<-'degree'
+  return(result)
+}

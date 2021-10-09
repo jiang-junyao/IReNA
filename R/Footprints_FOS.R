@@ -319,7 +319,7 @@ Merge_TFs_genes <- function(FOSF_RegM) {
 #' @export
 #'
 #' @examples load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
-#' get_cor(test_clustering, Tranfac201803_Hs_MotifTFsF, 0.5, start_column=3)
+#' correlation <- get_cor(test_clustering, Tranfac201803_Hs_MotifTFsF, 0.7, start_column=3)
 
 get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
   print("get correlation for gene pairs")

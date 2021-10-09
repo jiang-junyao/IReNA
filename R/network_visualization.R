@@ -50,6 +50,8 @@ plot_tf_network <- function(TFs_list, layout = 'grid', group.cols = NULL,
     col1 <- group.cols
   }
   network <- TFs_list[["TF_network"]]
+  network$TFGroup <- as.integer(network$TFGroup)
+  network$TargetGroup <- as.integer(network$TargetGroup)
   tfs <- network[, c("TFSymbol", "TFGroup")]
   target <- network[, c("TargetSymbol", "TargetGroup")]
   colnames(target) <- c("TFSymbol", "TFGroup")
