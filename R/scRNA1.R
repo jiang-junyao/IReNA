@@ -65,7 +65,7 @@ load_counts <- function(datapath, datatype = 0) {
 #'
 #' @examples load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
 #' get_pseudotime(test_seurat)
-get_pseudotime <- function(seurat_object, reverse = TRUE) {
+get_pseudotime <- function(seurat_object, reverse = FALSE) {
   data <- as(as.matrix(seurat_object@assays$RNA@counts), "sparseMatrix")
   pd <- new("AnnotatedDataFrame", data = seurat_object@meta.data)
   fData <- data.frame(gene_short_name = row.names(data), row.names = row.names(data))
