@@ -162,6 +162,9 @@ clustering_Kmeans <- function(RNA1, K1 = 1, ColumnGroup1 = NULL, Scale1 = "row",
                               Range1 = c(-Inf, Inf), Reorder1 = TRUE,
                               RevOrder1 = -1, NAcolum1 = NULL) {
   RowGroup1 = NULL;NumColumnBlank1 = NULL
+  if (is.numeric(K1)) {
+    K2 <- K1
+  } else{K2 <- nrow(K1)}
   if (Scale1 == "row") {
     RNA1 <- t(scale(t(RNA1)))
   }
@@ -195,16 +198,21 @@ clustering_Kmeans <- function(RNA1, K1 = 1, ColumnGroup1 = NULL, Scale1 = "row",
       RNA02 <- cbind(cRNA1$cluster, RNA1[, -NAcolum1])
       Cluster1 <- cRNA1$cluster
     } else {
-      if (K1 == 1) {
-        Cluster1 <- rep(1, nrow(RNA1))
-      } else {
+      if (is.numeric(K1)) {
+        if (K1 == 1) {
+          Cluster1 <- rep(1, nrow(RNA1))
+        } else {
+          cRNA1 <- kmeans(RNA1, K1)
+          Cluster1 <- cRNA1$cluster
+        }
+      }else{
         cRNA1 <- kmeans(RNA1, K1)
         Cluster1 <- cRNA1$cluster
       }
       RNA02 <- cbind(Cluster1, RNA1)
     }
     RNA2 <- cbind(Cluster1, RNA21)
-    NameInd1 <- 1:K1
+    NameInd1 <- 1:K2
     colnames(RNA2)[1] <- c("KmeansGroup")
     print(table(RNA2[, "KmeansGroup"]))
   } else {
@@ -236,7 +244,7 @@ clustering_Kmeans <- function(RNA1, K1 = 1, ColumnGroup1 = NULL, Scale1 = "row",
 
   print("Sort genes")
   RNA22 <- c()
-  for (i in 1:K1) {
+  for (i in 1:K2) {
     if (is.null(RowGroup1)) {
       RNA20 <- RNA2[RNA2[, "KmeansGroup"] == i, ]
       RNA03 <- RNA02[RNA02[, 1] == i, ]
