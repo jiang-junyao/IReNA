@@ -65,7 +65,10 @@ load_counts <- function(datapath, datatype = 0) {
 #'
 #' @examples load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
 #' get_pseudotime(test_seurat)
-get_pseudotime <- function(seurat_object, reverse = FALSE) {
+get_pseudotime <- function(seurat_object, reverse = FALSE,gene.use = NULL) {
+  if (is.null(gene.use)) {
+    seurat_object <- seurat_object
+  } else{seurat_object <- seurat_object[gene.use,]}
   data <- as(as.matrix(seurat_object@assays$RNA@counts), "sparseMatrix")
   pd <- new("AnnotatedDataFrame", data = seurat_object@meta.data)
   fData <- data.frame(gene_short_name = row.names(data), row.names = row.names(data))
@@ -76,8 +79,8 @@ get_pseudotime <- function(seurat_object, reverse = FALSE) {
                                          lowerDetectionLimit = 0.5,
                                          expressionFamily = VGAM::negbinomial.size()
   )
-  sc_cds <- BiocGenerics::estimateSizeFactors(monocle_cds)
-  cds <- monocle::reduceDimension(sc_cds,
+  cds <- BiocGenerics::estimateSizeFactors(monocle_cds)
+  cds <- monocle::reduceDimension(cds,
                                   max_components = 2,
                                   method = "DDRTree"
   )

@@ -111,7 +111,7 @@ filter_regulation<-function(Kmeans_result,correlation,Species,Rankingsdir){
 #' motif1 <- Tranfac201803_Hs_MotifTFsF
 #' regulatory_relationships <- get_cor(Kmeans_cluster_Ens,motif1,0.7)
 #' TFs_list <- network_analysis(regulatory_relationships,Kmeans_cluster_Ens)
-network_analysis <- function(regulatory_relationships, Kmeans_result, TFFDR1 = 2
+network_analysis <- function(regulatory_relationships, Kmeans_result, TFFDR1 = 10
                              ,TFFDR2 =10, ModuleFDR = 0.05){
   TFs_list <- get_Enriched_TFs(regulatory_relationships, Kmeans_result,
                                TFFdrThr1 = TFFDR1)
@@ -412,6 +412,9 @@ merge_Module_Regulations <- function(TFs_list, Kmeans_result, ModuleThr1 = 0.05)
 #' @param enrich.db 'GO' for GO enricment analysis, 'KEGG' for KEGG enrichment analysis
 #' @param fun_num numeric, indicating the number of output functions per module
 #' @param pvalueCutoff adjusted pvalue cutoff on enrichment tests to report
+#' @param use_internal_data logical, use KEGG.db or latest online KEGG data
+#' @param organism character, used for KEGG enrichment analysis.
+#' supported organism listed in 'http://www.genome.jp/kegg/catalog/org_list.html'
 #' @importFrom clusterProfiler bitr
 #' @importFrom clusterProfiler enrichKEGG
 #' @importFrom clusterProfiler enrichGO
@@ -424,8 +427,8 @@ merge_Module_Regulations <- function(TFs_list, Kmeans_result, ModuleThr1 = 0.05)
 #' enrichment <- enrich_module(Kmeans_cluster_Ens, org.Hs.eg.db, 'KEGG')
 #' enrichment <- enrich_module(Kmeans_cluster_Ens, org.Hs.eg.db, 'GO')
 #' }
-enrich_module <- function(Kmeans_result, org.db, enrich.db, fun_num = 5,
-                          pvalueCutoff = 0.05) {
+enrich_module <- function(Kmeans_result, org.db, enrich.db ,fun_num = 5,
+                          pvalueCutoff = 0.05, use_internal_data = TRUE, organism = NULL) {
   all_gene <- Kmeans_result
   all_gene<-all_gene[order(all_gene$KmeansGroup),]
   le<-levels(as.factor(all_gene$KmeansGroup))
@@ -436,7 +439,9 @@ enrich_module <- function(Kmeans_result, org.db, enrich.db, fun_num = 5,
                   OrgDb = org.db)
     if (enrich.db =='KEGG') {
       k1 <- clusterProfiler::enrichKEGG(gene = gene1$ENTREZID,
-                                        pvalueCutoff = pvalueCutoff,use_internal_data = TRUE)
+                                        pvalueCutoff = pvalueCutoff
+                                        ,organism = organism
+                                        ,use_internal_data = use_internal_data)
     }else if(enrich.db =='GO'){
       k1 = clusterProfiler::enrichGO(gene = gene1$ENTREZID,
                     OrgDb = org.db,

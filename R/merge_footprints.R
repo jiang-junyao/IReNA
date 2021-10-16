@@ -26,14 +26,14 @@ merge_footprints <- function(footprints, ditance = 4, revise = TRUE) {
   str1 <- con1[1,1]
   start1 <- con1[1,2]
   end1 <- con1[1,3]
-  pva1 <- con1[1,5]
+  pva1 <- con1[1,4]
   no1 <- 1
   out1 <- c()
   for (i in 2:nrow(con1)) {
     str2 <- as.character(con1[i, ][1])
     start2 <- as.numeric(con1[i, ][2])
     end2 <- as.numeric(con1[i, ][3])
-    pva2 <- as.numeric(con1[i, ][5])
+    pva2 <- as.numeric(con1[i, ][4])
     if (str2 == str1 & (start1 >= start2 & start1 <= end2 | end1 >= start2 &
                         end1 <= end2 | start1 <= start2 & end1 >= end2 | start2 >
                         end1 & (start2 - end1) <= ditance | start1 > end2 &
@@ -50,7 +50,7 @@ merge_footprints <- function(footprints, ditance = 4, revise = TRUE) {
       str1 <- str2
       start1 <- start2
       end1 <- end2
-      pva1 <- as.numeric(con1[i, ][5])
+      pva1 <- as.numeric(con1[i, ][4])
       no1 <- 1
     }
   }

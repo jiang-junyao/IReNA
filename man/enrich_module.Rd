@@ -9,7 +9,9 @@ enrich_module(
   org.db,
   enrich.db,
   fun_num = 5,
-  pvalueCutoff = 0.05
+  pvalueCutoff = 0.05,
+  use_internal_data = TRUE,
+  organism = NULL
 )
 }
 \arguments{
@@ -23,6 +25,11 @@ and the first column should be gene Symbol ID, the second column should be Kmean
 \item{fun_num}{numeric, indicating the number of output functions per module}
 
 \item{pvalueCutoff}{adjusted pvalue cutoff on enrichment tests to report}
+
+\item{use_internal_data}{logical, use KEGG.db or latest online KEGG data}
+
+\item{organism}{character, used for KEGG enrichment analysis.
+supported organism listed in 'http://www.genome.jp/kegg/catalog/org_list.html'}
 }
 \value{
 data.frame contains enrichment functions for each module

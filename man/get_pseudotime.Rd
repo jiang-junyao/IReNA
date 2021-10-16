@@ -4,7 +4,7 @@
 \alias{get_pseudotime}
 \title{Calculate pseudotime of cells}
 \usage{
-get_pseudotime(seurat_object, reverse = TRUE)
+get_pseudotime(seurat_object, reverse = FALSE, gene.use = NULL)
 }
 \arguments{
 \item{seurat_object}{seurat object}
