@@ -50,6 +50,7 @@ load_counts <- function(datapath, datatype = 0) {
 #' @description Use monocle to calculate the pseudotime and return a monocle object
 #' @param seurat_object seurat object
 #' @param reverse TRUE or FALSE, whether to reverse the pseudotime, default is TURE
+#' @param gene.use vector, indicating the variable genes to calculate pseudotime
 #' @import monocle
 #' @import pbapply
 #' @import ROCR
@@ -67,8 +68,9 @@ load_counts <- function(datapath, datatype = 0) {
 #' get_pseudotime(test_seurat)
 get_pseudotime <- function(seurat_object, reverse = FALSE,gene.use = NULL) {
   if (is.null(gene.use)) {
-    seurat_object <- seurat_object
-  } else{seurat_object <- seurat_object[gene.use,]}
+    seurat_object <- Seurat::FindVariableFeatures(seurat_object)
+    seurat_object2 <- seurat_object[seurat_object@assays$RNA@var.features,]
+  } else{seurat_object2 <- seurat_object[gene.use,]}
   data <- as(as.matrix(seurat_object@assays$RNA@counts), "sparseMatrix")
   pd <- new("AnnotatedDataFrame", data = seurat_object@meta.data)
   fData <- data.frame(gene_short_name = row.names(data), row.names = row.names(data))
@@ -80,40 +82,46 @@ get_pseudotime <- function(seurat_object, reverse = FALSE,gene.use = NULL) {
                                          expressionFamily = VGAM::negbinomial.size()
   )
   cds <- BiocGenerics::estimateSizeFactors(monocle_cds)
-  cds <- monocle::reduceDimension(cds,
-                                  max_components = 2,
-                                  method = "DDRTree"
+  data2 <- as(as.matrix(seurat_object2@assays$RNA@counts), "sparseMatrix")
+  pd2 <- new("AnnotatedDataFrame", data = seurat_object2@meta.data)
+  fData2 <- data.frame(gene_short_name = row.names(data2), row.names = row.names(data2))
+  fd2 <- new("AnnotatedDataFrame", data = fData2)
+  monocle_cds2 <- monocle::newCellDataSet(data2,
+                                          phenoData = pd2,
+                                          featureData = fd2,
+                                          lowerDetectionLimit = 0.5,
+                                          expressionFamily = VGAM::negbinomial.size()
   )
-  cds <- monocle::orderCells(cds, reverse = reverse)
+  cds2 <- BiocGenerics::estimateSizeFactors(monocle_cds2)
+  cds2 <- monocle::reduceDimension(cds2,
+                                   max_components = 2,
+                                   method = "DDRTree"
+  )
+  cds2 <- monocle::orderCells(cds2, reverse = reverse)
+  cds@dim_reduce_type <- cds2@dim_reduce_type
+  cds@cellPairwiseDistances <- cds2@cellPairwiseDistances
+  cds@minSpanningTree <- cds2@minSpanningTree
+  cds@reducedDimS <- cds2@reducedDimS
+  cds@reducedDimW <- cds2@reducedDimW
+  cds@reducedDimK <- cds2@reducedDimK
+  cds@phenoData@data <- cds2@phenoData@data
   return(cds)
 }
 
-#' add pseudtoime and identify DEGs
-#' @description Add pseudotime to seurat object, and filter differential
-#' expressed genes according to pseudotime
+
+
+#' add pseudotime in monocle object to the metadata of the seurat object
+#'
 #' @param seurat_object seurat object, which has same cells and genes as monocle_object
 #' @param monocle_object monocle object, which include pesudotime and has same
 #' cells and genes as seurat_object
-#' @param DEG logic, indicating whether filter differential expressed genes for
-#' seurat object
-#' @param qvalue numeric, indicating q-value to indentify differentially
-#' expressed genes
-#' @param nce numeric, indicating num cells expressed to indentify differentially
-#' expressed genes
-#' @param ed numeric, indicating expression difference to indentify differentially
-#' expressed genes
-#' @param normlize1 logic, indicating whether normalize the data in seurat object
-#'
-#' @return return a seurat object
+#' @return seurat_object with pseudotime
 #' @export
 #'
 #' @examples load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
 #' monocle_object = get_pseudotime(test_seurat)
-#' add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object, DEG = FALSE, normlize1 = FALSE)
-#' #add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object, DEG = TRUE, qvalue = 0.001, nce = 0.1, ed = 0.1)
-add_pseudotime_DEG_filter <- function(seurat_object, monocle_object, DEG = TRUE,
-                                      qvalue = 0.05, nce = 0.1, ed = 0.1,
-                                      normlize1 = TRUE) {
+#' add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object)
+add_pseudotime <- function(seurat_object, monocle_object){
   se <- seurat_object
   mo <- monocle_object
   #### add_pseduotime
@@ -122,30 +130,23 @@ add_pseudotime_DEG_filter <- function(seurat_object, monocle_object, DEG = TRUE,
   filter1 <- rownames(meta1)
   pse <- pse[filter1, ]
   se[["Pseudotime"]] <- pse$Pseudotime
-  if (normlize1 == TRUE) {
-    se <- Seurat::NormalizeData(object = se)
-  }
-  if (DEG == TRUE) {
-    print("return Seurat object has Pseudotime DEGs")
-    mo <- estimateDispersions(mo)
-    mo <- detectGenes(mo, min_expr = 3)
-    diff1 <- monocle::differentialGeneTest(mo,
-                                           fullModelFormulaStr = "~Pseudotime",
-                                           relative_expr = TRUE
-    )
-    sig_genes <- subset(diff1, qval < qvalue)
-    sig_genes <- subset(sig_genes, num_cells_expressed > nce)
-    b <- c()
-    for (i in sig_genes$num_cells_expressed) {
-      a <- log(i) * 0.95 - log(i) * 0.05
-      b <- c(b, a)
-    }
-    sig_genes$expression_difference <- b
-    sig_genes <- subset(sig_genes, expression_difference > ed)
-    pbmc <- subset(se, features = rownames(sig_genes))
-    return(pbmc)
-  } else {
-    return(se)
-  }
+  se[["State"]] <- pse$State
+  return(se)
 }
 
+
+diffgenetest_pseudotime <- function(monocle_object){
+  mo <- detectGenes(monocle_object, min_expr = 3)
+  mo <- estimateDispersions(mo)
+  diff1 <- monocle::differentialGeneTest(mo,
+                                         fullModelFormulaStr = "~Pseudotime",
+                                         relative_expr = TRUE
+  )
+  ed <- c()
+  for (i in diff1$num_cells_expressed) {
+    a <- log(i) * 0.95 - log(i) * 0.05
+    ed <- c(ed, a)
+  }
+  diff1$expression_difference <- ed
+  return(diff1)
+}
