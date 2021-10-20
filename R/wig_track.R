@@ -26,11 +26,11 @@ wig_track <- function(bamfilepath, bedfile, index = FALSE) {
     Rsamtools::indexBam(bamfilepath)
   }
   res <- Rsamtools::pileup(bamfilepath, pileupParam = p_param)
-  du <- duplicated(res[,2])
-  for (i in 1:length(du)) {
-    if (isTRUE(du[i])) {
-      res[i-1,5] <- res[i-1,5]+res[i,5]
-    }
+  a1 <- res$pos[duplicated(res$pos)]
+  a1 <- a1[!duplicated(a1)]
+  for (i in a1) {
+    depth <- sum(res[res2$pos==i,5])
+    res2[res$pos==i,][1,5] <- depth
   }
   res <- res[!duplicated(res[,2]),]
   pos1 <- res$pos
