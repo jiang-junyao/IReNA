@@ -10,6 +10,8 @@ get_pseudotime(seurat_object, reverse = FALSE, gene.use = NULL)
 \item{seurat_object}{seurat object}
 
 \item{reverse}{TRUE or FALSE, whether to reverse the pseudotime, default is TURE}
+
+\item{gene.use}{vector, indicating the variable genes to calculate pseudotime}
 }
 \value{
 return monocle object which contain pseudotime

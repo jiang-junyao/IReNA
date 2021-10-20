@@ -3,7 +3,7 @@
 export(Converse_GeneIDSymbol)
 export(Footprints_FOS)
 export(add_ENSID)
-export(add_pseudotime_DEG_filter)
+export(add_pseudotime)
 export(clustering_Kmeans)
 export(combine_footprints)
 export(diff_peaks)
