@@ -29,8 +29,8 @@ wig_track <- function(bamfilepath, bedfile, index = FALSE) {
   a1 <- res$pos[duplicated(res$pos)]
   a1 <- a1[!duplicated(a1)]
   for (i in a1) {
-    depth <- sum(res[res2$pos==i,5])
-    res2[res$pos==i,][1,5] <- depth
+    depth <- sum(res[res$pos==i,5])
+    res[res$pos==i,][1,5] <- depth
   }
   res <- res[!duplicated(res[,2]),]
   pos1 <- res$pos
