@@ -68,9 +68,8 @@ just directly run codes of **part 1**, **part 2** and **part 4** in
 ![workflow](docs/Readme%20figure/Workflow.png)
 
 ## How to cite this package
-
-If you use IReNA package, please cite the following Science
-paper: <https://science.sciencemag.org/content/370/6519/eabb8598>.
+The offcial paper of this package hasn't been released yet, you can cite the following Science
+paper first: <https://science.sciencemag.org/content/370/6519/eabb8598>.
 
 ## Help and Suggestion
 
