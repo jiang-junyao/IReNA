@@ -17,6 +17,8 @@ knitr::opts_chunk$set(
 
 IReNA (Integrated Regulatory Network Analysis) is an R package to reconstruct regulatory networks through integrating scRNA-seq and ATAC-seq data. Compared with other regulatory network analysis method (SCENIC), IReNA provides modularized regulatory network analysis to discover the biological significance of transcription factors and the regulatory role of each module throughout the process.
 
+IReNA is still under testing, so there may be some changes for this package in the coming weeks.
+
 ## Installation
 IReNA needs R version 4.0 or higher, [Bioconductor](http://bioconductor.org/) version 3.12.
 

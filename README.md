@@ -11,6 +11,9 @@ ATAC-seq data. Compared with other regulatory network analysis method
 discover the biological significance of transcription factors and the
 regulatory role of each module throughout the process.
 
+IReNA is still under testing, so there may be some changes for this
+package in the coming weeks.
+
 ## Installation
 
 IReNA needs R version 4.0 or higher,
@@ -68,8 +71,9 @@ just directly run codes of **part 1**, **part 2** and **part 4** in
 ![workflow](docs/Readme%20figure/Workflow.png)
 
 ## How to cite this package
-The offcial paper of this package hasn't been released yet, you can cite the following Science
-paper first: <https://science.sciencemag.org/content/370/6519/eabb8598>.
+
+If you use IReNA package, please cite the following Science
+paper: <https://science.sciencemag.org/content/370/6519/eabb8598>.
 
 ## Help and Suggestion
 
