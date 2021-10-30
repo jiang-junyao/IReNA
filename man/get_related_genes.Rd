@@ -2,7 +2,7 @@
 % Please edit documentation in R/annotation.R
 \name{get_related_genes}
 \alias{get_related_genes}
-\title{Annotate peaks}
+\title{Annotate peaks based on regions of peak}
 \usage{
 get_related_genes(footprints, motif, Species, txdb, tssRegion = c(-3000, 3000))
 }

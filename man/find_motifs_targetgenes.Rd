@@ -12,7 +12,7 @@ find_motifs_targetgenes(
   outputdir1,
   outputdir,
   Motifdir,
-  sequencedir
+  sequencedir = NULL
 )
 }
 \arguments{
@@ -38,7 +38,8 @@ if you have added fimo to the environment variable, just set this argument as 'f
 
 \item{Motifdir}{character, indicating the path of meme motif file}
 
-\item{sequencedir}{sequence file directory}
+\item{sequencedir}{character, indicating the path of sequence of target genes
+tss regions. If it's NULL, this parameter will be paste0(outputdir1,'fasta/')}
 }
 \value{
 

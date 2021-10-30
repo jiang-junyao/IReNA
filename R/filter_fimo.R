@@ -57,18 +57,22 @@ extract_genes <- function(gtf){
 #' @param outputdir1 character, indicating the output path of shell script
 #' @param outputdir character, indicating output path of fimo result
 #' @param Motifdir character, indicating the path of meme motif file
-#' @param sequencedir sequence file directory
+#' @param sequencedir character, indicating the path of sequence of target genes
+#' tss regions. If it's NULL, this parameter will be paste0(outputdir1,'fasta/')
 #'
 #' @return
 #' @export
 #'
 #' @examples
 find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1,outputdir, Motifdir
-                                    , sequencedir){
+                                    , sequencedir = NULL){
   fasta <- Biostrings::readBStringSet(refdir, format = "fasta", nrec = -1L,
                                       skip = 0L, seek.first.rec = FALSE,
                                       use.names = TRUE)
   motif1 <- motifs_select(motif,gene_tss[,1])
+  if (sequencedir == NULL) {
+    sequencedir <- paste0(outputdir1,'fasta/')
+  }
   fimoall <- c()
   if (!'fasta' %in% dir(outputdir1)) {
     dir.create(paste0(outputdir1,'fasta'))
