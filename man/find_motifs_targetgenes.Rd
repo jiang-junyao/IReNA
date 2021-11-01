@@ -10,7 +10,6 @@ find_motifs_targetgenes(
   refdir,
   fimodir,
   outputdir1,
-  outputdir,
   Motifdir,
   sequencedir = NULL
 )
@@ -32,9 +31,11 @@ genome can be download from https://hgdownload.soe.ucsc.edu/downloads.html}
 \item{fimodir}{character, indicating path of fimo software,
 if you have added fimo to the environment variable, just set this argument as 'fimo'}
 
-\item{outputdir1}{character, indicating the output path of shell script}
-
-\item{outputdir}{character, indicating output path of fimo result}
+\item{outputdir1}{character, indicating the output path of the shell scripts
+and sequence of target genes tss regions.(function 'find_motifs_targetgenes'
+will automatically generate two folders ('fasta' and 'fimo') in the path
+'outputdir1', and store sequence of target genes tss regions in the 'fasta'
+and shell scripts in the 'fimo')}
 
 \item{Motifdir}{character, indicating the path of meme motif file}
 

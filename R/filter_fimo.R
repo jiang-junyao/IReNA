@@ -72,6 +72,8 @@ find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1, Mo
   fasta <- Biostrings::readBStringSet(refdir, format = "fasta", nrec = -1L,
                                       skip = 0L, seek.first.rec = FALSE,
                                       use.names = TRUE)
+  gene_tss[,3] <- as.integer(gene_tss[,3])
+  gene_tss[,4] <- as.integer(gene_tss[,4])
   motif1 <- motifs_select(motif,gene_tss[,1])
   outputdir <- paste0(outputdir1,'fimo/')
   if (is.null(sequencedir)) {
