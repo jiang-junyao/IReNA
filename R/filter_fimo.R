@@ -70,7 +70,7 @@ find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1,out
                                       skip = 0L, seek.first.rec = FALSE,
                                       use.names = TRUE)
   motif1 <- motifs_select(motif,gene_tss[,1])
-  if (sequencedir == NULL) {
+  if (is.null(sequencedir)) {
     sequencedir <- paste0(outputdir1,'fasta/')
   }
   fimoall <- c()
