@@ -54,8 +54,11 @@ extract_genes <- function(gtf){
 #' genome can be download from https://hgdownload.soe.ucsc.edu/downloads.html
 #' @param fimodir character, indicating path of fimo software,
 #' if you have added fimo to the environment variable, just set this argument as 'fimo'
-#' @param outputdir1 character, indicating the output path of shell script
-#' @param outputdir character, indicating output path of fimo result
+#' @param outputdir1 character, indicating the output path of the shell scripts
+#' and sequence of target genes tss regions.(function 'find_motifs_targetgenes'
+#' will automatically generate two folders ('fasta' and 'fimo') in the path
+#' 'outputdir1', and store sequence of target genes tss regions in the 'fasta'
+#' and shell scripts in the 'fimo')
 #' @param Motifdir character, indicating the path of meme motif file
 #' @param sequencedir character, indicating the path of sequence of target genes
 #' tss regions. If it's NULL, this parameter will be paste0(outputdir1,'fasta/')
@@ -64,12 +67,13 @@ extract_genes <- function(gtf){
 #' @export
 #'
 #' @examples
-find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1,outputdir, Motifdir
+find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1, Motifdir
                                     , sequencedir = NULL){
   fasta <- Biostrings::readBStringSet(refdir, format = "fasta", nrec = -1L,
                                       skip = 0L, seek.first.rec = FALSE,
                                       use.names = TRUE)
   motif1 <- motifs_select(motif,gene_tss[,1])
+  outputdir <- paste0(outputdir1,'fimo/')
   if (is.null(sequencedir)) {
     sequencedir <- paste0(outputdir1,'fasta/')
   }
@@ -91,7 +95,7 @@ find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1,out
     outputdir12 <- paste0(outputdir1,'fimo/',gene_tss[i,1],'/')
     outputdir11 <- paste0(outputdir,gene_tss[i,1],'/')
     sequencedir1 <- paste0(sequencedir,gene_tss[i,1],'.fa')
-    find_motifs(motif1,step=200,fimodir1, outputdir12, outputdir11, Motifdir,
+    find_motifs(motif1,step=500,fimodir1, outputdir12, outputdir11, Motifdir,
                 sequencedir1)
   }
   fimoall <- as.data.frame(fimoall)
