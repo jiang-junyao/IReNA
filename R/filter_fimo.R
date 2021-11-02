@@ -28,7 +28,7 @@ get_tss_region <- function(gtf,gene.use,upstream_length=1000,downstream_length=5
   final$chr <- chr1
   final$start <- start1
   final$end <- end1
-  final <- final[,(ncol(final)-4):ncol(final)]
+  final <- final[,(ncol(final)-3):ncol(final)]
   return(final)
 }
 
