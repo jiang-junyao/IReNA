@@ -415,7 +415,6 @@ plot_kmeans_pheatmap <- function(Kmeans_result, start_column = 3, Gene1 = NULL,
                         rgb(72 / 255, 85 / 255, 167 / 255))
     } else {
       if (!is.null(RowGroup1) & is.factor(RowGroup1)) {
-        ModuleColor1 <- ModuleColor1[c(1, NameInd1 + 1)]
         ModuleColor1<-c('white',ModuleColor1)
       }
     }
