@@ -512,3 +512,17 @@ sort_TFs_degree <- function(regulatory_relationships){
   colnames(result)<-'degree'
   return(result)
 }
+
+network_Rcis <- function(Rcis){
+  tfs <- Rcis$TFSymbol[!duplicated(Rcis$TFSymbol)]
+  print(tfs)
+  network <- Rcis[Rcis$TargetSymbol %in% tfs,]
+  Regulation <- c()
+  for (i in 1:nrow(network)) {
+    if (network[i,7]>0) {
+      Regulation <- c(Regulation,'Positive')
+    }else{Regulation <- c(Regulation,'Negative')}
+  }
+  network$Regulation <- Regulation
+  return(network)
+}

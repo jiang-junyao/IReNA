@@ -363,7 +363,25 @@ get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
   col1 <- var1[, c("TF", "TFSymbol", "TFGroup", "Target", "TargetSymbol",
                    "TargetGroup", "Correlation")]
   col1 <- col1[!duplicated(col1),]
-
+  regulation_self1 <- data.frame(rownames(a)[1]
+                                 ,a[1,1],a[1,2],
+                                 rownames(a)[1],
+                                 a[1,1],a[1,2],
+                                 1)
+  colnames(regulation_self1) <- c("TF", "TFSymbol", "TFGroup", "Target", "TargetSymbol",
+                                  "TargetGroup", "Correlation")
+  for (i in 2:nrow(a)) {
+    regulation_self2 <- data.frame(rownames(a)[i]
+                                   ,a[i,1],a[i,2],
+                                   rownames(a)[i],
+                                   a[i,1],a[i,2],
+                                   1)
+    colnames(regulation_self2) <- c("TF", "TFSymbol", "TFGroup", "Target", "TargetSymbol",
+                                    "TargetGroup", "Correlation")
+    regulation_self1 <- rbind(regulation_self1,regulation_self2)
+  }
+  regulation_self1 <- regulation_self1[regulation_self1$TF %in% motifgene,]
+  col1 <- rbind(col1,regulation_self1)
   return(col1)
 }
 
