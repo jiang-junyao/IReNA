@@ -1,7 +1,7 @@
 test_that("multiplication works", {
   load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
   monocle_object <- get_pseudotime(test_seurat)
-  seurat_with_time <- add_pseudotime_DEG_filter(test_seurat, monocle_object,DEG = FALSE,normlize1 = FALSE)
+  seurat_with_time <- add_pseudotime(test_seurat, monocle_object)
   expression_profile <- get_SmoothByBin_PseudotimeExp(seurat_with_time)
   expression_profile_filter <- fileter_expression_profile(expression_profile, FC=0.01)
   clustering <- clustering_Kmeans(expression_profile_filter, K1=4)

@@ -120,7 +120,7 @@ get_pseudotime <- function(seurat_object, reverse = FALSE,gene.use = NULL) {
 #'
 #' @examples load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
 #' monocle_object = get_pseudotime(test_seurat)
-#' add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object)
+#' add_pseudotime(seurat_object = test_seurat,monocle_object = monocle_object)
 add_pseudotime <- function(seurat_object, monocle_object){
   se <- seurat_object
   mo <- monocle_object

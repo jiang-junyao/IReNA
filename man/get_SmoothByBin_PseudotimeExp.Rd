@@ -33,6 +33,6 @@ profile
 \examples{
 load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
 monocle_object = get_pseudotime(test_seurat)
-seurat_object_pseudotime=add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object, DEG = FALSE, normlize1 = FALSE)
+seurat_object_pseudotime=add_pseudotime(seurat_object = test_seurat,monocle_object = monocle_object)
 get_SmoothByBin_PseudotimeExp(seurat_object_pseudotime, Bin = 50, FcType = "Q95")
 }

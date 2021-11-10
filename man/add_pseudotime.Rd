@@ -21,5 +21,5 @@ add pseudotime in monocle object to the metadata of the seurat object
 \examples{
 load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
 monocle_object = get_pseudotime(test_seurat)
-add_pseudotime_DEG_filter(seurat_object = test_seurat,monocle_object = monocle_object)
+add_pseudotime(seurat_object = test_seurat,monocle_object = monocle_object)
 }

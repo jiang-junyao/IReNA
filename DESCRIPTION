@@ -2,11 +2,15 @@ Package: IReNA
 Title: IReNA
 Version: 0.99.0
 Authors@R: 
-    person(given = "Jiang",
-           family = "Jun yao",
+    c(person(given = "Junyao",
+           family = "Jiang",
            role = c("aut", "cre"),
-           email = "jiangjunyao789@163.com")
-Description: IReNA(Integrated Regulatory Network analysis) is a R package to intergrate bulk RNA-seq or scRNA-seq and ATAC-seq data to reconstrcut regulatory network. 
+           email = "jiangjunyao789@163.com"),
+           person(given = "Jie",
+           family = "Wang",
+           role = "ctb",
+           email = "wang_jie01@gibh.ac.cn"))
+Description: IReNA(Integrated Regulatory Network analysis) is an R package to intergrate bulk RNA-seq or scRNA-seq data with ATAC-seq data to reconstrcut regulatory network. 
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -45,6 +49,8 @@ Imports:
     BiocGenerics,
     clusterProfiler,
     edgeR,
-    limma
+    limma,
+    rlang
 biocViews: SingleCell,RNASeq,ATACSeq,Network
 VignetteBuilder: knitr
+BugReports: https://github.com/jiang-junyao/IReNA/issues
