@@ -5,49 +5,19 @@ transcriptomes
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 IReNA (Integrated Regulatory Network Analysis) is an R package to
-reconstruct regulatory networks through integrating scRNA-seq and
-ATAC-seq data. Compared with other regulatory network analysis method
-(SCENIC), IReNA provides modularized regulatory network analysis to
-discover the biological significance of transcription factors and the
-regulatory role of each module throughout the process.
-
-IReNA is still under testing, so there may be some changes for this
-package in the coming weeks.
+perform regulatory network analysis. IReNA contains two methods to
+reconstruct gene regulatory networks. The first is using single-cell RNA
+sequencing (scRNA-seq) data alone. The second is integrating scRNA-seq
+data and chromatin accessibility profiles from Assay for Transposase
+Accessible Chromatin using sequencing (ATAC-seq). IReNA performs modular
+regulatory networks to reveal key transcription factors and significant
+regulatory relationships among modules, providing biological insights on
+regulatory mechanisms.
 
 ## Installation
 
-IReNA needs R version 4.0 or higher,
-[Bioconductor](http://bioconductor.org/) version 3.12.
-
-First install Bioconductor, open R and run:
-
-``` r
-if (!requireNamespace("BiocManager", quietly = TRUE))
-install.packages("BiocManager")
-BiocManager::install(version = "3.12")
-```
-
-Next, install a few Bioconductor dependencies that aren’t automatically
-installed:
-
-``` r
-BiocManager::install(c('Rsamtools', 'ChIPseeker', 'monocle',
-                       'RcisTarget', 'RCy3', 'clusterProfiler'))
-```
-
-Then, install IReNA from GitHub:
-
-``` r
-install.packages("devtools")
-devtools::install_github("jiang-junyao/IReNA")
-```
-
-Finally, check whether IReNA was installed correctly, start a new R
-session and run:
-
-``` r
-library(IReNA)
-```
+Please see the Installation part of [IReNA
+tutorial](https://jiang-junyao.github.io/IReNA/tutorial#installation)
 
 ## Examples and tutorials
 
@@ -68,12 +38,12 @@ just directly run codes of **part 1**, **part 2** and **part 4** in
 
 ## Workflow
 
-![workflow](docs/Readme%20figure/Workflow.png)
+<img src="docs/Readme%20figure/Workflow.png" style="width:50.0%;height:50.0%" />
 
-## How to cite this package
+## External links
 
-If you use IReNA package, please cite the following Science
-paper: <https://science.sciencemag.org/content/370/6519/eabb8598>.
+[Use IReNA to identify transcription factors critical for retinal
+regeneration](https://github.com/jiewwwang/Single-cell-retinal-regeneration)
 
 ## Help and Suggestion
 
