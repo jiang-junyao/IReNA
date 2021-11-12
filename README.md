@@ -39,7 +39,7 @@ tutorial](https://jiang-junyao.github.io/IReNA/tutorial).
 
 ## Workflow
 
-<img src="docs/Readme%20figure/Workflow.png" style="width:35.0%;height:35.0%" />
+<img src="docs/Readme%20figure/Workflow.png" style="width:20.0%;height:20.0%" />
 
 ## External links
 

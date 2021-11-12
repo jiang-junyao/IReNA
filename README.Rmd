@@ -32,7 +32,7 @@ If **both ATAC-seq data and scRNA-seq (or bulk RNA-seq data)** are used to recon
 
 ## Workflow
 
-![](docs/Readme figure/Workflow.png){ width=35% height=35% }
+![](docs/Readme figure/Workflow.png){ width=20% height=20% }
 
 ## External links
 
