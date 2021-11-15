@@ -18,8 +18,8 @@
 #' @export
 #'
 #' @examples Rankingspath1 <- 'hg19-500bp-upstream-7species.mc9nr.feather'
-#'  # filtered_regulatory_relationships <- filter_regulation(Kmeans_result,regulatory_relationships, 'Hs', Rankingspath1)
-filter_regulation<-function(Kmeans_result,correlation,Species,Rankingsdir){
+#'  # filtered_regulatory_relationships_Rcis <- filter_regulation(Kmeans_result,regulatory_relationships, 'Hs', Rankingspath1)
+filter_regulation_Rcis<-function(Kmeans_result,correlation,Species,Rankingsdir){
   group1 <- levels(as.factor(Kmeans_result$KmeansGroup))
   genelist <- c()
   for (i in group1) {
