@@ -24,7 +24,6 @@ get_tss_region <- function(gtf,gene.use,upstream_length=1000,downstream_length=5
       end1 <- c(end1,as.numeric(final[i,4])+downstream_length)
     }
   }
-  chr1 <- paste0('chr',final[,1])
   final$chr <- chr1
   final$start <- start1
   final$end <- end1
@@ -62,19 +61,23 @@ extract_genes <- function(gtf){
 #' @param Motifdir character, indicating the path of meme motif file
 #' @param sequencedir character, indicating the path of sequence of target genes
 #' tss regions. If it's NULL, this parameter will be paste0(outputdir1,'fasta/')
-#'
+#' @param select_motif logic, indicating whether to select motifs whose related
+#' transcription factors are in genes of gene_tss
 #' @return
 #' @export
 #'
 #' @examples
 find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1, Motifdir
-                                    , sequencedir = NULL){
+                                    , sequencedir = NULL,select_motif = T){
   fasta <- Biostrings::readBStringSet(refdir, format = "fasta", nrec = -1L,
                                       skip = 0L, seek.first.rec = FALSE,
                                       use.names = TRUE)
   gene_tss[,3] <- as.integer(gene_tss[,3])
   gene_tss[,4] <- as.integer(gene_tss[,4])
-  motif1 <- motifs_select(motif,gene_tss[,1])
+  if (select_motif==T) {
+    motif1 <- motifs_select(motif,gene_tss[,1])
+  }else{motif1 = motif}
+
   outputdir <- paste0(outputdir1,'fimo/')
   if (is.null(sequencedir)) {
     sequencedir <- paste0(outputdir1,'fasta/')

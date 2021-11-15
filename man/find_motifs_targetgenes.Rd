@@ -11,7 +11,8 @@ find_motifs_targetgenes(
   fimodir,
   outputdir1,
   Motifdir,
-  sequencedir = NULL
+  sequencedir = NULL,
+  select_motif = T
 )
 }
 \arguments{
@@ -41,6 +42,9 @@ and shell scripts in the 'fimo')}
 
 \item{sequencedir}{character, indicating the path of sequence of target genes
 tss regions. If it's NULL, this parameter will be paste0(outputdir1,'fasta/')}
+
+\item{select_motif}{logic, indicating whether to select motifs whose related
+transcription factors are in genes of gene_tss}
 }
 \value{
 
