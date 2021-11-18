@@ -3,6 +3,10 @@ transcriptomes
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+[![R](https://img.shields.io/badge/r-4.04-green.svg)](https://www.r-project.org)
+[![Seurat](https://img.shields.io/badge/Seurat-4.01-red.svg)](https://satijalab.org/seurat/articles/get_started.html)
+[![Monocle](https://img.shields.io/badge/r-2.18-blue.svg)](http://cole-trapnell-lab.github.io/monocle-release/)
+
 
 IReNA (Integrated Regulatory Network Analysis) is an R package to
 perform regulatory network analysis. IReNA contains two methods to
@@ -14,8 +18,8 @@ regulatory network to reveal key transcription factors and significant
 regulatory relationships among modules, providing biological insights on
 regulatory mechanisms.
 
-[![](https://img.shields.io/badge/r-4.04-green.svg)](https://www.r-project.org)
-\#\# Installation
+
+## Installation
 
 Please see the Installation part of [IReNA
 tutorial](https://jiang-junyao.github.io/IReNA/tutorial#installation)
