@@ -14,7 +14,8 @@ regulatory network to reveal key transcription factors and significant
 regulatory relationships among modules, providing biological insights on
 regulatory mechanisms.
 
-## Installation
+[![](https://img.shields.io/badge/r-4.04-green.svg)](https://www.r-project.org)
+\#\# Installation
 
 Please see the Installation part of [IReNA
 tutorial](https://jiang-junyao.github.io/IReNA/tutorial#installation)
