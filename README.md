@@ -3,9 +3,9 @@ transcriptomes
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![R](https://img.shields.io/badge/r-4.04-green.svg)](https://www.r-project.org)
+[![R](https://img.shields.io/badge/R-4.04-green.svg)](https://www.r-project.org)
 [![Seurat](https://img.shields.io/badge/Seurat-4.01-red.svg)](https://satijalab.org/seurat/articles/get_started.html)
-[![Monocle](https://img.shields.io/badge/r-2.18-blue.svg)](http://cole-trapnell-lab.github.io/monocle-release/)
+[![Monocle](https://img.shields.io/badge/monocle-2.18-blue.svg)](http://cole-trapnell-lab.github.io/monocle-release/)
 
 
 IReNA (Integrated Regulatory Network Analysis) is an R package to
