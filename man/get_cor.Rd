@@ -8,7 +8,8 @@ threshold and are not transcription factors}
 get_cor(Kmeans_result, motif, correlation_filter, start_column = 4)
 }
 \arguments{
-\item{Kmeans_result}{Kmeans result, column names should be ENSEMBL ID}
+\item{Kmeans_result}{Kmeans result, rownames should be ENSEMBL ID, first column
+should be Symbol ID, second column should be KmeansGroup}
 
 \item{motif}{motif file, you can choose our bulit-in motif database of
 'mus musculus', 'homo sapiens', 'zebrafish' and 'chicken' by 'motif = Tranfac201803_Mm_MotifTFsF',
@@ -30,5 +31,6 @@ threshold and are not transcription factors
 }
 \examples{
 load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+test_clustering=add_ENSID(test_clustering,Spec1 = 'Hs')
 correlation <- get_cor(test_clustering, Tranfac201803_Hs_MotifTFsF, 0.7, start_column=3)
 }

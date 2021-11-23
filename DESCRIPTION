@@ -50,7 +50,8 @@ Imports:
     clusterProfiler,
     edgeR,
     limma,
-    rlang
+    rlang,
+    reshape2
 biocViews: SingleCell,RNASeq,ATACSeq,Network
 VignetteBuilder: knitr
 BugReports: https://github.com/jiang-junyao/IReNA/issues

@@ -17,6 +17,7 @@ Sort Transcription factor based on degree.
 }
 \examples{
 load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+test_clustering=add_ENSID(test_clustering,Spec1 = 'Hs')
 correlation <- get_cor(test_clustering, Tranfac201803_Hs_MotifTFsF, 0.7, start_column=3)
 TFs_degree <- sort_TFs_degree(correlation)
 }

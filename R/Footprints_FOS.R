@@ -305,7 +305,8 @@ Merge_TFs_genes <- function(FOSF_RegM) {
 #' Calculate correlation of each gene pair, and remove genes that are below the
 #' threshold and are not transcription factors
 #'
-#' @param Kmeans_result Kmeans result, column names should be ENSEMBL ID
+#' @param Kmeans_result Kmeans result, rownames should be ENSEMBL ID, first column
+#' should be Symbol ID, second column should be KmeansGroup
 #' @param motif motif file, you can choose our bulit-in motif database of
 #' 'mus musculus', 'homo sapiens', 'zebrafish' and 'chicken' by 'motif = Tranfac201803_Mm_MotifTFsF',
 #' 'motif = Tranfac201803_Hs_MotifTFsF', 'motif = Tranfac201803_Zf_MotifTFsF',
@@ -313,17 +314,18 @@ Merge_TFs_genes <- function(FOSF_RegM) {
 #' @param correlation_filter numeric, indicating correlation threshold
 #' @param start_column numeric, indicating the start column of expression value,
 #' defalut is 4
-#' @import dplyr
+#' @importFrom reshape2 melt
 #' @return return a table contain transcription factor with correlation >
 #' correlation_filter and correlation < -correlation_filter
 #' @export
 #'
 #' @examples load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
+#' test_clustering=add_ENSID(test_clustering,Spec1 = 'Hs')
 #' correlation <- get_cor(test_clustering, Tranfac201803_Hs_MotifTFsF, 0.7, start_column=3)
 
 get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
   cor1 <- cor(t(Kmeans_result[,start_column:ncol(Kmeans_result)]))
-  cor2 <- melt(cor1)
+  cor2 <- reshape2::melt(cor1)
   cor2 <- cor2[cor2[,3]>correlation_filter | cor2[,3]< -correlation_filter,]
   motifgene <- c()
   for (i in 1:nrow(motif)) {
