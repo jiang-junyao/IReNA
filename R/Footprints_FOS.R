@@ -322,68 +322,46 @@ Merge_TFs_genes <- function(FOSF_RegM) {
 #' correlation <- get_cor(test_clustering, Tranfac201803_Hs_MotifTFsF, 0.7, start_column=3)
 
 get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
-  print("get correlation for gene pairs")
-  a <- Kmeans_result
-  b <- motif
+  cor1 <- cor(t(Kmeans_result[,start_column:ncol(Kmeans_result)]))
+  cor2 <- melt(cor1)
+  cor2 <- cor2[cor2[,3]>correlation_filter | cor2[,3]< -correlation_filter,]
   motifgene <- c()
-  for (i in 1:nrow(b)) {
-    gene1 <- strsplit(b[i,5],';')[[1]]
+  for (i in 1:nrow(motif)) {
+    gene1 <- strsplit(motif[i,5],';')[[1]]
     motifgene <- c(motifgene,gene1)
   }
-  Exp1 <- cor(t(a[start_column:ncol(a)]))
-  col1 <- matrix(c("TF", "TFSymbol", "Target", "TargetSymbol", "Correlation"), nrow = 1)
-  newdata <- subset(Exp1 > correlation_filter | Exp1 < -correlation_filter)
-  for (i in 1:nrow(Exp1)) {
-    if (rownames(Exp1)[i] %in% motifgene) {
-      acc2 <- Exp1[i, ][newdata[i, ]]
-      for (j in 1:length(acc2)) {
-        if (rownames(Exp1)[i] != names(acc2)[j]) {
-          if (names(acc2)[j] %in% motifgene) {
-            var2 <- c(names(acc2)[j], a[names(acc2)[j], ]$Symbol, rownames(Exp1)[i],
-                      a[rownames(Exp1)[i], ]$Symbol, acc2[j])
-            col1 <- rbind(col1, var2)
-          }
-          var1 <- c(rownames(Exp1)[i], a[rownames(Exp1)[i], ]$Symbol, names(acc2)[j],
-                    a[names(acc2)[j], ]$Symbol, acc2[j])
-          col1 <- rbind(col1, var1)
-        }
-      }
-    }
-  }
-  col1 <- as.data.frame(col1)
-  colnames(col1) <- col1[1, ]
-  col1 <- col1[-1, ]
-  var1 <- col1
-  con2 <- b
-  con3 <- a
-  TFGroup <- con3[match(var1$TFSymbol, con3$Symbol), ]$KmeansGroup
-  TargetGroup <- con3[match(var1$TargetSymbol, con3$Symbol), ]$KmeansGroup
-  var1$TFGroup <- TFGroup
-  var1$TargetGroup <- TargetGroup
-  col1 <- var1[, c("TF", "TFSymbol", "TFGroup", "Target", "TargetSymbol",
-                   "TargetGroup", "Correlation")]
-  col1 <- col1[!duplicated(col1),]
-  regulation_self1 <- data.frame(rownames(a)[1]
-                                 ,a[1,1],a[1,2],
-                                 rownames(a)[1],
-                                 a[1,1],a[1,2],
-                                 1)
-  colnames(regulation_self1) <- c("TF", "TFSymbol", "TFGroup", "Target", "TargetSymbol",
-                                  "TargetGroup", "Correlation")
-  for (i in 2:nrow(a)) {
-    regulation_self2 <- data.frame(rownames(a)[i]
-                                   ,a[i,1],a[i,2],
-                                   rownames(a)[i],
-                                   a[i,1],a[i,2],
-                                   1)
-    colnames(regulation_self2) <- c("TF", "TFSymbol", "TFGroup", "Target", "TargetSymbol",
-                                    "TargetGroup", "Correlation")
-    regulation_self1 <- rbind(regulation_self1,regulation_self2)
-  }
-  regulation_self1 <- regulation_self1[regulation_self1$TF %in% motifgene,]
-  col1 <- rbind(col1,regulation_self1)
-  return(col1)
+  cor2 <- cor2[cor2$Var1 %in% motifgene,]
+  colnames(cor2) <- c('TF','Target','Correlation')
+  regulation_info <- unlist(apply(cor2,1,add_info,Kmeans_result2=Kmeans_result))
+  TFSymbolIdenx <- seq(1,nrow(cor2)*4,by=4)
+  TargetSymbolIdenx <- seq(2,nrow(cor2)*4,4)
+  TFGroupIdenx <- seq(3,nrow(cor2)*4,4)
+  TargetGroupIdenx <- seq(4,nrow(cor2)*4,4)
+  TFSymbol <- regulation_info[TFSymbolIdenx]
+  TargetSymbol <- regulation_info[TargetSymbolIdenx]
+  TFGroup <- regulation_info[TFGroupIdenx ]
+  TargetGroup <- regulation_info[TargetGroupIdenx ]
+  cor2$TFSymbol <- TFSymbol
+  cor2$TargetSymbol <- TargetSymbol
+  cor2$TFGroup <- TFGroup
+  cor2$TargetGroup <- TargetGroup
+  cor2 <- cor2[,c(1,4,6,2,5,7,3)]
+  return(cor2)
 }
+
+
+
+
+add_info <- function(correlation,Kmeans_result2){
+  ENS_gene2 <- correlation[2]
+  ENS_gene1 <- correlation[1]
+  Symbol_gene1 <- Kmeans_result2[ENS_gene1,][1]
+  Group_gene1 <- Kmeans_result2[ENS_gene1,][2]
+  Symbol_gene2 <- Kmeans_result2[ENS_gene2,][1]
+  Group_gene2 <- Kmeans_result2[ENS_gene2,][2]
+  return(c(Symbol_gene1,Symbol_gene2,Group_gene1,Group_gene2))
+}
+
 
 #' filter regulatory relationships based on footprints with high FOS
 #' @description overlap footprints information with regulatory relationships
