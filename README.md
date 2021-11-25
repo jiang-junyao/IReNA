@@ -7,7 +7,6 @@ transcriptomes
 [![Seurat](https://img.shields.io/badge/Seurat-version4.01-red.svg)](https://satijalab.org/seurat/articles/get_started.html)
 [![Monocle](https://img.shields.io/badge/monocle-version2.18-blue.svg)](http://cole-trapnell-lab.github.io/monocle-release/)
 
-
 IReNA (Integrated Regulatory Network Analysis) is an R package to
 perform regulatory network analysis. IReNA contains two methods to
 reconstruct gene regulatory networks. The first is using single-cell RNA
@@ -19,8 +18,6 @@ regulatory relationships among modules, providing biological insights on
 regulatory mechanisms.
 
 
-## Installation
-
 Please see the Installation part of [IReNA
 tutorial](https://jiang-junyao.github.io/IReNA/tutorial#installation)
 
@@ -28,19 +25,19 @@ tutorial](https://jiang-junyao.github.io/IReNA/tutorial#installation)
 
 If **both ATAC-seq data and scRNA-seq (or bulk RNA-seq data)** are used
 to reconstruct regulatory network, please run [ATAC-seq raw data
-preprocessing](https://jiang-junyao.github.io/IReNA/ATAC-seq-preprocessing)
+preprocessing](https://jiangjunyao123.github.io/IReNA/ATAC-seq-preprocessing)
 first to get bam file, peaks file and footprint file, then run the steps
 of **part 1**, **part 3** and **part 4** in [IReNA
-tutorial](https://jiang-junyao.github.io/IReNA/tutorial). If **only
+tutorial](https://jiangjunyao123.github.io/IReNA/tutorial). If **only
 scRNA-seq (or bulk RNA-seq data)** are used to reconstruct regulatory
 network, just directly run the steps of **part 1**, **part 2** and
 **part 4** in [IReNA
-tutorial](https://jiang-junyao.github.io/IReNA/tutorial).
+tutorial](https://jiangjunyao123.github.io/IReNA/tutorial).
 
 -   [ATAC-seq raw data
-    preprocessing](https://jiang-junyao.github.io/IReNA/ATAC-seq-preprocessing)
+    preprocessing](https://jiangjunyao123.github.io/IReNA/ATAC-seq-preprocessing)
 
--   [IReNA tutorial](https://jiang-junyao.github.io/IReNA/tutorial)
+-   [IReNA tutorial](https://jiangjunyao123.github.io/IReNA/tutorial)
 
 ## Workflow
 

@@ -5,19 +5,12 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
+
 
 
 IReNA (Integrated Regulatory Network Analysis) is an R package to perform regulatory network analysis. IReNA contains two methods to reconstruct gene regulatory networks. The first is using single-cell RNA sequencing (scRNA-seq) data alone. The second is integrating scRNA-seq data and chromatin accessibility profiles from Assay for Transposase Accessible Chromatin using sequencing (ATAC-seq). IReNA performs modular regulatory network to reveal key transcription factors and significant regulatory relationships among modules, providing biological insights on regulatory mechanisms.
 
-`r badger::badge_custom("r", "4.04", "green", "https://www.r-project.org")`
+[![](https://img.shields.io/badge/r-4.04-green.svg)](https://www.r-project.org)
 ## Installation
 
 Please see the Installation part of [IReNA tutorial](https://jiang-junyao.github.io/IReNA/tutorial#installation)
