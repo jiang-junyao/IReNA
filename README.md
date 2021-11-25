@@ -5,8 +5,9 @@ transcriptomes
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![](https://img.shields.io/badge/r-version4.04-green.svg)](https://www.r-project.org)
-[![](https://img.shields.io/badge/Seurat-version4.01-green.svg)](https://satijalab.org/seurat/articles/get_started.html)
-[![](https://img.shields.io/badge/monocle-version2.18-green.svg)](http://cole-trapnell-lab.github.io/monocle-release)
+[![](https://img.shields.io/badge/Seurat-version4.01-red.svg)](https://satijalab.org/seurat/articles/get_started.html)
+[![](https://img.shields.io/badge/monocle-version2.18-blue.svg)](http://cole-trapnell-lab.github.io/monocle-release)
+
 IReNA (Integrated Regulatory Network Analysis) is an R package to
 perform regulatory network analysis. IReNA contains two methods to
 reconstruct gene regulatory networks. The first is using single-cell RNA
