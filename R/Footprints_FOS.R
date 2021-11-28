@@ -324,7 +324,7 @@ Merge_TFs_genes <- function(FOSF_RegM) {
 #' correlation <- get_cor(test_clustering, Tranfac201803_Hs_MotifTFsF, 0.7, start_column=3)
 
 get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
-  cor1 <- cor(t(Kmeans_result[,start_column:ncol(Kmeans_result)]))
+  cor1 <- sparse.cor(t(Kmeans_result[,start_column:ncol(Kmeans_result)]))
   cor2 <- reshape2::melt(cor1)
   cor2 <- cor2[cor2[,3]>correlation_filter | cor2[,3]< -correlation_filter,]
   motifgene <- c()
@@ -352,7 +352,19 @@ get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
 }
 
 
-
+sparse.cor <- function(x){
+  n <- nrow(x)
+  cMeans <- colMeans(x)
+  cSums <- colSums(x)
+  # Calculate the population covariance matrix.
+  # There's no need to divide by (n-1) as the std. dev is also calculated the same way.
+  # The code is optimized to minize use of memory and expensive operations
+  covmat <- tcrossprod(cMeans, (-2*cSums+n*cMeans))
+  crossp <- as.matrix(crossprod(x))
+  covmat <- covmat+crossp
+  sdvec <- sqrt(diag(covmat)) # standard deviations of columns
+  covmat/crossprod(t(sdvec)) # correlation matrix
+}
 
 add_info <- function(correlation,Kmeans_result2){
   ENS_gene2 <- correlation[2]
