@@ -51,6 +51,11 @@ An example for [using IReNA to identify transcription factors critical
 for retinal
 regeneration](https://github.com/jiewwwang/Single-cell-retinal-regeneration)
 
+## Citation
+
+Preprint: [IReNA: integrated regulatory network analysis of single-cell
+transcriptomes](https://doi.org/10.1101/2021.11.22.469628)
+
 ## Help and Suggestion
 
 If you have any question, comment or suggestion, please use github issue
