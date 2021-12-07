@@ -13,6 +13,7 @@ get_tss_region <- function(gtf,gene.use,upstream_length=1000,downstream_length=5
   genes <- apply(gtfgene, 1, extract_genes)
   gtfgene$genes <- genes
   final <- gtfgene[gtfgene$genes%in%gene.use,]
+  chr1 <- gtfgene[gtfgene$genes%in%gene.use,]$V1
   start1 <- c()
   end1 <- c()
   for (i in 1:nrow(final)) {
