@@ -334,22 +334,17 @@ get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
   }
   cor2 <- cor2[cor2$Var1 %in% motifgene,]
   colnames(cor2) <- c('TF','Target','Correlation')
-  regulation_info <- unlist(apply(cor2,1,add_info,Kmeans_result2=Kmeans_result))
-  TFSymbolIdenx <- seq(1,nrow(cor2)*4,by=4)
-  TargetSymbolIdenx <- seq(2,nrow(cor2)*4,4)
-  TFGroupIdenx <- seq(3,nrow(cor2)*4,4)
-  TargetGroupIdenx <- seq(4,nrow(cor2)*4,4)
-  TFSymbol <- regulation_info[TFSymbolIdenx]
-  TargetSymbol <- regulation_info[TargetSymbolIdenx]
-  TFGroup <- regulation_info[TFGroupIdenx ]
-  TargetGroup <- regulation_info[TargetGroupIdenx ]
-  cor2$TFSymbol <- TFSymbol
-  cor2$TargetSymbol <- TargetSymbol
-  cor2$TFGroup <- TFGroup
-  cor2$TargetGroup <- TargetGroup
-  cor2 <- cor2[,c(1,4,6,2,5,7,3)]
-  return(cor2)
+  SourceIdx <- match(cor2[,1],rownames(Kmeans_result))
+  TargetIdx <- match(cor2[,2],rownames(Kmeans_result))
+  source2 <- Kmeans_result[SourceIdx,c(1,2)]
+  colnames(source2) <- c('TFSymbol','TFGroup')
+  target2 <- Kmeans_result[TargetIdx,c(1,2)]
+  colnames(target2) <- c('TargetSymbol','TargetGroup')
+  regulatory_relationships <- cbind(cor2,source2,target2)
+  regulatory_relationships <- regulatory_relationships[,c(1,4,5,2,6,7,3)]
+  return(regulatory_relationships)
 }
+
 
 
 sparse.cor <- function(x){
@@ -366,15 +361,6 @@ sparse.cor <- function(x){
   covmat/crossprod(t(sdvec)) # correlation matrix
 }
 
-add_info <- function(correlation,Kmeans_result2){
-  ENS_gene2 <- correlation[2]
-  ENS_gene1 <- correlation[1]
-  Symbol_gene1 <- Kmeans_result2[ENS_gene1,][1]
-  Group_gene1 <- Kmeans_result2[ENS_gene1,][2]
-  Symbol_gene2 <- Kmeans_result2[ENS_gene2,][1]
-  Group_gene2 <- Kmeans_result2[ENS_gene2,][2]
-  return(c(Symbol_gene1,Symbol_gene2,Group_gene1,Group_gene2))
-}
 
 
 #' filter regulatory relationships based on footprints with high FOS
