@@ -118,7 +118,7 @@ find_motifs <- function(motif, step = 20, fimodir,outputdir1,outputdir, Motifdir
                   col.names = FALSE, quote = FALSE)
     }
     # write.table(out1,paste0(Dir1,'/Programs/Fimo',no1,'.txt'),row.names=F,col.names = F,quote = F)
-    col2 <- paste0("nohup sh ", outputdir, "/Fimo", no1, ".sh ;")
+    col2 <- paste0("nohup sh ", outputdir, "/Fimo", no1, ".sh &")
     no1 <- no1 + 1
     out2 <- c(out2, col2)
   }

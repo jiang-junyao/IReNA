@@ -64,12 +64,16 @@ extract_genes <- function(gtf){
 #' tss regions. If it's NULL, this parameter will be paste0(outputdir1,'fasta/')
 #' @param select_motif logic, indicating whether to select motifs whose related
 #' transcription factors are in genes of gene_tss
+#' @importFrom stringr str_ends
 #' @return
 #' @export
 #'
 #' @examples
 find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1, Motifdir
                                     , sequencedir = NULL,select_motif = T){
+  if (str_ends(outputdir1,'/')==FALSE) {
+    warning('the last character of outputdir1 is not "/"')
+  }
   fasta <- Biostrings::readBStringSet(refdir, format = "fasta", nrec = -1L,
                                       skip = 0L, seek.first.rec = FALSE,
                                       use.names = TRUE)
@@ -91,7 +95,7 @@ find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1, Mo
     dir.create(paste0(outputdir1,'fimo'))
   }
   for (i in 1:nrow(gene_tss)) {
-    fimo1 <- paste0('sh ',gene_tss[i,1],'/','Fimo1.sh ;')
+    fimo1 <- paste0('sh ',outputdir1,'fimo/',gene_tss[i,1],'/','Fimo1.sh ;')
     fimoall <- c(fimoall,fimo1)
     dir.create(paste0(outputdir1,'fimo/',gene_tss[i,1]))
     fasta1 <- getfasta2(gene_tss[i,2:4],fasta)

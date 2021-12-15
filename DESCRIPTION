@@ -51,7 +51,8 @@ Imports:
     edgeR,
     limma,
     rlang,
-    reshape2
+    reshape2,
+    stringr
 biocViews: SingleCell,RNASeq,ATACSeq,Network
 VignetteBuilder: knitr
 BugReports: https://github.com/jiang-junyao/IReNA/issues

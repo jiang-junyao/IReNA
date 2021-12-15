@@ -150,3 +150,25 @@ diffgenetest_pseudotime <- function(monocle_object){
   diff1$expression_difference <- ed
   return(diff1)
 }
+
+#' extract expressed transcription factors
+#' @description extract expressed transcription factors according to the proportion of cells that
+#' transcription factors express
+#' @param seurat_object seurat object
+#' @param TFs character, indicating transcription factors names
+#' @param cells_quantile numeric, indicating proportion of cells that
+#' transcription factors express (threshold to get expressed transcription factors)
+#'
+#' @return
+#' @export
+#'
+#' @examples
+extract_expressed_TFs <- function(seurat_object,TFs,cells_quantile = 0.05){
+  matrix_tf <- seurat_object@assays$RNA@counts[TFs,]
+  if (cells_quantile==0) {
+    TfExp <- matrix_tf[rowSums(matrix_tf)>0,]
+  }else{
+    quantile_exp <- ncol(matrix_tf)/(1/cells_quantile)
+    TfExp <- matrix_tf[rowSums(matrix_tf)>quantile_exp,]}
+  return(TfExp)
+}
