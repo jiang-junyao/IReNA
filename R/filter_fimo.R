@@ -95,7 +95,7 @@ find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1, Mo
     dir.create(paste0(outputdir1,'fimo'))
   }
   for (i in 1:nrow(gene_tss)) {
-    fimo1 <- paste0('sh ',outputdir1,'fimo/',gene_tss[i,1],'/','Fimo1.sh ;')
+    fimo1 <- paste0('sh ',outputdir1,'fimo/',gene_tss[i,1],'/','Fimo1.sh &')
     fimoall <- c(fimoall,fimo1)
     dir.create(paste0(outputdir1,'fimo/',gene_tss[i,1]))
     fasta1 <- getfasta2(gene_tss[i,2:4],fasta)
