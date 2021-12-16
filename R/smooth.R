@@ -469,7 +469,7 @@ plot_kmeans_pheatmap <- function(Kmeans_result, start_column = 3, Gene1 = NULL,
       layout_ncol <- length(uColumnGroup1) + 1
       layout_matrix <- matrix(c(1, ModuleScale2), nrow = 1)
     } else {
-      ph2 <- pheatmap(RNA3[, 2:ncol(RNA3)], clustering_distance_rows = clustering_distance_rows,
+      ph2 <- pheatmap(RNA3[, 1:ncol(RNA3)], clustering_distance_rows = clustering_distance_rows,
                       clustering_method = clustering_method, show_rownames = show_rownames,
                       show_colnames = show_colnames, labels_row = Gene2, border_color = border_color,
                       cluster_rows = FALSE, cluster_cols = cluster_cols,
