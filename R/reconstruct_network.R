@@ -59,10 +59,10 @@ filter_regulation_Rcis<-function(Kmeans_result,regulatory_relationships,Species,
     regulation11 <- unlist(regulation11)
     regulation1 <- c(regulation1,regulation11)
   }
-  regulation2 <- paste(correlation$TFSymbol,
-                       correlation$TargetSymbol)
-  regulatory_relationships <- correlation[regulation2 %in% regulation1,]
-  return(regulatory_relationships)
+  regulation2 <- paste(regulatory_relationships$TFSymbol,
+                       regulatory_relationships$TargetSymbol)
+  regulatory_relationships2 <- regulatory_relationships[regulation2 %in% regulation1,]
+  return(regulatory_relationships2)
 }
 
 #' Function to make regulatory network analysis

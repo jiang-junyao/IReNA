@@ -64,13 +64,14 @@ extract_genes <- function(gtf){
 #' tss regions. If it's NULL, this parameter will be paste0(outputdir1,'fasta/')
 #' @param select_motif logic, indicating whether to select motifs whose related
 #' transcription factors are in genes of gene_tss
+#' @param use_nohup logic, indicating whether use nohup to run all fimo scripts simultaneously
 #' @importFrom stringr str_ends
 #' @return
 #' @export
 #'
 #' @examples
 find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1, Motifdir
-                                    , sequencedir = NULL,select_motif = T){
+                                    , sequencedir = NULL,select_motif = T, use_nohup = F){
   if (str_ends(outputdir1,'/')==FALSE) {
     warning('the last character of outputdir1 is not "/"')
   }
@@ -95,7 +96,12 @@ find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1, Mo
     dir.create(paste0(outputdir1,'fimo'))
   }
   for (i in 1:nrow(gene_tss)) {
-    fimo1 <- paste0('sh ',outputdir1,'fimo/',gene_tss[i,1],'/','Fimo1.sh &')
+    if (use_nohup==TRUE) {
+      fimo1 <- paste0('nohup sh ',outputdir1,'fimo/',gene_tss[i,1],'/','Fimo1.sh &')
+    }else if(use_nohup==FALSE){
+      fimo1 <- paste0('sh ',outputdir1,'fimo/',gene_tss[i,1],'/','Fimo1.sh ;')
+    }else{stop('parameter use_nohup should be TRUE or FALSE')}
+
     fimoall <- c(fimoall,fimo1)
     dir.create(paste0(outputdir1,'fimo/',gene_tss[i,1]))
     fasta1 <- getfasta2(gene_tss[i,2:4],fasta)
@@ -176,6 +182,12 @@ generate_fimo_regulation <- function(motif_dir,motif){
 #'
 #' @examples
 filter_regulation_fimo <- function(fimo_regulation,regulatory_relationships){
+  if (!'TF' %in% colnames(regulatory_relationships)) {
+    stop('regulatory_relationships should contain "TF" column')
+  }
+  if (!'Target' %in% colnames(regulatory_relationships)) {
+    stop('regulatory_relationships should contain "Target" column')
+  }
   targetgenes <- regulatory_relationships$Target
   targetgenes <- targetgenes[!duplicated(targetgenes)]
   regulation1 <- as.matrix(regulatory_relationships[1,])
