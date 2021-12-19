@@ -12,7 +12,8 @@ find_motifs_targetgenes(
   outputdir1,
   Motifdir,
   sequencedir = NULL,
-  select_motif = T
+  select_motif = T,
+  use_nohup = F
 )
 }
 \arguments{
@@ -45,6 +46,8 @@ tss regions. If it's NULL, this parameter will be paste0(outputdir1,'fasta/')}
 
 \item{select_motif}{logic, indicating whether to select motifs whose related
 transcription factors are in genes of gene_tss}
+
+\item{use_nohup}{logic, indicating whether use nohup to run all fimo scripts simultaneously}
 }
 \value{
 
