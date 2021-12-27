@@ -4,7 +4,7 @@
 \alias{add_regulation_type}
 \title{Add regulation type for each gene pair}
 \usage{
-add_regulation_type(Kmeans_result, potential_regulation, start_column = 3)
+add_regulation_type(Kmeans_result, potential_regulation, start_column = 4)
 }
 \arguments{
 \item{Kmeans_result}{Kmeans result data.frame, row names should be ENSEMBEL ID,

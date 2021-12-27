@@ -26,7 +26,8 @@ Depends:
     R (>= 4.0),
     pheatmap,
     DDRTree,
-    RcisTarget
+    RcisTarget,
+    GenomicRanges
 Imports: 
     Rsamtools,
     ChIPseeker,
