@@ -74,39 +74,26 @@ Trans_WigToMultirows2 <- function(b) {
 Add_size_of_motif <- function(cutsp_list, Candid) {
   list1 <- list()
   con2 <- Candid
-  con2$V2 <- as.numeric(con2$V2)
-  con2$V3 <- as.numeric(con2$V3)
-  con2$V5 <- as.numeric(con2$V5)
-  con2$V6 <- as.numeric(con2$V6)
+  Candid$V2 <- as.numeric(Candid$V2)
+  Candid$V3 <- as.numeric(Candid$V3)
+  Candid$V5 <- as.numeric(Candid$V5)
+  Candid$V6 <- as.numeric(Candid$V6)
   for (i in 1:length(cutsp_list)) {
-    con3 <- cutsp_list[[i]]
-    var11 <- c()
-    var12 <- c()
-    col1 <- c()
-    for (k in 1:nrow(con3)) {
-      var2 <- con3[k, ]
-      var3 <- strsplit(var2, "\t")
-      var31 <- var3[[1]][1:3]
-      var32 <- var3[[1]][4:length(var3[[1]])]
-      var311 <- paste0(var31[1:length(var31)], collapse = "\t")
-      var321 <- paste0(var32[1:length(var32)], collapse = ",")
-      var11 <- c(var11, var311)
-      var12 <- c(var12, var321)
+    cuts <- cutsp_list[[i]]
+    cuts_footprint <- paste(cuts[,1],cuts[,2],cuts[,3])
+    Candid_footprint <- paste(Candid[,1],
+                              Candid[,5],Candid[,6])
+    check1 <- cuts_footprint==Candid_footprint
+    if (length(cuts_footprint)!=length(Candid_footprint)) {
+      stop('number of footprints is not equal to number of peaks')
     }
-    var1 <- as.data.frame(matrix(c(var11, var12), ncol = 2))
-    for (j in 1:nrow(con2)) {
-      var21 <- paste0(as.character(con2[j, ][c(1, 5, 6)]), collapse = "\t")
-      size1 <- con2[j, ][3] - con2[j, ][2] + 1
-      if (var21 %in% var1$V1) {
-        col11 <- paste(con2[j, ][ncol(con2)], con2[j, ][4], size1, con2[j, ][1],
-                       con2[j, ][2], con2[j, ][3], var1[var1$V1 == var21, ]$V2[1],
-                       sep = "\t")
-        col1 <- c(col1, col11)
-      }
+    if (FALSE %in% check1) {
+      stop('please check whether all footprints are in Candid')
     }
-    col2 <- as.data.frame(col1)
-    col2 <- split_dataframe(col2)
-    list1[[i]] <- col2
+    size <- Candid[,3] - Candid[,2] +1
+    Candid$motifsize <- size
+    new_Candid <- cbind(Candid[,c(7,4,8,1,2,3)],cuts[,4])
+    list1[[i]] <- new_Candid
   }
   return(list1)
 }
