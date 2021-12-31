@@ -54,66 +54,65 @@ get_related_genes <- function(footprints, motif, Species, txdb, tssRegion = c(-3
   gene <- peakAnno@anno@elementMetadata$ENSEMBL
   start1 <- peakAnno@anno@ranges@start
   merged_footprints2 <- merged_footprints[merged_footprints$V2 %in% start1, ]
-  region2 <- c()
-  for (i in region) {
-    region3 <- strsplit(i, "\\(")[[1]][1]
-    region4 <- strsplit(region3, " ")[[1]]
-    if (length(region4) > 1) {
-      region5 <- region3
-    } else {
-      region5 <- region4[1]
-    }
-    region2 <- c(region2, region5)
-  }
+  exon1 <- grep('exon',region)
+  Intron1 <- grep('Intron',region)
+  Intergenic1 <- grep('Intergenic',region)
+  Downstream1 <- grep('Downstream',region)
+  Promoter1 <- grep('Promoter',region)
+  UTR3 <- grep("3' UTR",region)
+  UTR5 <- grep("5' UTR",region)
+  region2 <- rep(NA,length(region))
+  region2[exon1]='Exon'
+  region2[Intron1]='Intron'
+  region2[Downstream1]='Downstream'
+  region2[Promoter1]='Promoter'
+  region2[UTR3]="3' UTR"
+  region2[UTR5]="5' UTR"
+  region2[Intergenic1]='Intergenic'
+  table(region2)
+  peak_region1 <- paste(as.character(peakAnno@anno@seqnames),
+                        as.character(peakAnno@anno@ranges),sep = ':')
+  peak_region2 <- paste0(merged_footprints[,1],':'
+                         ,merged_footprints[,2],'-',merged_footprints[,3])
+  merged_footprints2 <- merged_footprints[peak_region2%in%peak_region1,]
   merged_footprints2$gene <- gene
   merged_footprints2$region <- region2
   merged_footprints2 <- merged_footprints2[, c(9, 8, 1:7)]
   colnames(merged_footprints2) <- c(paste0("V", 1:9))
   footprintslist[[2]] <- merged_footprints2
-  footprintslist[[1]] <- footprintslist[[1]][footprintslist[[1]]$V2 %in% merged_footprints2$V7,]
+  footprintslist[[1]] <- footprintslist[[1]][peak_region2%in%peak_region1,]
   return(footprintslist)
 }
 
 
 
-merge_extent_footprints <- function(file1, motif) {
-  con1 <- file1
-  con2 <- motif
-  con3 <- con2[, c(1, 5)]
-  col1 <- c()
-  acc2 <- c()
-  col2 <- c()
-  hash1 <- list()
-  for (i in 1:nrow(con1)) {
-    var1 <- paste(con1[i, ][1]$V1, con1[i, ][2]$V2, con1[i, ][3]$V3, con1[i, ][4]$V4, sep = "\t")
-    acc1 <- con1$V7
-    if (acc1[i] %in% con3[, 1] == TRUE) {
-      var12 <- paste(acc1[i], con3[con3[, 1] == acc1[i], ][2], sep = ";")
-    }
-    if (is.null(hash1[var1]) == FALSE) {
-      hash1[[var1]] <- c(hash1[[var1]], var12)
-    } else {
-      hash1[var1] <- var12
-    }
-  }
-  name1 <- names(hash1)
-  name2 <- sort(name1)
-  for (i in name2) {
-    key21 <- strsplit(i, "\t")[[1]]
-    num1 <- as.integer((as.numeric(key21[2]) + as.numeric(key21[3])) / 2)
-    size1 <- as.numeric(key21[3]) - as.numeric(key21[2]) + 1
-    num11 <- num1 - (size1 * 5)
-    num12 <- num1 + (size1 * 5)
-    var2 <- paste(hash1[[i]], collapse = "|")
-    out1 <- paste(key21[1], num11, num12, sep = "\t")
-    out2 <- paste(key21[1], key21[2], key21[3], key21[4], num11, num12, var2, sep = "\t")
-    col1 <- c(col1, out1)
-    col2 <- c(col2, out2)
-  }
-  col3 <- as.data.frame(col1)
-  col4 <- as.data.frame(col2)
-  col3 <- split_dataframe(col3, sep = "\t")
-  col4 <- split_dataframe(col4, sep = "\t")
-  list1 <- list(col3, col4)
+merge_extent_footprints <- function(file1, motif1) {
+  file1 <- file1[file1[,7] %in% motif1$Accession,]
+  peak_region <- paste(as.character(file1[,1]), file1[,2],
+                       file1[,3], file1[,4], sep = "\t")
+  file1$peak_region <- peak_region
+  file1$tf <- motif1[match(file1[,7],motif1[,1]),5]
+  group_peak <- dplyr::group_by(file1,peak_region)
+  group_peak <- group_peak[order(group_peak$peak_region),]
+  group_peak2 <-dplyr::group_map(group_peak,~merge_group(.x))
+  group_peak3 <- as.data.frame(group_peak[!duplicated(group_peak$peak_region),])
+  num1 <- as.integer((as.numeric(group_peak3[,2]) + as.numeric(group_peak3[,3])) / 2)
+  size1 <- as.numeric(group_peak3[,3]) - as.numeric(group_peak3[,2]) + 1
+  num11 <- as.integer(num1 - (size1 * 5))
+  num12 <- as.integer(num1 + (size1 * 5))
+  Candid <- group_peak3[,1:4]
+  Candid <- dplyr::mutate(Candid, V5 = num11 ,V6=num12,V7=unlist(group_peak2))
+  bed <- Candid[,c(1,5,6)]
+  list1 <- list(bed,Candid)
   return(list1)
+}
+
+
+
+merge_group <- function(data1){
+  data1 <- as.data.frame(data1)
+  motif <- as.character(data1[,7])
+  related_gene <- as.character(data1[,11])
+  mg <- paste(motif,related_gene,sep = ';',collapse = '|')
+  return(mg)
 }
