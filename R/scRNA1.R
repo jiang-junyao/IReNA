@@ -164,6 +164,7 @@ diffgenetest_pseudotime <- function(monocle_object){
 #'
 #' @examples
 extract_expressed_TFs <- function(seurat_object,TFs,cells_quantile = 0.05){
+  TFs <- TFs[TFs%in%rownames(seurat_object)]
   matrix_tf <- seurat_object@assays$RNA@counts[TFs,]
   if (cells_quantile==0) {
     TfExp <- matrix_tf[rowSums(matrix_tf)>0,]

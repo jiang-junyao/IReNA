@@ -164,40 +164,38 @@ Filter_Footprints <- function(FOS1, FOS_cutoff) {
 
 
 get_potential_regulation <- function(FOSF) {
-  con1 <- FOSF
-  col1 <- c()
-  title1 <- paste("TF", "\t", "Motif", "\t", "Target", "\t", "TypeChrStartEndFOS")
-  col1 <- c(title1, col1)
-  for (i in 1:nrow(con1)) {
-    acc11 <- strsplit(as.character(con1[i, ][1]), "\\|")[[1]]
-    acc12 <- strsplit(as.character(con1[i, ][2]), ";")[[1]]
-    acc121 <- c()
-    for (j in 1:length(acc12)) {
-      acc122 <- strsplit(acc12[j], "\\|")[[1]]
-      acc1222 <- strsplit(acc122[1], ",")[[1]]
-      var122 <- paste(acc122[2], con1[i, ][5], con1[i, ][6],
-        con1[i, ][ncol(con1)],
-        sep = ","
-      )
-      for (k in 1:length(acc1222)) {
-        acc121 <- c(acc121, paste(acc1222[k], var122, sep = "\t"))
-      }
-    }
-    for (j in 1:length(acc11)) {
-      acc112 <- strsplit(acc11[j], ";")[[1]]
-      for (k in 2:length(acc112)) {
-        for (n in 1:length(acc121)) {
-          var1 <- paste(acc112[k], acc112[1], acc121[n], sep = "\t")
-          col1 <- c(col1, var1)
-        }
-      }
-    }
+  potential_regulation <- apply(FOSF,1,get_potential_regulation2)
+  potential_regulation <- as.data.frame(unlist(potential_regulation))
+  potential_regulation <- split_dataframe(potential_regulation)
+  return(potential_regulation)
+}
+
+get_potential_regulation2 <- function(regulation){
+  source <- strsplit(regulation[1],'\\|')[[1]]
+  TFs <- c()
+  motif <- c()
+  for (i in source) {
+    source2 <- strsplit(i,';')[[1]]
+    motif1 <- source2[1]
+    TF1 <- source2[-1]
+    TFs <- c(TFs,TF1)
+    motif <- c(motif,rep(motif1,length(TF1)))
   }
-  col2 <- as.data.frame(col1)
-  col2 <- split_dataframe(col2)
-  colnames(col2) <- col2[1, ]
-  col2 <- col2[-1, ]
-  return(col2)
+  target <- unlist(strsplit(strsplit(regulation[2],';')[[1]],'\\|'))
+  target_gene <- target[seq(1,length(target),2)]
+  target_gene2 <- c()
+  for (i in target_gene) {
+    target_gene2 <- c(target_gene2,strsplit(i,',')[[1]])
+  }
+  target_gene <- target_gene2
+  annotation <- target[2]
+  type <- paste(annotation,regulation[4],regulation[5],regulation[6],
+                regulation[length(regulation)],sep = ',')
+  AllTFs <- rep(TFs,length(target_gene))
+  Allgenes <- rep(target_gene,each=length(TFs))
+  AllType <- rep(type,length(AllTFs))
+  potential_regulation <- paste(AllTFs,motif,Allgenes,AllType,sep='\t')
+  return(potential_regulation)
 }
 
 
