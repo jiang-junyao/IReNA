@@ -26,16 +26,26 @@ tutorial](https://jiang-junyao.github.io/IReNA/tutorial#installation)
 
 ## Examples and tutorials
 
+First of all, run [scRNA-seq preprocessing
+pipeline](https://jiang-junyao.github.io/IReNA/scRNA-seq-preprocessing)
+to get seurat object with pseudotime, or use your own methods to
+calculate the pseudotime of each cell, and then add it to the metadata
+of seurat object.
+
+If **only scRNA-seq (or bulk RNA-seq data)** are used to reconstruct
+regulatory network, just directly run the steps of **part 1**, **part
+2** and **part 4** in [IReNA
+tutorial](https://jiang-junyao.github.io/IReNA/tutorial).
+
 If **both ATAC-seq data and scRNA-seq (or bulk RNA-seq data)** are used
 to reconstruct regulatory network, please run [ATAC-seq raw data
 preprocessing](https://jiang-junyao.github.io/IReNA/ATAC-seq-preprocessing)
 first to get bam file, peaks file and footprint file, then run the steps
 of **part 1**, **part 3** and **part 4** in [IReNA
-tutorial](https://jiang-junyao.github.io/IReNA/tutorial). If **only
-scRNA-seq (or bulk RNA-seq data)** are used to reconstruct regulatory
-network, just directly run the steps of **part 1**, **part 2** and
-**part 4** in [IReNA
 tutorial](https://jiang-junyao.github.io/IReNA/tutorial).
+
+-   [ATAC-seq raw data
+    preprocessing](https://jiang-junyao.github.io/IReNA/scRNA-seq-preprocessing)
 
 -   [ATAC-seq raw data
     preprocessing](https://jiang-junyao.github.io/IReNA/ATAC-seq-preprocessing)
