@@ -44,7 +44,7 @@ first to get bam file, peaks file and footprint file, then run the steps
 of **part 1**, **part 3** and **part 4** in [IReNA
 tutorial](https://jiang-junyao.github.io/IReNA/tutorial).
 
--   [ATAC-seq raw data
+-   [scRNA-seq raw data
     preprocessing](https://jiang-junyao.github.io/IReNA/scRNA-seq-preprocessing)
 
 -   [ATAC-seq raw data
