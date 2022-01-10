@@ -12,6 +12,10 @@ filter_original_regulation(
 )
 }
 \arguments{
+\item{potential_regulation}{data.frame consists of three columns, first column
+contains source genes, second column contains target genes, third column contains
+weight.}
+
 \item{motif}{motif file, you can choose our bulit-in motif database of
 'mus musculus', 'homo sapiens', 'zebrafish' and 'chicken' by 'motif = Tranfac201803_Mm_MotifTFsF',
 'motif = Tranfac201803_Hs_MotifTFsF', 'motif = Tranfac201803_Zf_MotifTFsF',

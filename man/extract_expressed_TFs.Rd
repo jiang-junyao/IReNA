@@ -21,3 +21,8 @@ transcription factors express (threshold to get expressed transcription factors)
 extract expressed transcription factors according to the proportion of cells that
 transcription factors express
 }
+\examples{
+load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
+TFs <- c('CLK1','TCEB3','SOX4')
+extract_expressed_TFs(test_seurat,TFs)
+}

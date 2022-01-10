@@ -7,7 +7,9 @@
 sort_TFs_degree(regulatory_relationships)
 }
 \arguments{
-\item{regulatory_relationships}{}
+\item{regulatory_relationships}{regulatory relationships , columns should
+contain 'TF', 'TFSymbol', 'TFGroup', 'Target', 'TargetSymbol', 'TargetGroup'
+and 'Correlation'}
 }
 \value{
 Matrix contains sorted transcription factors

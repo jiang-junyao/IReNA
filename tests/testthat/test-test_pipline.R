@@ -14,5 +14,5 @@ test_that("FOS", {
   load(system.file("extdata", "Candid.rda", package = "IReNA"))
   Kmeans_clustering_ENS <- add_ENSID(test_clustering, Spec1='Hs')
   regulatory_relationships <- Footprints_FOS(wig_list, Candid,0.1)
-  expect_equal(nrow(regulatory_relationships), 538)
+  expect_equal(nrow(regulatory_relationships), 747)
 })

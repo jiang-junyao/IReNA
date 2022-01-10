@@ -112,7 +112,7 @@ get_SmoothByBin_PseudotimeExp <- function(seurat_object, FC = TRUE, Bin = 50, Fc
 #'
 #' @examples load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
 #' expression_profile = test_clustering[,-1]
-#' fileter_expression_profile(expression_profile)
+#' filter_expression_profile(expression_profile)
 filter_expression_profile <- function(expression_profile, filterfc = TRUE,
                                        FC = 0.1) {
   pro <- expression_profile

@@ -24,5 +24,5 @@ remove empty columns and genes with low foldchange in expression profile
 \examples{
 load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
 expression_profile = test_clustering[,-1]
-fileter_expression_profile(expression_profile)
+filter_expression_profile(expression_profile)
 }

@@ -7,7 +7,7 @@
 Footprints_FOS(Wig_list, Candid, FOS_threshold = 1, trans_wig = FALSE)
 }
 \arguments{
-\item{Wig_list}{list object, where each element is the \link{wig_track} result
+\item{Wig_list}{list object, where each element is the \link{cal_footprint_cuts} result
 of each sample.}
 
 \item{Candid}{If you follow our our pipline, this parameter should be the

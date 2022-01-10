@@ -27,9 +27,9 @@ Depends:
     pheatmap,
     DDRTree,
     RcisTarget,
-    GenomicRanges
 Imports: 
     Rsamtools,
+    GenomicRanges,
     ChIPseeker,
     GenomicRanges,
     IRanges,
@@ -53,7 +53,10 @@ Imports:
     limma,
     rlang,
     reshape2,
-    stringr
+    stringr,
+    furrr,
+    future,
+    purrr
 biocViews: SingleCell,RNASeq,ATACSeq,Network
 VignetteBuilder: knitr
 BugReports: https://github.com/jiang-junyao/IReNA/issues
