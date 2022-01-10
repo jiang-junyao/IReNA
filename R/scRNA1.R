@@ -162,15 +162,17 @@ diffgenetest_pseudotime <- function(monocle_object){
 #' @return
 #' @export
 #'
-#' @examples
+#' @examples load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
+#' TFs <- c('CLK1','TCEB3','SOX4')
+#' extract_expressed_TFs(test_seurat,TFs)
 extract_expressed_TFs <- function(seurat_object,TFs,cells_quantile = 0.05){
   TFs <- TFs[TFs%in%rownames(seurat_object)]
   matrix_tf <- seurat_object@assays$RNA@counts[TFs,]
   if (cells_quantile==0) {
-    TfExp <- matrix_tf[rowSums(matrix_tf)>0,]
+    TfExp <- matrix_tf[rowSums(as.matrix(matrix_tf))>0,]
   }else{
     quantile_exp <- ncol(matrix_tf)/(1/cells_quantile)
-    TfExp <- matrix_tf[rowSums(matrix_tf)>quantile_exp,]}
+    TfExp <- matrix_tf[rowSums(as.matrix(matrix_tf))>quantile_exp,]}
   return(TfExp)
 }
 

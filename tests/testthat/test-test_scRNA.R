@@ -3,7 +3,7 @@ test_that("multiplication works", {
   monocle_object <- get_pseudotime(test_seurat)
   seurat_with_time <- add_pseudotime(test_seurat, monocle_object)
   expression_profile <- get_SmoothByBin_PseudotimeExp(seurat_with_time)
-  expression_profile_filter <- fileter_expression_profile(expression_profile, FC=0.01)
+  expression_profile_filter <- filter_expression_profile(expression_profile, FC=0.01)
   clustering <- clustering_Kmeans(expression_profile_filter, K1=4)
   col1 <- c('#67C1E3','#EF9951','#00BFC4','#AEC7E8','#C067A9','#E56145','#2F4F4F')
   plot_kmeans_pheatmap(clustering, ModuleColor1 = col1)
