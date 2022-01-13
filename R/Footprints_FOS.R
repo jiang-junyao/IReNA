@@ -28,7 +28,9 @@ Footprints_FOS <- function(Wig_list, Candid, FOS_threshold = 1, trans_wig = FALS
   FOS1 <- Combine_Footprints_FOS(cutsp2_FOS)
   FOS2 <- Filter_Footprints(FOS1,FOS_threshold)
   FOSF <- get_potential_regulation(FOS2)
-  FOSF_RegM <- Merge_same_pairs(FOSF)
+  FOSF_RegM <- FOSF[!duplicated(paste(FOSF[,1],FOSF[,3])),]
+  FOSF_RegM <- FOSF_RegM[,c(1,3,2,4)]
+  colnames(FOSF_RegM) <- c('TF','Target','Motif','MotifTypeChrStartEndFOS')
   return(FOSF_RegM)
 }
 

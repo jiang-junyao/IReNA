@@ -44,7 +44,7 @@ combine_footprints <- function(Dir) {
 overlap_footprints_peaks <- function(footprints, peak_bed) {
   peak <- GenomicRanges::GRanges(paste0(peak_bed[,1],':',peak_bed[,2],'-',peak_bed[,3]))
   footprints1 <- GenomicRanges::GRanges(paste0(footprints[,1],':',footprints[,2],'-',footprints[,3]))
-  overlap_idx <- findOverlaps(footprints1,peak)
+  overlap_idx <- GenomicRanges::findOverlaps(footprints1,peak)
   final_footprints <- cbind(footprints[overlap_idx@from,],peak_bed[overlap_idx@to,])
   return(final_footprints)
 }
