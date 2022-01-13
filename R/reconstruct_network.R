@@ -11,6 +11,11 @@
 #' @param Rankingsdir path of Gene-motif rankings file, which can be downloaded
 #' in https://resources.aertslab.org/cistarget. For more details about motif ranking
 #' file, you can read https://bioconductor.riken.jp/packages/3.9/bioc/vignettes/RcisTarget/inst/doc/RcisTarget.html#gene-motif_rankings
+#' @param nesThreshold Numeric. NES threshold to calculate the motif significant
+#'  (3.0 by default). The NES is calculated -for each motif- based on the AUC
+#'  distribution of all the motifs for the gene-set [(x-mean)/sd]. The motifs
+#'  are considered significantly enriched if they pass the the Normalized
+#'  Enrichment Score (NES) threshold.
 #' @importFrom RcisTarget importRankings
 #' @importFrom RcisTarget cisTarget
 #' @importFrom utils data
@@ -19,7 +24,8 @@
 #'
 #' @examples Rankingspath1 <- 'hg19-500bp-upstream-7species.mc9nr.feather'
 #'  # filtered_regulatory_relationships_Rcis <- filter_regulation(Kmeans_result,regulatory_relationships, 'Hs', Rankingspath1)
-filter_regulation_Rcis<-function(Kmeans_result,regulatory_relationships,Species,Rankingsdir){
+filter_regulation_Rcis<-function(Kmeans_result,regulatory_relationships,Species,
+                                 Rankingsdir,nesThreshold=3){
   group1 <- levels(as.factor(Kmeans_result$KmeansGroup))
   genelist <- c()
   for (i in group1) {
@@ -37,8 +43,10 @@ filter_regulation_Rcis<-function(Kmeans_result,regulatory_relationships,Species,
   }
   motifRankings <- RcisTarget::importRankings(Rankingsdir)
   motifEnrichmentTable_wGenes <- RcisTarget::cisTarget(genelist, motifRankings,
-                                                       motifAnnot=geneannotate)
+                                                       motifAnnot=geneannotate,
+                                                       nesThreshold=nesThreshold)
   regulation1 <- c()
+  group1 <- levels(as.factor(motifEnrichmentTable_wGenes$geneSet))
   for (i in group1) {
     groupmotif <- motifEnrichmentTable_wGenes[motifEnrichmentTable_wGenes$geneSet==i,]
     signifMotifNames <- groupmotif$motif[1:nrow(groupmotif)]

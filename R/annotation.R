@@ -42,10 +42,10 @@ get_related_genes <- function(footprints, motif, Species, txdb, tssRegion = c(-3
   } else if (Species == "Ch") {
     annodb <- "org.Gg.eg.db"
   }
-  reference_GRange <- GenomicRanges::GRanges(seqnames = merged_footprints$V1,
-                                             IRanges::IRanges(start = as.numeric(merged_footprints$V2),
-                                             end = as.numeric(merged_footprints$V3)),
-                                             strand = merged_footprints$V4)
+  reference_GRange <- GenomicRanges::GRanges(seqnames = merged_footprints[,1],
+                                             IRanges::IRanges(start = as.numeric(merged_footprints[,2]),
+                                                              end = as.numeric(merged_footprints[,3])),
+                                             strand = merged_footprints[,4])
   peakAnno <- ChIPseeker::annotatePeak(reference_GRange,
     tssRegion = tssRegion,
     TxDb = txdb, annoDb = annodb
