@@ -161,7 +161,7 @@ generate_fimo_regulation <- function(motif_dir,motif){
           regulation1 <- data.frame(motifgene1,targetgenes[i])
           rownames(regulation1) <- i
           colnames(regulation1) <- c('TF','Target')
-          regulation <- rbind(regulation_final,regulation1)
+          regulation_final <- rbind(regulation_final,regulation1)
         }
       }
     }
