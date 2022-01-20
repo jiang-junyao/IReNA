@@ -76,10 +76,10 @@ Trans_WigToMultirows2 <- function(b) {
 Add_size_of_motif <- function(cutsp_list, Candid) {
   list1 <- list()
   con2 <- Candid
-  Candid$V2 <- as.numeric(Candid$V2)
-  Candid$V3 <- as.numeric(Candid$V3)
-  Candid$V5 <- as.numeric(Candid$V5)
-  Candid$V6 <- as.numeric(Candid$V6)
+  Candid[,2] <- as.numeric(Candid[,2])
+  Candid[,3] <- as.numeric(Candid[,3])
+  Candid[,5] <- as.numeric(Candid[,5])
+  Candid[,6] <- as.numeric(Candid[,6])
   for (i in 1:length(cutsp_list)) {
     cuts <- cutsp_list[[i]]
     cuts_footprint <- paste(cuts[,1],cuts[,2],cuts[,3])
