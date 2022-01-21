@@ -188,20 +188,15 @@ filter_regulation_fimo <- function(fimo_regulation,regulatory_relationships){
   if (!'Target' %in% colnames(regulatory_relationships)) {
     stop('regulatory_relationships should contain "Target" column')
   }
-  targetgenes <- regulatory_relationships$Target
-  targetgenes <- targetgenes[!duplicated(targetgenes)]
-  regulation1 <- as.matrix(regulatory_relationships[1,])
-  for (i in targetgenes) {
-    if (i %in% fimo_regulation$Target) {
-      source <- fimo_regulation[fimo_regulation$Target==i,1]
-      source <- as.character(source)
-      source <- strsplit(source,';')[[1]]
-      regulatory_relationships1 <- regulatory_relationships[regulatory_relationships$Target==i,]
-      regulatory_relationships1 <- regulatory_relationships1[regulatory_relationships1$TF %in% source,]
-      regulation1 <- rbind(regulation1,regulatory_relationships1)
-    }
-  }
-  regulation1 <- regulation1[-1,]
+  fimo_pair <- apply(fimo_regulation, 1, function(x1){
+    TFs <- strsplit(x1[1],';')[[1]]
+    Target <- x1[2]
+    regulation <- paste(TFs,Target)
+    return(regulation)
+  })
+  fimo_pair <- unlist(fimo_pair)
+  regulation_pair <- paste(regulatory_relationships[,1],regulatory_relationships[,4])
+  regulation1 <- regulation2[regulation_pair %in% fimo_pair,]
   return(regulation1)
 }
 
