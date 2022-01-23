@@ -360,8 +360,15 @@ sparse.cor <- function(x){
 #'
 #' @examples
 filter_ATAC <- function(FOS,regulary_relationships){
+  if (grepl("ENS", FOS[1,1])) {
+    TfIndex <- 1
+  }else{TfIndex <- 2}
+  if (grepl("ENS", FOS[1,2])) {
+    TargetIndex <- 4
+  }else{TargetIndex <- 5}
   pair1 <- paste(FOS[,1],FOS[,2])
-  pair2 <- paste(regulary_relationships[,1],regulary_relationships[,4])
+  pair2 <- paste(regulary_relationships[,TfIndex],
+                 regulary_relationships[,TargetIndex])
   filtered <- regulary_relationships[pair2 %in% pair1,]
   return(filtered)
 }
