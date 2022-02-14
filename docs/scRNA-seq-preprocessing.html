@@ -208,9 +208,9 @@ seurat_object &lt;- load_counts(&#39;test_data.txt&#39;,datatype = 1)</code></pr
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>sig_genes <span class="ot">&lt;-</span> <span class="fu">subset</span>(sig_genes, num_cells_expressed <span class="sc">&gt;</span> <span class="fl">0.1</span>)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">### select Candidate TFs.</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>Candidate_TFs <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(motif)) {</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  gene1 <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(motif[i,<span class="dv">5</span>],<span class="st">&#39;;&#39;</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  motifgene <span class="ot">&lt;-</span> <span class="fu">c</span>(Candidate_TFs,gene1)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(motif1)) {</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  gene1 <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(motif1[i,<span class="dv">5</span>],<span class="st">&#39;;&#39;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  Candidate_TFs <span class="ot">&lt;-</span> <span class="fu">c</span>(Candidate_TFs,gene1)</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="do">### Identify expressed TFs</span></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="do">### Canidate TFs in our motif database are ensemble ID, If your gene names in </span></span>
