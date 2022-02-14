@@ -139,7 +139,12 @@ Guangzhou Institutes of Biomedicine and Health, Chinese Academy of Sciences</h4>
 <ul>
 <li><a href="#scrna-seq-preprocessing-pipeline">scRNA-seq preprocessing pipeline</a>
 <ul>
-<li><a href="#inputs-of-this-pipline">Inputs of this pipline</a></li>
+<li><a href="#inputs-of-this-pipline">Inputs of this pipline</a>
+<ul>
+<li><a href="#seurat-object">(1) <span>seurat object</span></a></li>
+<li><a href="#raw-counts">(2) Raw counts</a></li>
+<li><a href="#motif-information-of-transcription-factors">(3) Motif information of transcription factors</a></li>
+</ul></li>
 <li><a href="#step-1-calculate-the-pseudotime">Step 1: Calculate the pseudotime</a></li>
 <li><a href="#step-2-identify-degs-and-expressed-transcription-factorstfs">Step 2: Identify DEGs and expressed transcription factors(TFs)</a></li>
 </ul></li>
@@ -153,46 +158,71 @@ Guangzhou Institutes of Biomedicine and Health, Chinese Academy of Sciences</h4>
 <p>This pipeline is developed for scRNA-seq data pre-processing of <a href="https://github.com/jiang-junyao/IReNA">IReNA</a>. This pipline finally generates a seurat object(refined_seurat) which is input of IReNA. Test data used in <a href="https://github.com/jiang-junyao/IReNA">IReNA</a> can be download from <a href="https://github.com/jiang-junyao/IReNA-test-data" class="uri">https://github.com/jiang-junyao/IReNA-test-data</a></p>
 <div id="inputs-of-this-pipline" class="section level2">
 <h2>Inputs of this pipline</h2>
-<ol style="list-style-type: decimal">
-<li><p><a href="https://satijalab.org/seurat/articles/get_started.html">seurat object</a></p></li>
-<li><p>For users who only have raw counts, IReNA provides the function ‘load_counts’ to load raw counts of scRNA-seq data, and return seurat object. If the data is <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/output/matrices">10X format</a>, set the parameter ‘datatype = 0’. If the data is normal counts format (‘txt’ as the suffix of the file name), set the parameter ‘dayatype =1’.</p></li>
-</ol>
+<div id="seurat-object" class="section level3">
+<h3>(1) <a href="https://satijalab.org/seurat/articles/get_started.html">seurat object</a></h3>
+</div>
+<div id="raw-counts" class="section level3">
+<h3>(2) Raw counts</h3>
+<p>For users who only have raw counts, IReNA provides the function ‘load_counts’ to load raw counts of scRNA-seq data, and return seurat object. If the data is <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/output/matrices">10X format</a>, set the parameter ‘datatype = 0’. If the data is normal counts format (‘txt’ as the suffix of the file name), set the parameter ‘dayatype =1’.</p>
 <pre><code>### load 10X counts
 seurat_object &lt;- load_counts(&#39;10X_data/sample1/&#39;, datatype = 0)
 ### load normal counts
 seurat_object &lt;- load_counts(&#39;test_data.txt&#39;,datatype = 1)</code></pre>
 </div>
+<div id="motif-information-of-transcription-factors" class="section level3">
+<h3>(3) Motif information of transcription factors</h3>
+<p>IReNA contains DNA motif datasets for four species (Homo sapiens, Mus musculus, Zebrafish and Chicken) derived from <a href="https://genexplain.com/transfac/">TRANSFAC version 201803</a>. Following codes are used to get the motif dataset from TRANSFAC or user-defined motif dataset which should have the same format as these from TRANSFAC database.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(IReNA)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">###call Mus musculus motif database</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>motif1 <span class="ot">&lt;-</span> Tranfac201803_Mm_MotifTFsF</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">###call Homo sapiens motif database</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>motif1 <span class="ot">&lt;-</span> Tranfac201803_Hs_MotifTFsF</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">###call Zebrafish motif database</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>motif1 <span class="ot">&lt;-</span> Tranfac201803_Zf_MotifTFsF</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">###call Chicken motif database</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>motif1 <span class="ot">&lt;-</span> Tranfac201803_Ch_MotifTFsF</span></code></pre></div>
+</div>
+</div>
 <div id="step-1-calculate-the-pseudotime" class="section level2">
 <h2>Step 1: Calculate the pseudotime</h2>
 <p>In this step, IReNA integrate R package <a href="http://cole-trapnell-lab.github.io/monocle-release/">monocle2</a> to calculate the pseudotime of each cell, and then add the pseudotime to the metadata of seurat object. Alternatively, you can use <a href="https://bioconductor.org/packages/devel/bioc/vignettes/slingshot/inst/doc/vignette.html">slingshot</a>, <a href="http://cole-trapnell-lab.github.io/monocle3">monocle3</a>, <a href="https://github.com/zji90/TSCAN">TSCAN</a> or other related methods to infer pseudotime, and add it to the metadata of seurat object by your own codes (function ‘add_pseudotime’ only support monocle object from monocle2).</p>
 <p>Parameter ‘gene.use’ in ‘get_pseudotime’ function indicate the genes use to calculate pseudotime, if it’s null, this function will automatically use variable genes calculated by ‘FindVariableFeatures’ function in Seurat package to calculate pseudotime.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Read seurat_object</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(IReNA)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>seurat_object <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&#39;seurat_object.rds&#39;</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">### Calculate the pseudotime and return monocle object</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>monocle_object <span class="ot">&lt;-</span> <span class="fu">get_pseudotime</span>(seurat_object,<span class="at">gene.use =</span> <span class="fu">rownames</span>(seurat_object))</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">###Add pseudotime to the Seurat object</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="do">### This function only support monocle object from monocle2</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>seurat_with_time <span class="ot">&lt;-</span> <span class="fu">add_pseudotime</span>(seurat_object, monocle_object)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Read seurat_object</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(IReNA)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>seurat_object <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&#39;seurat_object.rds&#39;</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">### Calculate the pseudotime and return monocle object</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>monocle_object <span class="ot">&lt;-</span> <span class="fu">get_pseudotime</span>(seurat_object,<span class="at">gene.use =</span> <span class="fu">rownames</span>(seurat_object))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">###Add pseudotime to the Seurat object</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">### This function only support monocle object from monocle2</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>seurat_with_time <span class="ot">&lt;-</span> <span class="fu">add_pseudotime</span>(seurat_object, monocle_object)</span></code></pre></div>
 </div>
 <div id="step-2-identify-degs-and-expressed-transcription-factorstfs" class="section level2">
 <h2>Step 2: Identify DEGs and expressed transcription factors(TFs)</h2>
 <p>In this step, firstly we identify DEGs across the pseudotime and exprssed TFs (expressed in more than 5% of cells). Then, using above genes to refine the seurat object. We recommend ‘differentialGeneTest’ function in <a href="http://cole-trapnell-lab.github.io/monocle-release/">monocle2</a> to calculate DEGs across pseudotime. DEGs and expressed TFs will be used to make expression profile in further analysis.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Identify DEGs across pseudotime (qvalue &lt; 0.05 and num_cells_expressed &gt; 0.1)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(monocle)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>monocle_object <span class="ot">&lt;-</span> <span class="fu">detectGenes</span>(monocle_object, <span class="at">min_expr =</span> <span class="dv">3</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>monocle_object <span class="ot">&lt;-</span> <span class="fu">estimateDispersions</span>(monocle_object)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>diff1 <span class="ot">&lt;-</span> monocle<span class="sc">::</span><span class="fu">differentialGeneTest</span>(monocle_object,<span class="at">fullModelFormulaStr =</span> <span class="st">&quot;~Pseudotime&quot;</span>,<span class="at">relative_expr =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>sig_genes <span class="ot">&lt;-</span> <span class="fu">subset</span>(diff1, qval <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>sig_genes <span class="ot">&lt;-</span> <span class="fu">subset</span>(sig_genes, num_cells_expressed <span class="sc">&gt;</span> <span class="fl">0.1</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">### Identify expressed TFs</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>expressed_tf <span class="ot">&lt;-</span> <span class="fu">rownames</span>(<span class="fu">extract_expressed_TFs</span>(seurat_object,TF))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>expressed_tf <span class="ot">&lt;-</span> expressed_tf[<span class="sc">!</span>expressed_tf<span class="sc">%in%</span><span class="fu">rownames</span>(sig_genes)]</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="do">### Refine the seurat object</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>refined_seurat <span class="ot">&lt;-</span> <span class="fu">subset</span>(seurat_with_time, <span class="at">features =</span> <span class="fu">c</span>(expressed_tf,<span class="fu">rownames</span>(sig_genes)))</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Identify DEGs across pseudotime (qvalue &lt; 0.05 and num_cells_expressed &gt; 0.1)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(monocle)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>monocle_object <span class="ot">&lt;-</span> <span class="fu">detectGenes</span>(monocle_object, <span class="at">min_expr =</span> <span class="dv">1</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>monocle_object <span class="ot">&lt;-</span> <span class="fu">estimateDispersions</span>(monocle_object)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>diff1 <span class="ot">&lt;-</span> monocle<span class="sc">::</span><span class="fu">differentialGeneTest</span>(monocle_object,<span class="at">fullModelFormulaStr =</span> <span class="st">&quot;~Pseudotime&quot;</span>,<span class="at">relative_expr =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>sig_genes <span class="ot">&lt;-</span> <span class="fu">subset</span>(diff1, qval <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>sig_genes <span class="ot">&lt;-</span> <span class="fu">subset</span>(sig_genes, num_cells_expressed <span class="sc">&gt;</span> <span class="fl">0.1</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">### select Candidate TFs.</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>Candidate_TFs <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(motif)) {</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  gene1 <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(motif[i,<span class="dv">5</span>],<span class="st">&#39;;&#39;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  motifgene <span class="ot">&lt;-</span> <span class="fu">c</span>(Candidate_TFs,gene1)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="do">### Identify expressed TFs</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="do">### Canidate TFs in our motif database are ensemble ID, If your gene names in </span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="do">### seurat object are Symbol ID, you need to transfer </span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="do">### Canidate TFs to Symbol ID first.</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>expressed_tf <span class="ot">&lt;-</span> <span class="fu">rownames</span>(<span class="fu">extract_expressed_TFs</span>(seurat_object,Candidate_TFs))</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>expressed_tf <span class="ot">&lt;-</span> expressed_tf[<span class="sc">!</span>expressed_tf<span class="sc">%in%</span><span class="fu">rownames</span>(sig_genes)]</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="do">### Refine the seurat object</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>refined_seurat <span class="ot">&lt;-</span> <span class="fu">subset</span>(seurat_with_time, <span class="at">features =</span> <span class="fu">c</span>(expressed_tf,<span class="fu">rownames</span>(sig_genes)))</span></code></pre></div>
 <p>if you already have identified DEGs, you just need to run <a href="https://satijalab.org/seurat/reference/subset.anchorset">subset</a> function in seurat:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">### DEGs used here is the character class</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>seurat_with_time <span class="ot">&lt;-</span> <span class="fu">subset</span>(seurat_with_time, <span class="at">features =</span> DEGs)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">### DEGs used here is the character class</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>seurat_with_time <span class="ot">&lt;-</span> <span class="fu">subset</span>(seurat_with_time, <span class="at">features =</span> DEGs)</span></code></pre></div>
 <p><strong>Hint</strong> : In most situations, i highly recommend using DEGs and expressed TFs to refine the seurat object, then reconstruct the regulatory networks. However, if your project has some special purpose, you could skip step2, and use all genes to reconstruct the regulatory networks.</p>
 </div>
 </div>
