@@ -172,7 +172,7 @@ extract_expressed_TFs <- function(seurat_object,TFs,cells_quantile = 0.05){
     TfExp <- matrix_tf[rowSums(as.matrix(matrix_tf))>0,]
   }else{
     quantile_exp <- ncol(matrix_tf)/(1/cells_quantile)
-    TfExp <- matrix_tf[rowSums(as.matrix(matrix_tf))>quantile_exp,]}
+    TfExp <- matrix_tf[ncol(matrix_tf)-rowSums(matrix_tf==0)>quantile_exp,]}
   return(TfExp)
 }
 
