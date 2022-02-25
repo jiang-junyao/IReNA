@@ -48,6 +48,7 @@ generate_scATAC_Candid <- function(p2g,combined_footprints,Kmeans_clustering_ENS
   pg <- pg[order(pg$peak),]
   colnames(pg) <- c('peak','gene')
   peak_grouped <- dplyr::group_by(pg,peak)
+  peak_grouped$gene<- paste0(peak_grouped$gene,'|Unknown')
   peak_all_gene=dplyr::group_map(peak_grouped,~get_genes(.x))
   peak_all_gene <-unlist(peak_all_gene)
   peak_name <- pg[!duplicated(pg$peak),1]
@@ -61,13 +62,12 @@ generate_scATAC_Candid <- function(p2g,combined_footprints,Kmeans_clustering_ENS
   overlapped <- overlap_footprints_peaks(combined_footprints,peak_data)
   footprintslist <- merge_extent_footprints(overlapped, Tranfac201803_Mm_MotifTFsF)
   group_peak3=merge_extent_footprints2(overlapped, Tranfac201803_Mm_MotifTFsF)
-  footprintslist[[2]]$strand <- paste0(peak_all_gene[match(paste(group_peak3[,8]
+  footprintslist[[2]]$strand <- peak_all_gene[match(paste(group_peak3[,8]
                                                                  ,group_peak3[,9],
                                                                  group_peak3[,10]),
                                                            paste(peak_data[,1],
                                                                  peak_data[,2],
-                                                                 peak_data[,3]))],
-                                                                      '|Unknown')
+                                                                 peak_data[,3]))]
   return(footprintslist)
 }
 

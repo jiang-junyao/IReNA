@@ -167,8 +167,7 @@ Filter_Footprints <- function(FOS1, FOS_cutoff) {
 
 get_potential_regulation <- function(FOSF) {
   potential_regulation <- apply(FOSF,1,get_potential_regulation2)
-  potential_regulation <- as.data.frame(unlist(potential_regulation))
-  potential_regulation <- split_dataframe(potential_regulation)
+  potential_regulation <- do.call(dplyr::bind_rows,potential_regulation)
   return(potential_regulation)
 }
 
@@ -196,7 +195,7 @@ get_potential_regulation2 <- function(regulation){
   AllTFs <- rep(TFs,length(target_gene))
   Allgenes <- rep(target_gene,each=length(TFs))
   AllType <- rep(type,length(AllTFs))
-  potential_regulation <- paste(AllTFs,motif,Allgenes,AllType,sep='\t')
+  potential_regulation <- data.frame(AllTFs,motif,Allgenes,AllType)
   return(potential_regulation)
 }
 

@@ -51,6 +51,38 @@ smoothByBin <- function(Exp1, Pseudotime1, PseudotimeRange1 = NULL,
   return(Exp2)
 }
 
+
+
+
+smoothByState <- function(seurat_obj, Pseudotime1, each_state_bin1){
+  ### order cells
+  Pseudotime1 <- Pseudotime1[order(Pseudotime1$Pseudotime),]
+  Pseudotime1$State <- as.character(Pseudotime1$State)
+  seurat_exp <- as.matrix(seurat_obj@assays$RNA@data)
+  seurat_exp <- seurat_exp[,rownames(Pseudotime1)]
+  ### order states
+  order_state <- as.character(Pseudotime1$State[!duplicated(Pseudotime1$State)])
+  ### divide cells in each state to bins
+  each_state_bin <- each_state_bin1
+  for (j in order_state) {
+
+    Pseudotime2 <- Pseudotime1[Pseudotime1$State==j,]
+    seurat_exp2_state <- seurat_exp[,rownames(Pseudotime2)]
+    PseudotimeBin1 <- round(seq(1,nrow(Pseudotime2),length.out=each_state_bin+1))
+    Exp2 <- array(0, dim = c(nrow(seurat_exp), each_state_bin))
+    for (i in 1:(length(PseudotimeBin1) - 1)) {
+        Exp2[, i] <- rowMeans(seurat_exp2_state[, PseudotimeBin1[i]:PseudotimeBin1[i+1]])
+    }
+    if (j==1) {
+      Exp3 = Exp2
+    }else{Exp3 <-cbind(Exp3,Exp2)}
+  }
+  rownames(Exp3) <- rownames(seurat_exp)
+  return(Exp3)
+}
+
+
+
 #' get somoothbybin
 #' @description Divide cells into bins across pseudotime and return expression
 #' profile
@@ -69,13 +101,21 @@ smoothByBin <- function(Exp1, Pseudotime1, PseudotimeRange1 = NULL,
 #' monocle_object = get_pseudotime(test_seurat)
 #' seurat_object_pseudotime=add_pseudotime(seurat_object = test_seurat,monocle_object = monocle_object)
 #' get_SmoothByBin_PseudotimeExp(seurat_object_pseudotime, Bin = 50, FcType = "Q95")
-get_SmoothByBin_PseudotimeExp <- function(seurat_object, FC = TRUE, Bin = 50, FcType = "Q95") {
-  TotalBin1 <- Bin
+get_SmoothByBin_PseudotimeExp <- function(seurat_object, FC = TRUE, Bin = 50,
+                                          method = 'Pseudotime',FcType = "Q95") {
   FcType1 <- FcType
   ByBin1 <- c("Equal.Pseudotime")
   pbmc1 <- seurat_object
-  Exp1 <- smoothByBin(as.matrix(pbmc1@assays$RNA@data), pbmc1@meta.data,
+  if (method == 'Pseudotime') {
+    TotalBin1 <- Bin
+    Exp1 <- smoothByBin(as.matrix(pbmc1@assays$RNA@data), pbmc1@meta.data,
                       SmoothLength1 = TotalBin1, ByBin1 = ByBin1[1])
+  }
+  if (method == 'State') {
+    TotalBin1 <- round(Bin/length(levels(as.factor(pbmc1@meta.data$State))))
+    Exp1 <- smoothByState(pbmc1, pbmc1@meta.data,
+                          TotalBin1)
+  }
   if (FC == TRUE) {
     if (FcType1 == "Q90") {
       Prob1 <- c(0.1, 0.9)

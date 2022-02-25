@@ -388,7 +388,7 @@ merge_Module_Regulations <- function(TFs_list, Kmeans_result, ModuleThr1 = 0.05)
   RegulationNum1 <- RegulationNum1[RegulationNum1$V4 != "NaN", ]
   RegulationP1 <- apply(RegulationNum1[, 5:ncol(RegulationNum1)], 1, function(X1) {
     X1 <- as.numeric(X1)
-    if (X1[1] < 2) {
+    if (X1[1] < 4) {
       P1 <- 1
     } else {
       P1 <- phyper(X1[1], X1[2], X1[3], X1[4], lower.tail = FALSE)
