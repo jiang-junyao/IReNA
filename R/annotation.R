@@ -100,6 +100,7 @@ merge_extent_footprints <- function(file1, motif1) {
   size1 <- as.numeric(group_peak3[,3]) - as.numeric(group_peak3[,2]) + 1
   num11 <- as.integer(num1 - (size1 * 5))
   num12 <- as.integer(num1 + (size1 * 5))
+  peak_index = paste0(group_peak3[,8],':',group_peak3[,9],'-',group_peak3[,10])
   Candid <- group_peak3[,1:4]
   Candid <- dplyr::mutate(Candid, V5 = num11 ,V6=num12,V7=unlist(group_peak2))
   bed <- Candid[,c(1,5,6)]
