@@ -21,10 +21,37 @@ knitr::opts_chunk$set(
 
 IReNA (Integrated Regulatory Network Analysis) is an R package to perform regulatory network analysis. IReNA contains two methods to reconstruct gene regulatory networks. The first is using single-cell RNA sequencing (scRNA-seq) data alone. The second is integrating scRNA-seq data and chromatin accessibility profiles from Assay for Transposase Accessible Chromatin using sequencing (ATAC-seq). IReNA performs modular regulatory network to reveal key transcription factors and significant regulatory relationships among modules, providing biological insights on regulatory mechanisms.
 
+## Workflow
+
+![](docs/Readme figure/Workflow1.png){ width=50% height=50% }
 
 ## Installation
 
-Please see the Installation part of [IReNA tutorial](https://jiang-junyao.github.io/IReNA/tutorial#installation)
+IReNA needs R version 4.0 or higher, and [Bioconductor](http://bioconductor.org/) version 3.12.
+
+First, install Bioconductor, open R platform and run:
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+install.packages("BiocManager")
+BiocManager::install(version = "3.12")
+```
+
+Next, install several Bioconductor dependencies:
+```r
+BiocManager::install(c('Rsamtools', 'ChIPseeker', 'monocle',
+                       'RcisTarget', 'RCy3', 'clusterProfiler'))
+```
+
+Then, install IReNA from GitHub:
+```r
+install.packages("devtools")
+devtools::install_github("jiang-junyao/IReNA")
+```
+
+Finally, check whether IReNA was installed correctly, restart R session and run:
+```r
+library(IReNA)
+```
 
 ## Examples and tutorials
 First of all, run [scRNA-seq preprocessing pipeline](https://jiang-junyao.github.io/IReNA/scRNA-seq-preprocessing) to get seurat object with pseudotime, or use your own methods to calculate the pseudotime of each cell, and then add it to the metadata of seurat object.
@@ -39,10 +66,6 @@ If **both ATAC-seq data and scRNA-seq (or bulk RNA-seq data)** are used to recon
 
 * [IReNA tutorial](https://jiang-junyao.github.io/IReNA/tutorial)
 
-
-## Workflow
-
-![](docs/Readme figure/Workflow.png){ width=30% height=30% }
 
 ## External links
 

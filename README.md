@@ -19,10 +19,43 @@ regulatory network to reveal key transcription factors and significant
 regulatory relationships among modules, providing biological insights on
 regulatory mechanisms.
 
+## Workflow
+
+<img src="docs/Readme%20figure/Workflow1.png" style="width:50.0%;height:50.0%" />
+
 ## Installation
 
-Please see the Installation part of [IReNA
-tutorial](https://jiang-junyao.github.io/IReNA/tutorial#installation)
+IReNA needs R version 4.0 or higher, and
+[Bioconductor](http://bioconductor.org/) version 3.12.
+
+First, install Bioconductor, open R platform and run:
+
+``` r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+install.packages("BiocManager")
+BiocManager::install(version = "3.12")
+```
+
+Next, install several Bioconductor dependencies:
+
+``` r
+BiocManager::install(c('Rsamtools', 'ChIPseeker', 'monocle',
+                       'RcisTarget', 'RCy3', 'clusterProfiler'))
+```
+
+Then, install IReNA from GitHub:
+
+``` r
+install.packages("devtools")
+devtools::install_github("jiang-junyao/IReNA")
+```
+
+Finally, check whether IReNA was installed correctly, restart R session
+and run:
+
+``` r
+library(IReNA)
+```
 
 ## Examples and tutorials
 
@@ -51,10 +84,6 @@ tutorial](https://jiang-junyao.github.io/IReNA/tutorial).
     preprocessing](https://jiang-junyao.github.io/IReNA/ATAC-seq-preprocessing)
 
 -   [IReNA tutorial](https://jiang-junyao.github.io/IReNA/tutorial)
-
-## Workflow
-
-<img src="docs/Readme%20figure/Workflow.png" style="width:30.0%;height:30.0%" />
 
 ## External links
 
