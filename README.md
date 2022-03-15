@@ -21,7 +21,7 @@ regulatory mechanisms.
 
 ## Workflow
 
-<img src="docs/Readme%20figure/Workflow1.png" style="width:30.0%;height:30.0%" />
+<img src="docs/Readme%20figure/Workflow1.png" style="width:10.0%;height:10.0%" />
 
 ## Installation
 

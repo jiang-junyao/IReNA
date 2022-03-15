@@ -23,7 +23,7 @@ IReNA (Integrated Regulatory Network Analysis) is an R package to perform regula
 
 ## Workflow
 
-![](docs/Readme figure/Workflow1.png){ width=30% height=30% }
+![](docs/Readme figure/Workflow1.png){ width=10% height=10% }
 
 ## Installation
 
