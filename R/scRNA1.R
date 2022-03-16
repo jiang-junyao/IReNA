@@ -246,15 +246,31 @@ filter_original_regulation <-function(potential_regulation,motif,
 #'
 #' @examples
 add_regulation_type <- function(Kmeans_result,potential_regulation,start_column=4){
-  source1 <- match(potential_regulation[,1],rownames(Kmeans_result))
-  target1 <- match(potential_regulation[,2],rownames(Kmeans_result))
-  source2 <- Kmeans_result[source1,c(1,2)]
-  colnames(source2) <- c('TFSymbol','TFGroup')
-  target2 <- Kmeans_result[target1,c(1,2)]
-  colnames(target2) <- c('TargetSymbol','TargetGroup')
   colnames(potential_regulation) <- c('TF','Target','Weight')
-  regulatory_relationships_Gen <- cbind(potential_regulation,source2,target2)
-  regulatory_relationships_Gen <- regulatory_relationships_Gen[,c(1,4,5,2,6,7,3)]
+  Kmeans_result[,3] <- rownames(Kmeans_result)
+  if (grepl("ENS", potential_regulation[1,1])) {
+    source1 <- match(potential_regulation[,1],rownames(Kmeans_result))
+    target1 <- match(potential_regulation[,2],rownames(Kmeans_result))
+    source2 <- Kmeans_result[source1,c(1,2)]
+    colnames(source2) <- c('TFSymbol','TFGroup')
+    target2 <- Kmeans_result[target1,c(1,2)]
+    colnames(target2) <- c('TargetSymbol','TargetGroup')
+    regulatory_relationships_Gen <- cbind(potential_regulation,source2,target2)
+    regulatory_relationships_Gen <- regulatory_relationships_Gen[,c(1,4,5,2,6,7,3)]
+  }else{
+    potential_regulation <- potential_regulation[potential_regulation$TF%in%Kmeans_result$Symbol,]
+    potential_regulation <- potential_regulation[potential_regulation$Target%in%Kmeans_result$Symbol,]
+    source1 <- match(potential_regulation[,1],Kmeans_result[,1])
+    target1 <- match(potential_regulation[,2],Kmeans_result[,1])
+    TFGroup <- Kmeans_result[source1,2]
+    TFENS <- Kmeans_result[source1,3]
+    TargetGroup <- Kmeans_result[target1,2]
+    TargetENS <- Kmeans_result[target1,3]
+    source2 <- data.frame(TFGroup,TFENS)
+    target2 <- data.frame(TargetGroup,TargetENS)
+    regulatory_relationships_Gen <- cbind(potential_regulation,source2,target2)
+    regulatory_relationships_Gen <- regulatory_relationships_Gen[,c(5,1,4,7,2,6,3)]
+  }
   cor1 <- sparse.cor(t(Kmeans_result[,start_column:ncol(Kmeans_result)]))
   cor2 <- reshape2::melt(cor1)
   correlationIndex <-  match(paste(regulatory_relationships_Gen[,1],regulatory_relationships_Gen[,4]),
