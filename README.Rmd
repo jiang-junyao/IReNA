@@ -13,17 +13,17 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
-
 `r badger::badge_custom("r", "version4.04", "green", "https://www.r-project.org")`
 `r badger::badge_custom("Seurat", "version4.01", "red", "https://satijalab.org/seurat/articles/get_started.html")`
 `r badger::badge_custom("monocle", "version2.18", "blue", "http://cole-trapnell-lab.github.io/monocle-release")`
 `r badger::badge_custom("Preprint", "biorxiv", "purple", "https://doi.org/10.1101/2021.11.22.469628")`
 
-IReNA (Integrated Regulatory Network Analysis) is an R package to perform regulatory network analysis. IReNA contains two methods to reconstruct gene regulatory networks. The first is using single-cell RNA sequencing (scRNA-seq) data alone. The second is integrating scRNA-seq data and chromatin accessibility profiles from Assay for Transposase Accessible Chromatin using sequencing (ATAC-seq). IReNA performs modular regulatory network to reveal key transcription factors and significant regulatory relationships among modules, providing biological insights on regulatory mechanisms.
+
+IReNA (Integrated Regulatory Network Analysis) is an R package to perform regulatory network analysis. IReNA contains two methods to reconstruct gene regulatory networks. The first is using single-cell RNA sequencing (scRNA-seq) data alone. The second is integrating scRNA-seq data and chromatin accessibility profiles from Assay for Transposase Accessible Chromatin using sequencing (scATAC-seq or bulk ATAC-seq). IReNA performs modular regulatory network to reveal key transcription factors and significant regulatory relationships among modules, providing biological insights on regulatory mechanisms.
 
 ## Workflow
 
-![](docs/Readme figure/Workflow1.png){ width=10% height=10% }
+![](docs/Readme figure/Workflow1.png){ width=80% height=80% }
 
 ## Installation
 
@@ -54,17 +54,14 @@ library(IReNA)
 ```
 
 ## Examples and tutorials
-First of all, run [scRNA-seq preprocessing pipeline](https://jiang-junyao.github.io/IReNA/scRNA-seq-preprocessing) to get seurat object with pseudotime, or use your own methods to calculate the pseudotime of each cell, and then add it to the metadata of seurat object.
 
-If **only scRNA-seq (or bulk RNA-seq data)** are used to reconstruct regulatory network, just directly run the steps of **part 1**, **part 2** and **part 4** in [IReNA tutorial](https://jiang-junyao.github.io/IReNA/tutorial).
+* [Regulatory network analysis through only scRNA-seq data](https://jiang-junyao.github.io/IReNA/only-scRNA)
 
-If **both ATAC-seq data and scRNA-seq (or bulk RNA-seq data)** are used to reconstruct regulatory network, please run [ATAC-seq raw data preprocessing](https://jiang-junyao.github.io/IReNA/ATAC-seq-preprocessing) first to get bam file, peaks file and footprint file, then run the steps of **part 1**, **part 3** and **part 4** in [IReNA tutorial](https://jiang-junyao.github.io/IReNA/tutorial). 
 
-* [scRNA-seq raw data preprocessing](https://jiang-junyao.github.io/IReNA/scRNA-seq-preprocessing)
+* [Regulatory network analysis through intergrating scRNA-seq data and scATAC-seq data](https://jiang-junyao.github.io/IReNA/scATAC+scRNA)
 
-* [ATAC-seq raw data preprocessing](https://jiang-junyao.github.io/IReNA/ATAC-seq-preprocessing)
 
-* [IReNA tutorial](https://jiang-junyao.github.io/IReNA/tutorial)
+* [Regulatory network analysis through intergrating scRNA-seq data and bulk ATAC-seq data](https://jiang-junyao.github.io/IReNA/bulk-ATAC+scRNA)
 
 
 ## External links

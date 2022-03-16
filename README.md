@@ -14,14 +14,14 @@ perform regulatory network analysis. IReNA contains two methods to
 reconstruct gene regulatory networks. The first is using single-cell RNA
 sequencing (scRNA-seq) data alone. The second is integrating scRNA-seq
 data and chromatin accessibility profiles from Assay for Transposase
-Accessible Chromatin using sequencing (ATAC-seq). IReNA performs modular
-regulatory network to reveal key transcription factors and significant
-regulatory relationships among modules, providing biological insights on
-regulatory mechanisms.
+Accessible Chromatin using sequencing (scATAC-seq or bulk ATAC-seq).
+IReNA performs modular regulatory network to reveal key transcription
+factors and significant regulatory relationships among modules,
+providing biological insights on regulatory mechanisms.
 
 ## Workflow
 
-<img src="docs/Readme%20figure/Workflow1.png" style="width:10.0%;height:10.0%" />
+<img src="docs/Readme%20figure/Workflow1.png" style="width:80.0%;height:80.0%" />
 
 ## Installation
 
@@ -59,31 +59,15 @@ library(IReNA)
 
 ## Examples and tutorials
 
-First of all, run [scRNA-seq preprocessing
-pipeline](https://jiang-junyao.github.io/IReNA/scRNA-seq-preprocessing)
-to get seurat object with pseudotime, or use your own methods to
-calculate the pseudotime of each cell, and then add it to the metadata
-of seurat object.
+-   [Regulatory network analysis through only scRNA-seq
+    data](https://jiang-junyao.github.io/IReNA/only-scRNA)
 
-If **only scRNA-seq (or bulk RNA-seq data)** are used to reconstruct
-regulatory network, just directly run the steps of **part 1**, **part
-2** and **part 4** in [IReNA
-tutorial](https://jiang-junyao.github.io/IReNA/tutorial).
+-   [Regulatory network analysis through intergrating scRNA-seq data and
+    scATAC-seq data](https://jiang-junyao.github.io/IReNA/scATAC+scRNA)
 
-If **both ATAC-seq data and scRNA-seq (or bulk RNA-seq data)** are used
-to reconstruct regulatory network, please run [ATAC-seq raw data
-preprocessing](https://jiang-junyao.github.io/IReNA/ATAC-seq-preprocessing)
-first to get bam file, peaks file and footprint file, then run the steps
-of **part 1**, **part 3** and **part 4** in [IReNA
-tutorial](https://jiang-junyao.github.io/IReNA/tutorial).
-
--   [scRNA-seq raw data
-    preprocessing](https://jiang-junyao.github.io/IReNA/scRNA-seq-preprocessing)
-
--   [ATAC-seq raw data
-    preprocessing](https://jiang-junyao.github.io/IReNA/ATAC-seq-preprocessing)
-
--   [IReNA tutorial](https://jiang-junyao.github.io/IReNA/tutorial)
+-   [Regulatory network analysis through intergrating scRNA-seq data and
+    bulk ATAC-seq
+    data](https://jiang-junyao.github.io/IReNA/bulk-ATAC+scRNA)
 
 ## External links
 
