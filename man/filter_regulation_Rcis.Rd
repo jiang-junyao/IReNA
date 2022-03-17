@@ -8,7 +8,8 @@ filter_regulation_Rcis(
   Kmeans_result,
   regulatory_relationships,
   Species,
-  Rankingsdir
+  Rankingsdir,
+  nesThreshold = 3
 )
 }
 \arguments{
@@ -23,6 +24,12 @@ function only support three species: 'Mm', 'Hs' and 'Fly'}
 \item{Rankingsdir}{path of Gene-motif rankings file, which can be downloaded
 in https://resources.aertslab.org/cistarget. For more details about motif ranking
 file, you can read https://bioconductor.riken.jp/packages/3.9/bioc/vignettes/RcisTarget/inst/doc/RcisTarget.html#gene-motif_rankings}
+
+\item{nesThreshold}{Numeric. NES threshold to calculate the motif significant
+(3.0 by default). The NES is calculated -for each motif- based on the AUC
+distribution of all the motifs for the gene-set \link{(x-mean)/sd}. The motifs
+are considered significantly enriched if they pass the the Normalized
+Enrichment Score (NES) threshold.}
 }
 \value{
 return filtered regulatory relationship

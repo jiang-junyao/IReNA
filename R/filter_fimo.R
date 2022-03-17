@@ -40,7 +40,7 @@ extract_genes <- function(gtf){
 }
 
 
-#' Title
+#' Use fimo to scan the TSS regions of candidate genes to find binding motifs
 #'
 #' @param gene_tss TSS region of genes. first column should be gene, second column
 #' should be chr, third column should be start, fourth column should be end.

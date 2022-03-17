@@ -171,8 +171,8 @@ extract_expressed_TFs <- function(seurat_object,TFs,cells_quantile = 0.05){
   if (cells_quantile==0) {
     TfExp <- matrix_tf[rowSums(as.matrix(matrix_tf))>0,]
   }else{
-    quantile_exp <- ncol(matrix_tf)/(1/cells_quantile)
-    TfExp <- matrix_tf[ncol(matrix_tf)-rowSums(matrix_tf==0)>quantile_exp,]}
+    quantile_exp <- ncol(as.matrix(matrix_tf))/(1/cells_quantile)
+    TfExp <- matrix_tf[ncol(as.matrix(matrix_tf))-rowSums(as.matrix(matrix_tf==0))>quantile_exp,]}
   return(TfExp)
 }
 
@@ -276,5 +276,7 @@ add_regulation_type <- function(Kmeans_result,potential_regulation,start_column=
   correlationIndex <-  match(paste(regulatory_relationships_Gen[,1],regulatory_relationships_Gen[,4]),
                              paste(cor2[,1],cor2[,2]))
   regulatory_relationships_Gen$Correlation <- cor2[correlationIndex,3]
+  colnames(regulatory_relationships_Gen)[1:2] <- c('TF','TFSymbol')
+  colnames(regulatory_relationships_Gen)[4:5] <- c('Target','TargetSymbol')
   return(regulatory_relationships_Gen)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/filter_fimo.R
 \name{find_motifs_targetgenes}
 \alias{find_motifs_targetgenes}
-\title{Title}
+\title{Use fimo to scan the TSS regions of candidate genes to find binding motifs}
 \usage{
 find_motifs_targetgenes(
   gene_tss,
@@ -53,5 +53,5 @@ transcription factors are in genes of gene_tss}
 
 }
 \description{
-Title
+Use fimo to scan the TSS regions of candidate genes to find binding motifs
 }

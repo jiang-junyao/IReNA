@@ -2,12 +2,13 @@
 % Please edit documentation in R/smooth.R
 \name{get_SmoothByBin_PseudotimeExp}
 \alias{get_SmoothByBin_PseudotimeExp}
-\title{get somoothbybin}
+\title{Smooth cells into bins based on pseudotime or State}
 \usage{
 get_SmoothByBin_PseudotimeExp(
   seurat_object,
   FC = TRUE,
   Bin = 50,
+  method = "Pseudotime",
   FcType = "Q95"
 )
 }
@@ -18,8 +19,13 @@ Pseudotime}
 \item{FC}{logic, indicating whether to add FoldChangeQ95 to the first column,
 default is TRUE}
 
-\item{Bin}{numeric, indicating the numbers of bin which divide the pseudotime,
+\item{Bin}{numeric, indicating the numbers of bins which divide the pseudotime,
 default is 50}
+
+\item{method}{'Pseudotime' or 'State'. Pseudotime method firstly orders all
+cells according to pseudotime, and then smooth these cells into ‘Bin' number
+of bins. State method firstly orders all cells according to pseudotime, and
+then smooth cells in each state into ('Bin'/number of state) number of bins.}
 
 \item{FcType}{'Q95' or 'Q90', FoldChange threshold, default is 'Q95'}
 }

@@ -1,7 +1,7 @@
-#' Filter peak to gene link
+#' Filter peak-to-gene link
 #' @description Extract peak to gene links data.frame from ArchR object, then identify
 #' significant links based on corCutOff, FDRCutOff, varCutOffATAC and varCutOffRNA.
-#' @param ArchR_obj ArchR object with
+#' @param ArchR_obj ArchR object with Peak2GeneLinks information in peakset slot
 #' @param corCutOff numeric, correlation between each peak and gene to refine p2g
 #' @param FDRCutOff numeric, FDR of peak to gene link to refine p2g
 #' @param varCutOffATAC numeric, VarQATAC to refine p2g

@@ -323,6 +323,8 @@ get_regulation_of_TFs_to_modules <- function(TFs_list, Thr = 2) {
 get_partial_regulations <- function(TFs_list) {
   con1 <- TFs_list[['FOSF_RegMTF_Cor_EnTFs']]
   hash2 <- TFs_list[['TF_list']]
+  con1$TFSymbol <- as.character(con1$TFSymbol)
+  con1$TargetSymbol <- as.character(con1$TargetSymbol)
   rowcount <- c()
   for (i in 1:nrow(con1)) {
     if (con1[i, ][2] %in% hash2 & con1[i, ][9] %in% hash2 == TRUE) {

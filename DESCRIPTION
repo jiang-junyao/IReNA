@@ -10,7 +10,7 @@ Authors@R:
            family = "Wang",
            role = "ctb",
            email = "wang_jie01@gibh.ac.cn"))
-Description: IReNA(Integrated Regulatory Network analysis) is an R package to intergrate bulk RNA-seq or scRNA-seq data with ATAC-seq data to reconstrcut regulatory network. 
+Description: IReNA(Integrated Regulatory Network analysis) is an R package to intergrate scRNA-seq data with scATAC-seq/ATAC-seq data to reconstrcut regulatory network. 
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -31,7 +31,6 @@ Imports:
     Rsamtools,
     GenomicRanges,
     ChIPseeker,
-    GenomicRanges,
     IRanges,
     Biostrings,
     igraph,
@@ -39,7 +38,6 @@ Imports:
     RCy3,
     ROCR,
     Seurat (>= 3.0.0),
-    stringr,
     ggplot2,
     dplyr,
     gridExtra,
