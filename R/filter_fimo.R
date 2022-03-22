@@ -141,12 +141,7 @@ generate_fimo_regulation <- function(motif_dir,motif){
       rownames(info) <- DirFile1
       info <- info[info$size>0,]
       info <- info[!grepl(c('Fimo_All.sh'),rownames(info)),]
-      info <- info[!grepl(c('Fimo1.sh'),rownames(info)),]
-      info <- info[!grepl(c('Fimo2.sh'),rownames(info)),]
-      info <- info[!grepl(c('Fimo3.sh'),rownames(info)),]
-      info <- info[!grepl(c('Fimo4.sh'),rownames(info)),]
-      info <- info[!grepl(c('Fimo5.sh'),rownames(info)),]
-      info <- info[!grepl(c('Fimo6.sh'),rownames(info)),]
+      info <- info[!grepl(c('Fimo1..sh'),rownames(info)),]
       if (nrow(info)>0) {
         motif1 <- rownames(info)
         motif1 <- gsub('.txt','',motif1)
