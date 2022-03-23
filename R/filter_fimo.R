@@ -18,8 +18,8 @@ get_tss_region <- function(gtf,gene.use,upstream_length=1000,downstream_length=5
   end1 <- c()
   for (i in 1:nrow(final)) {
     if (final[i,7]=='-') {
-      start1 <- c(start1,as.numeric(final[i,5])+upstream_length)
-      end1 <- c(end1,as.numeric(final[i,5])-downstream_length)
+      start1 <- c(start1,as.numeric(final[i,5])-upstream_length)
+      end1 <- c(end1,as.numeric(final[i,5])+downstream_length)
     }else{
       start1 <- c(start1,as.numeric(final[i,4])-upstream_length)
       end1 <- c(end1,as.numeric(final[i,4])+downstream_length)
