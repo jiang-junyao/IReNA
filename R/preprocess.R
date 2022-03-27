@@ -116,8 +116,9 @@ diff_peaks <- function(Count,Group){
 
 
 #' Merge peak and generate gft
-#' @description Merge the peaks that are close to each other and modify the length of the peak to 500. Finally, return peaks related gtf file
+#' @description Merge the peaks that are close to each other and modify the length of the peak to 2*(peak_half_width). Finally, return peaks related gtf file
 #' @param peak data.frame, indicating peaks file. If you call peak for each sample separately, you need to combine these peaks firstly through cbind().
+#' @param peak_half_width numeric, indicating half of peak width
 #'
 #' @return return peaks related gtf file
 #' @export
@@ -135,9 +136,9 @@ diff_peaks <- function(Count,Group){
 #'  sample6_peaks <- read.delim("sample6_peaks.narrowPeak", header=FALSE)
 #'  all_peak <- rbind(sample1_peaks, sample2_peaks, sample3_peaks, sample4_peaks,
 #'  sample5_peaks, sample6_peaks)
-#'  peaks_merged_gtf <- merge_peak(all_peak)
+#'  peaks_merged_gtf <- generate_peak_gtf(all_peak)
 #' }
-generate_gtf <- function(peak){
+generate_peak_gtf <- function(peak,peak_half_width = 250){
   Exp1 <- peak
   SortInd1 <- c(3,2,1)
   for(i in 1:length(SortInd1)){
@@ -185,9 +186,10 @@ generate_gtf <- function(peak){
   out1 <- paste0(str1,'\t','.','\t','exon','\t',start12,'\t',end12,
                  '\t','.','\t','.','\t','.','\t','gene_id','\t',paste0('Peak',no1))
   col1 <- c(col1,out1)
-  col1 <- as.data.frame(col1)
-  col1 <- split_dataframe(col1)
-  return(col1)
+  PeakGtf <- strsplit(col1,'\t')
+  PeakGtf <- as.data.frame(t(as.data.frame(PeakGtf)))
+  rownames(PeakGtf) <- 1:nrow(PeakGtf)
+  return(PeakGtf)
 }
 
 split_dataframe <- function(dataframe1, sep = "\t") {

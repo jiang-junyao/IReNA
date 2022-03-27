@@ -220,7 +220,7 @@ sample4_peaks &lt;- read.delim(&quot;sample4_peaks.narrowPeak&quot;, header=FALS
 sample5_peaks &lt;- read.delim(&quot;sample5_peaks.narrowPeak&quot;, header=FALSE)
 sample6_peaks &lt;- read.delim(&quot;sample6_peaks.narrowPeak&quot;, header=FALSE)
 all_peak &lt;- rbind(sample1_peaks, sample2_peaks, sample3_peaks, sample4_peaks, sample5_peaks, sample6_peaks)
-peaks_merged_gtf &lt;- generate_gtf(all_peak)</code></pre>
+peaks_merged_gtf &lt;- generate_peak_gtf(all_peak)</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(peaks_merged_gtf)</span></code></pre></div>
 <pre><code>##     V1 V2   V3     V4     V5 V6 V7 V8      V9   V10
 ## 1 chr1  . exon  10075  10575  .  .  . gene_id Peak1
