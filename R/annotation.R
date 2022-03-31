@@ -31,6 +31,11 @@
 #' overlapped <- overlap_footprints_peaks(combined, peak_bed)
 #' #list1 <- get_related_genes(overlapped,txdb = txdb,motif=Tranfac201803_Mm_MotifTFsF,Species = 'Mm')
 get_related_genes <- function(footprints, motif, Species, txdb, tssRegion = c(-3000, 3000)) {
+  validInput(footprints,'footprints','df')
+  validInput(motif,'motif','df')
+  validInput(Species,'Species','character')
+  validInput(txdb,'txdb','txdb')
+  validInput(tssRegion,'tssRegion','vector')
   footprintslist <- merge_extent_footprints(footprints, motif)
   merged_footprints <- footprintslist[[2]]
   if (Species == "Hs") {

@@ -21,6 +21,8 @@
 #' gene <- rownames(Kmeans_clustering_ENS)
 #' filtered_motif <- motifs_select(motif,gene)
 motifs_select <- function(motif,gene){
+  validInput(motif,'motif','df')
+  validInput(gene,'gene','character')
   index <- c()
   for (i in 1:nrow(motif)) {
     judge <- c()
@@ -60,6 +62,8 @@ motifs_select <- function(motif,gene){
 #' }
 #'
 merge_sort_count <- function(count_all,gtf){
+  validInput(count,'motif','df')
+  validInput(gtf,'gtf','df')
   count_all <- count_all[1:(nrow(count_all)-5),]
   gtf$num <- 1:nrow(gtf)
   gtf <- gtf[order(gtf[,10]), ]
@@ -94,6 +98,8 @@ merge_sort_count <- function(count_all,gtf){
 #' group <- c(1,1,2,2)
 #' peaks <- diff_peaks(test_peak[,4:7],group)
 diff_peaks <- function(Count,Group){
+  validInput(Count,'Count','df')
+  validInput(Group,'Group','vector')
   Group1 <- factor(Group)
   Dge1 <- edgeR::DGEList(counts=Count, group=Group1)
   Dge2 <- edgeR::calcNormFactors(Dge1);
@@ -139,6 +145,8 @@ diff_peaks <- function(Count,Group){
 #'  peaks_merged_gtf <- generate_peak_gtf(all_peak)
 #' }
 generate_peak_gtf <- function(peak,peak_half_width = 250){
+  validInput(peak,'peak','df')
+  validInput(peak_half_width,'peak_half_width','vector')
   Exp1 <- peak
   SortInd1 <- c(3,2,1)
   for(i in 1:length(SortInd1)){

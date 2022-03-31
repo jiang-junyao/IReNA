@@ -12,6 +12,7 @@
 #' @examples
 #' #combied<-combine_footprints(Dir2)
 combine_footprints <- function(Dir) {
+  validInput(Dir,'Dir','direxists')
   DirFile1 <- list.files(Dir)
   con3 <- read.table(paste0(Dir, DirFile1[1]), header = TRUE, sep = "\t")
   col1 <- con3[, c(3, 4, 5, 6, 8, 10, 1)]
@@ -42,6 +43,8 @@ combine_footprints <- function(Dir) {
 #' peak_bed <- get_bed(test_peak)
 #' overlapped <- overlap_footprints_peaks(combined, peak_bed)
 overlap_footprints_peaks <- function(footprints, peak_bed) {
+  validInput(footprints,'footprints','df')
+  validInput(peak_bed,'peak_bed','df')
   peak <- GenomicRanges::GRanges(paste0(peak_bed[,1],':',peak_bed[,2],'-',peak_bed[,3]))
   footprints1 <- GenomicRanges::GRanges(paste0(footprints[,1],':',footprints[,2],'-',footprints[,3]))
   overlap_idx <- GenomicRanges::findOverlaps(footprints1,peak)
@@ -78,6 +81,13 @@ overlap_footprints_peaks <- function(footprints, peak_bed) {
 #' #find_motifs(motif1,step=20,fimodir, outputdir, motifdir, sequencedir)
 find_motifs <- function(motif, step = 20, fimodir,outputdir1,outputdir, Motifdir
                         , sequencedir) {
+  validInput(motif,'motif','df')
+  validInput(step,'step','numeric')
+  validInput(sequencedir,'sequencedir','direxists')
+  validInput(outputdir1,'outputdir1','direxists')
+  validInput(outputdir,'outputdir','direxists')
+  validInput(Motifdir,'Motifdir','direxists')
+
   con1 <- motif
   no1 <- 1
   out2 <- c()
@@ -148,6 +158,8 @@ get_bed <- function(peak) {
 #' Kmeans_clustering_ENS <- add_ENSID(test_clustering, Spec1='Hs')
 #' list1 <- get_related_peaks(list1,Kmeans_clustering_ENS)
 get_related_peaks <- function(list1, expression_profile) {
+  validInput(list1,'list1','list')
+  validInput(expression_profile,'expression_profile','df')
   Candid <- list1[[2]]
   bed <- list1[[1]]
   FilterIdx <- Candid[,2] %in% rownames(expression_profile)

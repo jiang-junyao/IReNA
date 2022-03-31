@@ -9,6 +9,10 @@
 #' @export
 #'
 get_tss_region <- function(gtf,gene.use,upstream_length=1000,downstream_length=500){
+  validInput(gtf,'gtf','df')
+  validInput(gene.use,'gene.use','character')
+  validInput(upstream_length,'upstream_length','numeric')
+  validInput(downstream_length,'downstream_length','numeric')
   gtfgene=gtf[gtf$V3=='gene',]
   genes <- apply(gtfgene, 1, extract_genes)
   gtfgene$genes <- genes
@@ -72,6 +76,9 @@ extract_genes <- function(gtf){
 #' @examples
 find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1, Motifdir
                                     , sequencedir = NULL,select_motif = T, use_nohup = F){
+  validInput(Motifdir,'Motifdir','direxists')
+  validInput(sequencedir,'sequencedir','direxists')
+  validInput(outputdir1,'outputdir','direxists')
   if (str_ends(outputdir1,'/')==FALSE) {
     warning('the last character of outputdir1 is not "/"')
   }
@@ -133,6 +140,8 @@ find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1, Mo
 #'
 #' @examples
 generate_fimo_regulation <- function(motif_dir,motif){
+  validInput(motif_dir,'motif_dir','direxists')
+  validInput(motif,'motif','df')
   targetgenes <- dir(motif_dir)
   for (i in 1:length(targetgenes)) {
     DirFile1 <- list.files(paste0(motif_dir,targetgenes[i]))
