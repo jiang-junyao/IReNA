@@ -18,6 +18,10 @@
 #' load(system.file("extdata", "wig_list.rda", package = "IReNA"))
 #' regulatory_relationships <- Footprints_FOS(wig_list, Candid)
 Footprints_FOS <- function(Wig_list, Candid, FOS_threshold = 1, trans_wig = FALSE) {
+  validInput(Wig_list,'Wig_list','list')
+  validInput(Candid,'Candid','df')
+  validInput(FOS_threshold,'FOS_threshold','numeric')
+  validInput(trans_wig,'trans_wig','logical')
   if (trans_wig == TRUE) {
     Wig_list2 <- Trans_WigToMultirows(Wig_list)
   } else {
@@ -310,6 +314,10 @@ Merge_TFs_genes <- function(FOSF_RegM) {
 #' correlation <- get_cor(test_clustering, Tranfac201803_Hs_MotifTFsF, 0.7, start_column=3)
 
 get_cor <- function(Kmeans_result, motif, correlation_filter, start_column=4) {
+  validInput(Kmeans_result,'Kmeans_result','list')
+  validInput(motif,'motif','df')
+  validInput(correlation_filter,'correlation_filter','numeric')
+  validInput(start_column,'start_column','numeric')
   cor1 <- sparse.cor(t(Kmeans_result[,start_column:ncol(Kmeans_result)]))
   cor2 <- reshape2::melt(cor1)
   cor2 <- cor2[cor2[,3]>correlation_filter | cor2[,3]< -correlation_filter,]
@@ -359,6 +367,8 @@ sparse.cor <- function(x){
 #'
 #' @examples
 filter_ATAC <- function(FOS,regulary_relationships){
+  validInput(regulary_relationships,'regulary_relationships','df')
+
   if (grepl("ENS", FOS[1,1])) {
     TfIndex <- 1
   }else{TfIndex <- 2}

@@ -1,5 +1,6 @@
 test_that("multiplication works", {
   load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
+
   monocle_object <- get_pseudotime(test_seurat)
   seurat_with_time <- add_pseudotime(test_seurat, monocle_object)
   expression_profile <- get_SmoothByBin_PseudotimeExp(seurat_with_time)
@@ -12,5 +13,7 @@ test_that("multiplication works", {
   motif1 <- Tranfac201803_Hs_MotifTFsF
   regulatory_relationships <- get_cor (Kmeans_clustering_ENS,motif1,0.6)
   TFs_list <- network_analysis(regulatory_relationships,Kmeans_clustering_ENS,TFFDR1 = 10,TFFDR2 = 10)
+  plot_tf_network(TFs_list)
+  plot_intramodular_network(TFs_list)
   expect_true(nrow(TFs_list[[8]])>1)
 })

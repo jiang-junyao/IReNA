@@ -10,6 +10,7 @@
 #'
 #' @examples \dontrun{load_counts('D:/scRNA/10X',datatype=1)}
 load_counts <- function(datapath, datatype = 0) {
+  validInput(datapath,'datapath','direxists')
   if (datatype[1] == 1) {
     RAW1 <- read.table(datapath, sep = "\t", header = TRUE, row.names = 1)
   }
@@ -67,6 +68,8 @@ load_counts <- function(datapath, datatype = 0) {
 #' @examples load(system.file("extdata", "test_seurat.rda", package = "IReNA"))
 #' get_pseudotime(test_seurat)
 get_pseudotime <- function(seurat_object, reverse = FALSE,gene.use = NULL) {
+  validInput(seurat_object,'seurat_object','seurat')
+  validInput(reverse,'reverse','logical')
   if (is.null(gene.use)) {
     seurat_object <- Seurat::FindVariableFeatures(seurat_object)
     seurat_object2 <- seurat_object[seurat_object@assays$RNA@var.features,]
@@ -122,6 +125,8 @@ get_pseudotime <- function(seurat_object, reverse = FALSE,gene.use = NULL) {
 #' monocle_object = get_pseudotime(test_seurat)
 #' add_pseudotime(seurat_object = test_seurat,monocle_object = monocle_object)
 add_pseudotime <- function(seurat_object, monocle_object){
+
+  validInput(seurat_object,'seurat_object','seurat')
   se <- seurat_object
   mo <- monocle_object
   #### add_pseduotime
@@ -166,6 +171,9 @@ diffgenetest_pseudotime <- function(monocle_object){
 #' TFs <- c('CLK1','TCEB3','SOX4')
 #' extract_expressed_TFs(test_seurat,TFs)
 extract_expressed_TFs <- function(seurat_object,TFs,cells_quantile = 0.05){
+  validInput(seurat_object,'seurat_object','seurat')
+  validInput(TFs,'TFs','vector')
+  validInput(cells_quantile,'cells_quantile','numeric')
   TFs <- TFs[TFs%in%rownames(seurat_object)]
   matrix_tf <- seurat_object@assays$RNA@counts[TFs,]
   if (cells_quantile==0) {
@@ -197,6 +205,10 @@ extract_expressed_TFs <- function(seurat_object,TFs,cells_quantile = 0.05){
 #' @examples
 filter_original_regulation <-function(potential_regulation,motif,
                                       tf_threshold = 500,target_threshold = 100){
+  validInput(potential_regulation,'potential_regulation','seurat')
+  validInput(motif,'motif','df')
+  validInput(tf_threshold,'tf_threshold','numeric')
+  validInput(target_threshold,'target_threshold','numeric')
   motifgene <- c()
   for (i in 1:nrow(motif)) {
     gene1 <- strsplit(motif[i,5],';')[[1]]
@@ -246,6 +258,9 @@ filter_original_regulation <-function(potential_regulation,motif,
 #'
 #' @examples
 add_regulation_type <- function(Kmeans_result,potential_regulation,start_column=4){
+  validInput(Kmeans_result,'Kmeans_result','df')
+  validInput(potential_regulation,'potential_regulation','df')
+  validInput(start_column,'start_column','numeric')
   colnames(potential_regulation) <- c('TF','Target','Weight')
   Kmeans_result[,3] <- rownames(Kmeans_result)
   if (grepl("ENS", potential_regulation[1,1])) {

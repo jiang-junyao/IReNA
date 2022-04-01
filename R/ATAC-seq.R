@@ -83,7 +83,6 @@ find_motifs <- function(motif, step = 20, fimodir,outputdir1,outputdir, Motifdir
                         , sequencedir) {
   validInput(motif,'motif','df')
   validInput(step,'step','numeric')
-  validInput(sequencedir,'sequencedir','direxists')
   validInput(outputdir1,'outputdir1','direxists')
   validInput(outputdir,'outputdir','direxists')
   validInput(Motifdir,'Motifdir','direxists')

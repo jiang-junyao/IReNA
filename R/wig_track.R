@@ -25,6 +25,9 @@
 #' #cuts2<-cal_footprint_cuts(bamfilepath = bamfilepath2,bedfile = list2[[1]])
 #' #cuts_list<-list(cuts1,cuts2)
 cal_footprint_cuts <- function(bamfilepath, bedfile, index_bam = FALSE,workers = NULL) {
+  validInput(bedfile,'bedfile','df')
+  validInput(bamfilepath,'bamfilepath','fileexists')
+  validInput(index_bam,'index_bam','logical')
   footprints <- bedfile
   future::plan(future::multisession, workers = workers)
   p_param <- Rsamtools::PileupParam(min_base_quality = 10L)

@@ -76,8 +76,8 @@ extract_genes <- function(gtf){
 #' @examples
 find_motifs_targetgenes <- function(gene_tss,motif,refdir,fimodir,outputdir1, Motifdir
                                     , sequencedir = NULL,select_motif = T, use_nohup = F){
+  validInput(refdir,'refdir','fileexists')
   validInput(Motifdir,'Motifdir','direxists')
-  validInput(sequencedir,'sequencedir','direxists')
   validInput(outputdir1,'outputdir','direxists')
   if (str_ends(outputdir1,'/')==FALSE) {
     warning('the last character of outputdir1 is not "/"')

@@ -43,6 +43,19 @@ plot_tf_network <- function(TFs_list, layout = 'grid', group.cols = NULL,
                             vertex.label.family = 'ArialMT', frame.color = 'white'
                             , arrow.size = 0.2, arrow.width = 0.5, edge.width = 1.8,
                             edge.curved = 0, edge.color = c('#FDD1B0','#B3B3B3')) {
+  validInput(TFs_list,'TFs_list','list')
+  validInput(vertex.size,'vertex.size','numeric')
+  validInput(vertex.size.add,'vertex.size.add','numeric')
+  validInput(legend,'legend','logical')
+  validInput(vertex.label.cex,'vertex.label.cex','numeric')
+  validInput(arrow.size,'arrow.size','numeric')
+  validInput(arrow.width,'arrow.width','numeric')
+  validInput(edge.width,'edge.width','numeric')
+  validInput(edge.curved,'edge.curved','numeric')
+  if (length(edge.color)!=2) {
+    stop('You should input two colors for edge.color')
+  }
+
   if (is.null(group.cols)) {
     col1 <- c('#67C7C1','#5BA6DA','#FFBF0F','#C067A9','#EF9951','#E56145',
               '#C0C130','#67C1E3','#EF9951','#00BFC4','#AEC7E8','#E56145','#2F4F4F')
@@ -92,7 +105,7 @@ plot_tf_network <- function(TFs_list, layout = 'grid', group.cols = NULL,
   } else if (layout == "random") {
     layout1 <- igraph::layout_randomly(g)
   } else {
-    print("please input correct layout name")
+    stop("please input correct layout name")
   }
   edge.color2 <- c()
   for (i in edge_type) {
@@ -181,6 +194,20 @@ plot_intramodular_network <- function(TFs_list, enrichment = NULL,layout = 'circ
                                       , arrow.size = 0.5, arrow.width = 0.8, edge.width = 2.5,
                                       edge.curved = 0, edge.color = c('#FDD1B0','#B3B3B3'),
                                       vertex.label.degree = 0.35, vertex.label.dist = -6) {
+  validInput(TFs_list,'TFs_list','list')
+  validInput(vertex.size,'vertex.size','numeric')
+  validInput(legend,'legend','logical')
+  validInput(vertex.label.cex,'vertex.label.cex','numeric')
+  validInput(arrow.size,'arrow.size','numeric')
+  validInput(arrow.width,'arrow.width','numeric')
+  validInput(edge.width,'edge.width','numeric')
+  validInput(edge.curved,'edge.curved','numeric')
+  if (length(edge.color)!=2) {
+    stop('You should input two colors for edge.color')
+  }
+  validInput(vertex.label.degree,'vertex.label.degree','numeric')
+  validInput(vertex.label.dist,'vertex.label.dist','numeric')
+
   if (is.null(group.cols)) {
     col1 <- c('#67C7C1','#5BA6DA','#FFBF0F','#C067A9','#EF9951','#E56145',
               '#C0C130','#67C1E3','#EF9951','#00BFC4','#AEC7E8','#E56145','#2F4F4F')
@@ -250,7 +277,7 @@ plot_intramodular_network <- function(TFs_list, enrichment = NULL,layout = 'circ
   } else if (layout == "random") {
     layout1 <- igraph::layout_randomly(g)
   } else {
-    print("please input correct layout name")
+    stop("please input correct layout name")
   }
   edge.color2 <- c()
   for (i in edge_type) {

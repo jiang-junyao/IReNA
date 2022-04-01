@@ -107,6 +107,12 @@ smoothByState <- function(seurat_obj, Pseudotime1, each_state_bin1){
 #' get_SmoothByBin_PseudotimeExp(seurat_object_pseudotime, Bin = 50, FcType = "Q95")
 get_SmoothByBin_PseudotimeExp <- function(seurat_object, FC = TRUE, Bin = 50,
                                           method = 'Pseudotime',FcType = "Q95") {
+  validInput(seurat_object,'seurat_object','seurat')
+  validInput(FC,'FC','logical')
+  validInput(Bin,'Bin','numeric')
+  if (!method %in% c('Pseudotime','State')) {
+    stop('method should be Pseudotime or State')
+  }
   FcType1 <- FcType
   ByBin1 <- c("Equal.Pseudotime")
   pbmc1 <- seurat_object
@@ -159,6 +165,9 @@ get_SmoothByBin_PseudotimeExp <- function(seurat_object, FC = TRUE, Bin = 50,
 #' filter_expression_profile(expression_profile)
 filter_expression_profile <- function(expression_profile, filterfc = TRUE,
                                        FC = 0.1) {
+  validInput(expression_profile,'expression_profile','df')
+  validInput(filterfc,'filterfc','logical')
+  validInput(FC,'FC','numeric')
   pro <- expression_profile
   acc1 <- colSums(pro)
   acc2 <- c()
@@ -204,6 +213,8 @@ filter_expression_profile <- function(expression_profile, filterfc = TRUE,
 clustering_Kmeans <- function(RNA1, K1 = 1, ColumnGroup1 = NULL, Scale1 = "row",
                               Range1 = c(-Inf, Inf), Reorder1 = TRUE,
                               RevOrder1 = -1, NAcolum1 = NULL) {
+  validInput(K1,'K1','numeric')
+  validInput(Range1,'Range1','numeric')
   RowGroup1 = NULL;NumColumnBlank1 = NULL
   if (is.numeric(K1)) {
     K2 <- K1
@@ -355,6 +366,12 @@ clustering_Kmeans <- function(RNA1, K1 = 1, ColumnGroup1 = NULL, Scale1 = "row",
 #' load(system.file("extdata", "test_clustering.rda", package = "IReNA"))
 #' add_ENSID(test_clustering, Spec1 = "Hs")
 add_ENSID <- function(Kmeans_result, GeneInf1 = NULL, Spec1 = "") {
+  validInput(Kmeans_result,'Kmeans_result','df')
+  if (is.null(GeneInf1)) {
+    if (Spec1 == "") {
+      stop('Please input a gene names corresponding table or species name')
+    }
+  }
   con2 <- Kmeans_result
   con1 <- Converse_GeneIDSymbol(rownames(Kmeans_result), GeneInf1, Spec1 = Spec1)
   con2 <- con2[!is.na(match(rownames(con2), con1[, 2])), ]
@@ -410,6 +427,16 @@ plot_kmeans_pheatmap <- function(Kmeans_result, start_column = 3, Gene1 = NULL,
                                  legend1 = TRUE, border_color = "white",
                                  ByPanel = FALSE, Color1 = NULL, Show.Module = TRUE,
                                  Range1 = c(-3, 3), ColumnGroup1 = NULL) {
+  validInput(Kmeans_result,'Kmeans_result','df')
+  validInput(start_column,'start_column','numeric')
+  validInput(NumRowBlank1,'NumRowBlank1','numeric')
+  validInput(ModuleScale1,'ModuleScale1','numeric')
+  validInput(fontsize,'fontsize','numeric')
+  validInput(show_colnames,'show_colnames','logical')
+  validInput(ByPanel,'ByPanel','logical')
+  validInput(Show.Module,'Show.Module','logical')
+  validInput(legend1,'legend1','logical')
+
   RNA1 <- Kmeans_result
   g1<-unique(RNA1$KmeansGroup)
   for (i in g1) {

@@ -13,6 +13,11 @@
 #' @examples
 Get_p2g_fun <- function(ArchR_obj,corCutOff = 0.20,FDRCutOff = 1e-6,
                         varCutOffATAC = 0.7,varCutOffRNA = 0.3){
+  validInput(corCutOff,'corCutOff','numeric')
+  validInput(FDRCutOff,'FDRCutOff','numeric')
+  validInput(varCutOffATAC,'varCutOffATAC','numeric')
+  validInput(varCutOffRNA,'varCutOffRNA','numeric')
+
   p2g <- metadata(ArchR_obj@peakSet)$Peak2GeneLinks
   p2g <- p2g[which(abs(p2g$Correlation) >= corCutOff & p2g$FDR <= FDRCutOff), ,drop=FALSE]
   if(!is.null(varCutOffATAC)){
@@ -42,6 +47,11 @@ Get_p2g_fun <- function(ArchR_obj,corCutOff = 0.20,FDRCutOff = 1e-6,
 #'
 #' @examples
 generate_scATAC_Candid <- function(p2g,combined_footprints,Kmeans_clustering_ENS){
+  validInput(combined_footprints,'combined_footprints','df')
+  validInput(Kmeans_clustering_ENS,'Kmeans_clustering_ENS','df')
+  if (!is(CM_0H_48H_p2g,"DFrame")) {
+    stop('Input value for p2g is not a DFrame, please supply valid input!')
+  }
   pg <- data.frame(p2g@listData[["peak"]],p2g@listData[["gene"]])
   pg <- pg[pg[,2]%in%Kmeans_clustering_ENS[,1],]
   colnames(pg) <- c('peak','gene')
