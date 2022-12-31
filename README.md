@@ -83,6 +83,6 @@ transcriptomes](https://www.sciencedirect.com/science/article/pii/S2589004222016
 ## Help and Suggestion
 
 If you have any question, comment or suggestion, please use github issue
-tracker to report issues of IReNA or contact <jiangjunyao789@163.com>. I
-will answer you timely, and please remind me again if you have not
+tracker to report issues of IReNA or contact <jiangjunyao@westlake.edu.cn>. I
+will answer you timely, and please remind me gain if you have not
 received response more than three days.
