@@ -16,7 +16,7 @@
 #' #merged_fasta <- get_merged_fasta(fdr005,fastadir)
 get_merged_fasta <- function(footprints, fastadir, distance = 4) {
   validInput(footprints,'footprints','df')
-  validInput(fastadir,'fastadir','direxists')
+  #validInput(fastadir,'fastadir','direxists')
   validInput(distance,'distance','numeric')
   merged_footprints <- merge_footprints(footprints, ditance = distance)
   fasta <- getfasta(merged_footprints, fastadir = fastadir)
