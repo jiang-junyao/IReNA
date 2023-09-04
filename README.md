@@ -77,16 +77,12 @@ regeneration](https://github.com/jiewwwang/Single-cell-retinal-regeneration)
 
 ## Citation
 
-Preprint: [IReNA: integrated regulatory network analysis of single-cell
-transcriptomes](https://doi.org/10.1101/2021.11.22.469628)
-
-[Hoang T, Wang J, Boyd P, et al. Gene regulatory networks controlling
-vertebrate retinal regeneration. Science 2020;
-370(6519):eabb8598](https://www.science.org/doi/10.1126/science.abb8598)
+[IReNA: integrated regulatory network analysis of single-cell
+transcriptomes](https://www.sciencedirect.com/science/article/pii/S2589004222016315)
 
 ## Help and Suggestion
 
 If you have any question, comment or suggestion, please use github issue
-tracker to report issues of IReNA or contact <jiangjunyao789@163.com>. I
-will answer you timely, and please remind me again if you have not
+tracker to report issues of IReNA or contact <jiangjunyao@westlake.edu.cn>. I
+will answer you timely, and please remind me gain if you have not
 received response more than three days.
