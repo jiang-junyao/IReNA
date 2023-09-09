@@ -14,9 +14,6 @@ in ArchR R package}
 
 \item{Kmeans_clustering_ENS}{Kmeans result data.frame, the first column should be 'Symbol'}
 }
-\value{
-
-}
 \description{
 Generate scATAC Candid list
 }

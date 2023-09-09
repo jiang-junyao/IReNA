@@ -49,9 +49,6 @@ transcription factors are in genes of gene_tss}
 
 \item{use_nohup}{logic, indicating whether use nohup to run all fimo scripts simultaneously}
 }
-\value{
-
-}
 \description{
 Use fimo to scan the TSS regions of candidate genes to find binding motifs
 }

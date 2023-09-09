@@ -14,9 +14,6 @@ extract_expressed_TFs(seurat_object, TFs, cells_quantile = 0.05)
 \item{cells_quantile}{numeric, indicating proportion of cells that
 transcription factors express (threshold to get expressed transcription factors)}
 }
-\value{
-
-}
 \description{
 extract expressed transcription factors according to the proportion of cells that
 transcription factors express

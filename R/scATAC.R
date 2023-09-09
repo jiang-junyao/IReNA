@@ -48,7 +48,8 @@ Get_p2g_fun <- function(ArchR_obj,corCutOff = 0.20,FDRCutOff = 1e-6,
 #' @examples
 generate_scATAC_Candid <- function(p2g,combined_footprints,Kmeans_clustering_ENS){
   validInput(combined_footprints,'combined_footprints','df')
-  if (!is(p2g,"DFrame")) {
+  validInput(Kmeans_clustering_ENS,'Kmeans_clustering_ENS','df')
+  if (!is(CM_0H_48H_p2g,"DFrame")) {
     stop('Input value for p2g is not a DFrame, please supply valid input!')
   }
   pg <- data.frame(p2g@listData[["peak"]],p2g@listData[["gene"]])

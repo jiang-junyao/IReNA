@@ -17,9 +17,6 @@ potential regulation: Genin3, PIDC, GRNBOOST2}
 \item{start_column}{numeric, indicating the start column of expression value,
 defalut is 3}
 }
-\value{
-
-}
 \description{
 This function calculate the Spearman's correlation for each gene
 pair as the regulation types. Correlation > 0 is positive regulation, Correlation

@@ -15,9 +15,6 @@ generate_fimo_regulation(motif_dir, motif)
 'motif = Tranfac201803_Ch_MotifTFsF' respectively, or you can upload your own
 motif data base, but the formata use be the same as our built-in motif database.}
 }
-\value{
-
-}
 \description{
 Generate regulation database accoding to the fimo result
 }

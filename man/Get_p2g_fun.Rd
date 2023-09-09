@@ -23,9 +23,6 @@ Get_p2g_fun(
 
 \item{varCutOffRNA}{numeric, VarQRNA to refine p2g}
 }
-\value{
-
-}
 \description{
 Extract peak to gene links data.frame from ArchR object, then identify
 significant links based on corCutOff, FDRCutOff, varCutOffATAC and varCutOffRNA.
