@@ -165,6 +165,7 @@ edge_handle <- function(edge){
 }
 
 get_Enriched_TFs <- function(GeneCor1, Kmeans_result, TFFdrThr1 = 2) {
+  GeneCor1$TF <- factor(GeneCor1$TF)
   GeneCorP1 <- GeneCor1[GeneCor1$Correlation > 0, ]
   GeneCorN1 <- GeneCor1[GeneCor1$Correlation < 0, ]
   Module1 <- Kmeans_result
