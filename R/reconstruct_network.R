@@ -119,8 +119,8 @@ filter_regulation_Rcis<-function(Kmeans_result,regulatory_relationships,Species,
 #' motif1 <- Tranfac201803_Hs_MotifTFsF
 #' regulatory_relationships <- get_cor(Kmeans_cluster_Ens,motif1,0.7)
 #' TFs_list <- network_analysis(regulatory_relationships,Kmeans_cluster_Ens)
-network_analysis <- function(regulatory_relationships, Kmeans_result, TFFDR1 = 10
-                             ,TFFDR2 =10, ModuleFDR = 0.05){
+network_analysis <- function(regulatory_relationships, Kmeans_result, TFFDR1 = 2
+                             ,TFFDR2 =2, ModuleFDR = 0.05){
   validInput(regulatory_relationships,'regulatory_relationships','df')
   validInput(Kmeans_result,'Kmeans_result','df')
   validInput(TFFDR1,'TFFDR1','numeric')

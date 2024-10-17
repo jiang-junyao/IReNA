@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 `r badger::badge_custom("r", "version4.04", "green", "https://www.r-project.org")`
 `r badger::badge_custom("Seurat", "version4.01", "red", "https://satijalab.org/seurat/articles/get_started.html")`
 `r badger::badge_custom("monocle", "version2.18", "blue", "http://cole-trapnell-lab.github.io/monocle-release")`
-`r badger::badge_custom("Preprint", "biorxiv", "purple", "https://doi.org/10.1101/2021.11.22.469628")`
+`r badger::badge_custom("publication", "iscience", "purple", "https://www.cell.com/iscience/pdf/S2589-0042(22)01631-5.pdf")`
 
 
 IReNA (Integrated Regulatory Network Analysis) is an R package to perform regulatory network analysis. IReNA contains two methods to reconstruct gene regulatory networks. The first is using single-cell RNA sequencing (scRNA-seq) data alone. The second is integrating scRNA-seq data and chromatin accessibility profiles from Assay for Transposase Accessible Chromatin using sequencing (scATAC-seq or bulk ATAC-seq). IReNA performs modular regulatory network to reveal key transcription factors and significant regulatory relationships among modules, providing biological insights on regulatory mechanisms.
@@ -60,14 +60,17 @@ The primary novelty of IReNA lies in its ability to decode regulatory relationsh
 library(IReNA)
 ### load test data
 load(system.file("extdata", "qucik_start_test.rda", package = "IReNA"))
+### Structure of input data. Please note that colnames of your table should be same as the following test data
+print(head(grn_test))
+print(head(group_test))
 ### IReNA analysis
-IReNA_result <- network_analysis(grn_test,group_test,2,2,ModuleFDR = 0.05)
+IReNA_result <- network_analysis(grn_test,group_test)
 ### Here is enriched TFs that regulate other module
-IReNA_result$TF_module_regulation[1:5,]
+IReNA_result$TF_module_regulation[1:3,]
 ### Here is the network of enriched TFs
-IReNA_result$TF_network[1:5,]
+IReNA_result$TF_network[1:3,]
 ### Here is the simplified netowrk
-IReNA_result$intramodular_network[1:5,]
+IReNA_result$intramodular_network[1:3,]
 ```
 
 ## Full tutorials
