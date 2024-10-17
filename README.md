@@ -120,6 +120,10 @@ IReNA_result$intramodular_network[1:3,]
 #> Regulation21Nnum.3      16;16;16;16 0.000000e+00      Inf
 ```
 
+## NEWs
+
+2024.10.17 add qucik start tutorial at the ReadME page.
+
 ## Full tutorials
 
 - [Regulatory network analysis through only scRNA-seq
