@@ -151,6 +151,9 @@ network_analysis <- function(regulatory_relationships, Kmeans_result, TFFDR1 = 1
   TFs_list <- get_partial_regulations(TFs_list)
   TFs_list <- merge_Module_Regulations(TFs_list, Kmeans_result, ModuleThr1 =
                                          ModuleFDR)
+  colnames(TFs_list[["TF_module_regulation"]])[3] = 'LogFDR'
+  colnames(TFs_list[["TF_module_regulation"]])[6] = 'RegulationType'
+  TFs_list[["TF_module_regulation"]] = TFs_list[["TF_module_regulation"]][,-5]
   return(TFs_list)
 }
 
@@ -299,7 +302,7 @@ get_regulation_of_TFs_to_modules <- function(TFs_list, Thr = 2) {
   name1 <- colnames(con1)[grep("^[PN]fdr\\d+$", colnames(con1))]
   ind1 <- grep("^[PN]fdr\\d+$", colnames(con1))
   col1 <- c()
-  col1 <- c(paste("TF", "TFSymbol", "TFGroup", "TargetModule", "TargetGroup",
+  col1 <- c(paste("TF", "TFGroup", "TargetModule", "TargetGroup",
                   "Regulation", "Nlogfdr", sep = "\t"))
   TF <- c()
   for (i in 1:nrow(con1)) {
@@ -322,7 +325,7 @@ get_regulation_of_TFs_to_modules <- function(TFs_list, Thr = 2) {
         var2 <- paste(rownames(con1)[i], var1, paste0("Group", TG), TG,
                       name3, fdr1, sep = "\t")
         col1 <- c(col1, var2)
-        TF <- c(TF, con1[i, ][1]$Symbol)
+        TF <- c(TF, rownames(con1))
       }
     }
   }
@@ -338,7 +341,7 @@ get_regulation_of_TFs_to_modules <- function(TFs_list, Thr = 2) {
   TF_module_regulation <- as.data.frame(TF_module_regulation)
   colnames(TF_module_regulation) <- TF_module_regulation[1,]
   TF_module_regulation <- TF_module_regulation[-1,]
-  TF_module_regulation[,7] <- as.numeric(TF_module_regulation[,7])
+  TF_module_regulation[,'Regulation'] <- as.numeric(TF_module_regulation[,'Regulation'] )
   TFs_list[['TF_list']] <- TF_list
   TFs_list[['TF_module_regulation']] <- TF_module_regulation
   return(TFs_list)
@@ -348,11 +351,11 @@ get_regulation_of_TFs_to_modules <- function(TFs_list, Thr = 2) {
 get_partial_regulations <- function(TFs_list) {
   con1 <- TFs_list[['FOSF_RegMTF_Cor_EnTFs']]
   hash2 <- TFs_list[['TF_list']]
-  con1$TFSymbol <- as.character(con1$TFSymbol)
-  con1$TargetSymbol <- as.character(con1$TargetSymbol)
+  con1$TF <- as.character(con1$TF)
+  con1$Target <- as.character(con1$Target)
   rowcount <- c()
   for (i in 1:nrow(con1)) {
-    if (con1[i, ][2] %in% hash2 & con1[i, ][9] %in% hash2 == TRUE) {
+    if (con1[i, ]['TF'] %in% hash2 & con1[i, ]['Target'] %in% hash2 == TRUE) {
       rowcount <- c(rowcount, i)
     }
   }

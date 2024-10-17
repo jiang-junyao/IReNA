@@ -53,7 +53,24 @@ Finally, check whether IReNA was installed correctly, restart R session and run:
 library(IReNA)
 ```
 
-## Examples and tutorials
+## Quick start
+
+The primary novelty of IReNA lies in its ability to decode regulatory relationships among modules using a hypergeometric test. Consequently, if you possess pre-built networks and gene groups, you can directly execute IReNA with the following code.
+```{r,warning=FALSE,message=FALSE}
+library(IReNA)
+### load test data
+load(system.file("extdata", "qucik_start_test.rda", package = "IReNA"))
+### IReNA analysis
+IReNA_result <- network_analysis(grn_test,group_test,2,2,ModuleFDR = 0.05)
+### Here is enriched TFs that regulate other module
+IReNA_result$TF_module_regulation[1:5,]
+### Here is the network of enriched TFs
+IReNA_result$TF_network[1:5,]
+### Here is the simplified netowrk
+IReNA_result$intramodular_network[1:5,]
+```
+
+## Full tutorials
 
 * [Regulatory network analysis through only scRNA-seq data](https://jiang-junyao.github.io/IReNA/only-scRNA)
 
@@ -69,10 +86,8 @@ library(IReNA)
 An example for [using IReNA to identify transcription factors critical for retinal regeneration](https://github.com/jiewwwang/Single-cell-retinal-regeneration)
 
 ## Citation
-Preprint: [IReNA: integrated regulatory network analysis of single-cell transcriptomes](https://doi.org/10.1101/2021.11.22.469628)
-
-[Hoang T, Wang J, Boyd P, et al. Gene regulatory networks controlling vertebrate retinal regeneration. Science 2020; 370(6519):eabb8598](https://www.science.org/doi/10.1126/science.abb8598)
+Official publication: [IReNA: integrated regulatory network analysis of single-cell transcriptomes](https://www.cell.com/iscience/pdf/S2589-0042(22)01631-5.pdf)
 
 ## Help and Suggestion
 
-If you have any question, comment or suggestion, please use github issue tracker to report issues of IReNA or contact <jiangjunyao789@163.com>. I will answer you timely, and please remind me again if you have not received response more than three days.
+If you have any question, comment or suggestion, please use github issue tracker to report issues of IReNA or contact <jyjiang@link.cuhk.edu.hk>. I will answer you timely, and please remind me again if you have not received response more than three days.
