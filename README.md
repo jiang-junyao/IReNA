@@ -69,7 +69,8 @@ execute IReNA with the following code.
 library(IReNA)
 ### load test data
 load(system.file("extdata", "qucik_start_test.rda", package = "IReNA"))
-### Structure of input data. Please note that colnames of your table should be same as the following test data
+### Structure of input data. Please note that colnames of your table should be 
+### same as the following test data
 print(head(grn_test))
 #>                    TF TFGroup          Target TargetGroup Correlation
 #> 3370  ENSG00000114315       2 ENSG00000013441           1   0.7201089

@@ -60,7 +60,8 @@ The primary novelty of IReNA lies in its ability to decode regulatory relationsh
 library(IReNA)
 ### load test data
 load(system.file("extdata", "qucik_start_test.rda", package = "IReNA"))
-### Structure of input data. Please note that colnames of your table should be same as the following test data
+### Structure of input data. Please note that colnames of your table should be 
+### same as the following test data
 print(head(grn_test))
 print(head(group_test))
 ### IReNA analysis
