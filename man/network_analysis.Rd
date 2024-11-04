@@ -7,8 +7,8 @@
 network_analysis(
   regulatory_relationships,
   Kmeans_result,
-  TFFDR1 = 10,
-  TFFDR2 = 10,
+  TFFDR1 = 2,
+  TFFDR2 = 2,
   ModuleFDR = 0.05
 )
 }

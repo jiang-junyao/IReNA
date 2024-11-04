@@ -39,7 +39,7 @@ Must_to_GR <- function(x){
   return(GR_out)
 }
 
-motifs_select <- function(motif,gene){
+motifs_select2 <- function(motif,gene){
   index <- c()
   if (stringr::str_sub(gene[1],1,3)=='ENS') {
     col_idx = 5
@@ -74,7 +74,7 @@ motifs_select <- function(motif,gene){
 #' @examples
 identify_region_tfs <- function(GR,gene.use,motifdb,
                                 pvalue.cutoff = 5e-05,BSdb){
-  motif_use = motifs_select(motifdb,gene.use)
+  motif_use = motifs_select2(motifdb,gene.use)
   PWM = Transfac_PWMatrixList
   PWM = PWM[motif_use$Accession]
   matched_motif <- motifmatchr::matchMotifs(PWM,
@@ -83,10 +83,13 @@ identify_region_tfs <- function(GR,gene.use,motifdb,
   matched_motif <- Must_to_GR(matched_motif)
   overlapped_region <- findOverlaps(GR,matched_motif)
   enriched_tf <- c()
+  if (stringr::str_sub(gene.use[1],1,3)=='ENS') {
+    col_idx = 5
+  }else{col_idx = 4}
   for (i in unique(overlapped_region@from)) {
     all_motif <- matched_motif$motifs[overlapped_region[overlapped_region@from==i]@to]
     all_motif <- motifdb[motifdb$Accession%in%all_motif,]
-    all_tf <- paste(unique(unlist(strsplit(all_motif$EnsemblID,';')))
+    all_tf <- paste(unique(unlist(strsplit(all_motif[,col_idx],';')))
                     ,collapse = ';')
     names(all_tf) <- gene.use[i]
     enriched_tf <- c(enriched_tf,all_tf)

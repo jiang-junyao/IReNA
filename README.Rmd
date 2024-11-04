@@ -55,24 +55,10 @@ library(IReNA)
 
 ## Quick start
 
-The primary novelty of IReNA lies in its ability to decode regulatory relationships among modules using a hypergeometric test. Consequently, if you possess pre-built networks and gene groups, you can directly execute IReNA with the following code.
-```{r,warning=FALSE,message=FALSE}
-library(IReNA)
-### load test data
-load(system.file("extdata", "qucik_start_test.rda", package = "IReNA"))
-### Structure of input data. Please note that colnames of your table should be 
-### same as the following test data
-print(head(grn_test))
-print(head(group_test))
-### IReNA analysis
-IReNA_result <- network_analysis(grn_test,group_test)
-### Here is enriched TFs that regulate other module
-IReNA_result$TF_module_regulation[1:3,]
-### Here is the network of enriched TFs
-IReNA_result$TF_network[1:3,]
-### Here is the simplified netowrk
-IReNA_result$intramodular_network[1:3,]
-```
+* [Run IReNA based on seurat object (without pre-build GRN and gene modules)](https://jiang-junyao.github.io/IReNA/qucik-start)
+
+* [Run IReNA based on pre-build GRN and gene modules](https://jiang-junyao.github.io/IReNA/qucik-start2)
+
 ## NEWs
 
 2024.10.17 add qucik start tutorial at the ReadME page.

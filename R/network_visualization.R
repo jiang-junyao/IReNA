@@ -65,20 +65,20 @@ plot_tf_network <- function(TFs_list, layout = 'grid', group.cols = NULL,
   network <- TFs_list[["TF_network"]]
   network$TFGroup <- as.integer(network$TFGroup)
   network$TargetGroup <- as.integer(network$TargetGroup)
-  tfs <- network[, c("TFSymbol", "TFGroup")]
-  target <- network[, c("TargetSymbol", "TargetGroup")]
-  colnames(target) <- c("TFSymbol", "TFGroup")
+  tfs <- network[, c("TF", "TFGroup")]
+  target <- network[, c("Target", "TargetGroup")]
+  colnames(target) <- c("TF", "TFGroup")
   nodes <- rbind(tfs, target)
-  edges <- network[, c("TFSymbol", "TargetSymbol", "Regulation", "Correlation")]
+  edges <- network[, c("TF", "Target", "Regulation", "Correlation")]
   edge_type <- network$Regulation
   colnames(nodes) <- c("name", "type")
   nodes <- nodes[!duplicated(nodes$name), ]
   colnames(edges) <- c("from", "to", "type", "weight")
   g <- igraph::graph_from_data_frame(edges, vertices = nodes, directed = TRUE)
   tf_degree <- as.data.frame(table(network$TFSymbol))
-  cut1 <- as.numeric(summary(as.data.frame(table(network$TFSymbol))[,2])[2])
-  cut2 <- as.numeric(summary(as.data.frame(table(network$TFSymbol))[,2])[3])
-  cut3 <- as.numeric(summary(as.data.frame(table(network$TFSymbol))[,2])[5])
+  cut1 <- as.numeric(summary(as.data.frame(table(network$TF))[,2])[2])
+  cut2 <- as.numeric(summary(as.data.frame(table(network$TF))[,2])[3])
+  cut3 <- as.numeric(summary(as.data.frame(table(network$TF))[,2])[5])
   vertex.size1 <- c()
   for (i in 1:nrow(nodes)){
     if(nodes[i,1] %in% tf_degree[,1]){

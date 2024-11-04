@@ -200,7 +200,7 @@ filter_regulation_fimo <- function(fimo_regulation,regulatory_relationships){
     return(regulation)
   })
   fimo_pair <- unlist(fimo_pair)
-  regulation_pair <- paste(regulatory_relationships[,1],regulatory_relationships[,4])
+  regulation_pair <- paste(regulatory_relationships[,'TF'],regulatory_relationships[,'Target'])
   regulation1 <- regulatory_relationships[regulation_pair %in% fimo_pair,]
   return(regulation1)
 }

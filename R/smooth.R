@@ -143,8 +143,8 @@ get_SmoothByBin_PseudotimeExp <- function(seurat_object, FC = TRUE, Bin = 50,
     var1 <- as.data.frame(Exp2)
     return(var1)
   } else {
-    colnames(Exp2)[1:ncol(Exp2)] <- c(paste0("SmExp", 1:ncol(Exp1)))
-    var1 <- as.data.frame(Exp2)
+    colnames(Exp1)[1:ncol(Exp1)] <- c(paste0("SmExp", 1:ncol(Exp1)))
+    var1 <- as.data.frame(Exp1)
     return(var1)
   }
 }

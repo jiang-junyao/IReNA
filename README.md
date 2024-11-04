@@ -60,65 +60,11 @@ library(IReNA)
 
 ## Quick start
 
-The primary novelty of IReNA lies in its ability to decode regulatory
-relationships among modules using a hypergeometric test. Consequently,
-if you possess pre-built networks and gene groups, you can directly
-execute IReNA with the following code.
+- [Run IReNA based on seurat object (without pre-build GRN and gene
+  modules)](https://jiang-junyao.github.io/IReNA/qucik-start)
 
-``` r
-library(IReNA)
-### load test data
-load(system.file("extdata", "qucik_start_test.rda", package = "IReNA"))
-### Structure of input data. Please note that colnames of your table should be 
-### same as the following test data
-print(head(grn_test))
-#>                    TF TFGroup          Target TargetGroup Correlation
-#> 3370  ENSG00000114315       2 ENSG00000013441           1   0.7201089
-#> 3404  ENSG00000118263       2 ENSG00000013441           1   0.7146384
-#> 4323  ENSG00000108055       3 ENSG00000013441           1  -0.7023170
-#> 10725 ENSG00000025156       1 ENSG00000025156           1   1.0000000
-#> 18768 ENSG00000064703       1 ENSG00000064703           1   1.0000000
-#> 21449 ENSG00000066422       1 ENSG00000066422           1   1.0000000
-print(head(group_test))
-#>                 KmeansGroup
-#> ENSG00000011007           1
-#> ENSG00000013441           1
-#> ENSG00000015479           1
-#> ENSG00000023516           1
-#> ENSG00000025156           1
-#> ENSG00000028839           1
-### IReNA analysis
-IReNA_result <- network_analysis(grn_test,group_test)
-#> [1] "Total TFs: 227"
-#> [1] "Enriched TFs: 76"
-#> [1] "Significant regulations: 5"
-### Here is enriched TFs that regulate other module
-IReNA_result$TF_module_regulation[1:3,]
-#>                     TF TFGroup LogFDR TargetGroup RegulationType
-#> out2   ENSG00000124766       1    Inf      Group4       Negative
-#> out2.1 ENSG00000126003       1    Inf      Group3       Negative
-#> out2.2 ENSG00000196757       1    Inf      Group3       Negative
-### Here is the network of enriched TFs
-IReNA_result$TF_network[1:3,]
-#>                     TF TFGroup TFMinNlogfdr TFMinGroup SigActModules
-#> 262739 ENSG00000124766       1          Inf         N4            NA
-#> 270782 ENSG00000126003       1          Inf         N3            NA
-#> 742638 ENSG00000196757       1          Inf         N3            NA
-#>        SigRepModules          Target TargetGroup Correlation Regulation
-#> 262739             4 ENSG00000124766           1           1   Positive
-#> 270782             3 ENSG00000126003           1           1   Positive
-#> 742638             3 ENSG00000196757           1           1   Positive
-### Here is the simplified netowrk
-IReNA_result$intramodular_network[1:3,]
-#>                    TFGroup TargetGroup Regulation        Correlation
-#> Regulation12Pnum.4       2           2   Positive  0.808763726245598
-#> Regulation12Nnum.5       2           3   Negative -0.719932554995428
-#> Regulation21Nnum.3       3           2   Negative -0.719932554995428
-#>                    NumberRegulation       Pvalue  NlogFdr
-#> Regulation12Pnum.4   180;184;66;184 1.755047e-51 50.23283
-#> Regulation12Nnum.5      16;16;16;16 0.000000e+00      Inf
-#> Regulation21Nnum.3      16;16;16;16 0.000000e+00      Inf
-```
+- [Run IReNA based on pre-build GRN and gene
+  modules](https://jiang-junyao.github.io/IReNA/qucik-start2)
 
 ## NEWs
 
