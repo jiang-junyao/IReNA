@@ -18,12 +18,17 @@ knitr::opts_chunk$set(
 `r badger::badge_custom("monocle", "version2.18", "blue", "http://cole-trapnell-lab.github.io/monocle-release")`
 `r badger::badge_custom("publication", "iscience", "purple", "https://www.cell.com/iscience/pdf/S2589-0042(22)01631-5.pdf")`
 
+## Significance of IReNA
 
-IReNA (Integrated Regulatory Network Analysis) is an R package to perform regulatory network analysis. IReNA contains two methods to reconstruct gene regulatory networks. The first is using single-cell RNA sequencing (scRNA-seq) data alone. The second is integrating scRNA-seq data and chromatin accessibility profiles from Assay for Transposase Accessible Chromatin using sequencing (scATAC-seq or bulk ATAC-seq). IReNA performs modular regulatory network to reveal key transcription factors and significant regulatory relationships among modules, providing biological insights on regulatory mechanisms.
+There are several cell states involved in cell development or disease occurrence (e.g., progenitor, precursor, immature, and mature), each state maintained by a unique gene program (**modules**). Decoding the **inter**- or **intra**-regulatory mechanisms among these modules can further elucidate the key mechanisms that regulate cell state transitions, including identifying key transcription factors that regulate cell fate decisions or cell differentiation. Most current gene regulatory network (GRN) analysis methods focus on **intra**-module regulations; they select all cell states or single cell states to construct GRNs and **neglect inter**-module regulations. 
+
+IReNA can address this gap by identifying transcription factors (TFs) that regulate other modules and inferring inter-module interactions through hypergeometric tests. For instance, if IReNA identifies **TF A** from **module a** significantly activating **module b**, we can infer that TF A may regulate the differentiation of the Progenitor state into the Precursor state. In a second case, if IReNA identifies **TF B** from **module c** significantly repressing **module d**, we can infer that TF B represses the differentiation process from the Immature state to the Mature state.
+
+![](docs/Readme figure/significance.png){ width=80% height=80% }
 
 ## Workflow
 
-![](docs/Readme figure/Workflow1.png){ width=80% height=80% }
+![](docs/Readme figure/Workflow1.png){ width=60% height=60% }
 
 ## Installation
 
