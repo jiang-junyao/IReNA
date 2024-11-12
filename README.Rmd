@@ -28,7 +28,7 @@ IReNA can address this gap by identifying transcription factors (TFs) that regul
 
 ## Workflow
 
-![](docs/Readme figure/Workflow1.png){ width=60% height=60% }
+![](docs/Readme figure/workflow_new.jpg){ width=60% height=60% }
 
 ## Installation
 
@@ -65,6 +65,8 @@ library(IReNA)
 * [Run IReNA based on pre-build GRN and gene modules](https://jiang-junyao.github.io/IReNA/qucik-start2)
 
 ## NEWs
+
+2024.11.12 add signifiance of IReNA and update workflow.
 
 2024.10.17 add qucik start tutorial at the ReadME page.
 

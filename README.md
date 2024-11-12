@@ -37,7 +37,7 @@ style="width:80.0%;height:80.0%" />
 
 ## Workflow
 
-<img src="docs/Readme%20figure/Workflow1.png"
+<img src="docs/Readme%20figure/workflow_new.jpg"
 style="width:60.0%;height:60.0%" />
 
 ## Installation
@@ -83,6 +83,8 @@ library(IReNA)
   modules](https://jiang-junyao.github.io/IReNA/qucik-start2)
 
 ## NEWs
+
+2024.11.12 add signifiance of IReNA and update workflow.
 
 2024.10.17 add qucik start tutorial at the ReadME page.
 
