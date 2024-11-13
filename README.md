@@ -102,15 +102,14 @@ library(IReNA)
 
 ## External links
 
-An example for [using IReNA to identify transcription factors critical
-for retinal
+[An example of applying IReNA to identify key transcription factors 
+in retinal
 regeneration](https://github.com/jiewwwang/Single-cell-retinal-regeneration)
 
 ## Citation
 
-Official publication: [IReNA: integrated regulatory network analysis of
-single-cell
-transcriptomes](https://www.cell.com/iscience/pdf/S2589-0042(22)01631-5.pdf)
+Jiang J, Lyu P, Li J, et al. IReNA: Integrated regulatory network analysis of single-cell transcriptomes and chromatin accessibility profiles. [iScience 2022, 25(11): 105359.](https://www.cell.com/iscience/fulltext/S2589-0042(22)01631-5)
+Hoang T, Wang J, Boyd P, et al. Gene regulatory networks controlling vertebrate retinal regeneration. [Science 2020, 370 (6519): eabb8598.](https://www.science.org/doi/abs/10.1126/science.abb8598)
 
 ## Help and Suggestion
 
