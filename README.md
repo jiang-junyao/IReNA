@@ -13,7 +13,7 @@ transcriptomes
 
 There are several cell states involved in cell development or disease
 occurrence (e.g., progenitor, precursor, immature, and mature), each
-state maintained by a unique gene program (**modules**). Decoding the
+state maintained by a unique gene program (**gene regulatory modules**). Decoding the
 **inter**- or **intra**-regulatory mechanisms among these modules can
 further elucidate the key mechanisms that regulate cell state
 transitions, including identifying key transcription factors that
@@ -84,9 +84,9 @@ library(IReNA)
 
 ## News
 
-2024.11.12 add signifiance of IReNA and update workflow.
+2024.11.12: add the signifiance of IReNA and update the workflow.
 
-2024.10.17 add qucik start tutorial at the ReadME page.
+2024.10.17: add qucik start tutorial at the ReadME page.
 
 ## Full tutorials
 
@@ -109,6 +109,7 @@ regeneration](https://github.com/jiewwwang/Single-cell-retinal-regeneration)
 ## Citation
 
 Jiang J, Lyu P, Li J, et al. IReNA: Integrated regulatory network analysis of single-cell transcriptomes and chromatin accessibility profiles. [iScience 2022, 25(11): 105359.](https://www.cell.com/iscience/fulltext/S2589-0042(22)01631-5)
+
 Hoang T, Wang J, Boyd P, et al. Gene regulatory networks controlling vertebrate retinal regeneration. [Science 2020, 370 (6519): eabb8598.](https://www.science.org/doi/abs/10.1126/science.abb8598)
 
 ## Help and Suggestion
