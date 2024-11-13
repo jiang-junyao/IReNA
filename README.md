@@ -18,19 +18,19 @@ state maintained by a unique gene program (**gene regulatory modules**). Decodin
 further elucidate the key mechanisms that regulate cell state
 transitions, including identifying key transcription factors that
 regulate cell fate decisions or cell differentiation. Most current gene
-regulatory network (GRN) analysis methods focus on **intra**-module
+regulatory network (GRN) analysis methods focus on **intra**-modular
 regulations; they select all cell states or single cell states to
-construct GRNs and **neglect inter**-module regulations.
+construct GRNs and **neglect inter**-modular regulations.
 
 IReNA can address this gap by identifying transcription factors (TFs)
-that regulate other modules and inferring inter-module interactions
+that regulate other modules and inferring inter-modular interactions
 through hypergeometric tests. For instance, if IReNA identifies **TF A**
 from **module a** significantly activating **module b**, we can infer
-that TF A may regulate the differentiation of the Progenitor state into
-the Precursor state. In a second case, if IReNA identifies **TF B** from
+that TF A may regulate the differentiation of the progenitor state into
+the precursor state. In a second case, if IReNA identifies **TF B** from
 **module c** significantly repressing **module d**, we can infer that TF
-B represses the differentiation process from the Immature state to the
-Mature state.
+B represses the differentiation process from the immature state to the
+mature state.
 
 <img src="docs/Readme%20figure/significance.png"
 style="width:80.0%;height:80.0%" />
