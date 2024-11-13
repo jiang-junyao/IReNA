@@ -82,7 +82,7 @@ library(IReNA)
 - [Run IReNA based on pre-build GRN and gene
   modules](https://jiang-junyao.github.io/IReNA/qucik-start2)
 
-## NEWs
+## News
 
 2024.11.12 add signifiance of IReNA and update workflow.
 
